@@ -4,6 +4,7 @@
 //CTRL + 'C'
 static void	handle_sigint()
 {
+	rl_redisplay();
 	//if (//interactive mode)
 	//{
 	//	display_prompt();
