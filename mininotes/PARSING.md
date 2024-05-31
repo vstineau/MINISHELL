@@ -3,6 +3,4 @@ functions used for parsing :
 - https://github.com/kibatche/parser-bison/blob/main/README.md 
 
 
-
-
 send output to [[EXECUTION]]

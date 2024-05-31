@@ -1,20 +1,21 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 11:23:06 by vstineau          #+#    #+#             */
-/*   Updated: 2024/05/22 12:06:12 by vstineau         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 //CTRL + 'C'
 static void	handle_sigint()
 {
+	//if (//interactive mode)
+	//{
+	//	display_prompt();
+	//	return ;
+	//}
+	//else
+	//{
+	//	//kill le process en cour +
+	//	display_prompt();
+	//	return ;
+	//}
+
 }
 
 //CTRL + '\'
@@ -32,15 +33,12 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 		handle_sigquit();
 }
 
-int	init_signals(struct sigaction sa)
+int	init_signals(struct sigaction *sa)
 {
-	sigemptyset(&sa.sa_mask);
-	sa.sa_sigaction = signal_handler;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
+	sa->sa_sigaction = signal_handler;
+	if (sigaction(SIGINT, sa, NULL) == -1)
 		return (0);
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-		return (0);
-	if (sigaction(SIGKILL, &sa, NULL) == -1)
+	if (sigaction(SIGQUIT, sa, NULL) == -1)
 		return (0);
 	return (1);
 
