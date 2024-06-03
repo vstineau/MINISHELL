@@ -1,25 +1,6 @@
 
 #include "../includes/minishell.h"
 
-static size_t	count_words(char const *s, char c)
-{
-	size_t	l;
-	size_t	i;
-
-	i = 0;
-	l = 0;
-	while (s[i])
-	{
-		while (s[i] == c && s[i])
-			i++;
-		if (s[i] != c && s[i])
-			l++;
-		while (s[i] != c && s[i])
-			i++;
-	}
-	return (l);
-}
-
 static	int	fill_words(char const *s, char c, char **split, size_t count)
 {
 	size_t	i;
@@ -58,6 +39,25 @@ static void	free_all(char **split, size_t count)
 		i++;
 	}
 	free(split);
+}
+
+size_t	count_words(char const *s, char c)
+{
+	size_t	l;
+	size_t	i;
+
+	i = 0;
+	l = 0;
+	while (s[i])
+	{
+		while (s[i] == c && s[i])
+			i++;
+		if (s[i] != c && s[i])
+			l++;
+		while (s[i] != c && s[i])
+			i++;
+	}
+	return (l);
 }
 
 char	**ft_split(char const *s, char c)

@@ -1,35 +1,29 @@
 
 #include "../includes/minishell.h"
 
-t_cmd	*new_cmd(char *content)
+
+t_cmd	*parse(char *s)
 {
-	char	**temp;
-	t_cmd	*cmd;
+	t_cmd *c;
 	int	i;
 
-	i = 1;
-	cmd = ft_calloc(1, sizeof(*cmd));
-	if (!cmd)
-		return (NULL);
-	temp = ft_split(content, ' ');
-	ft_strcpy(cmd->cmd, temp[0]);
-	while (temp[i])
+	c = (t_cmd *){0};
+	i = 0;
+	while (s[i])
 	{
-		ft_strcpy(cmd->arg[i - 1], temp[i]);
-		i++;
+		if (s[i] == '|')
+			;
+		if (s[i] == '<' && s[i + 1] != '<')
+			;
+		if (s[i] == '>' && s[i + 1] != '>')
+			;
+		if (s[i] == '>' && s[i + 1] == '>')
+			;
+		if (s[i] == '<' && s[i + 1] == '<')
+			;
+		if (s[i] == '"')
+			;
+		if (s[i] == '\'')
+			;
 	}
-	free_split(temp);
-	return (cmd);
-}
-
-t_cmd	*parse(char *line)
-{
-	t_cmd	*cmd;
-	char **pipes;
-
-	pipes = ft_split(line, '|');
-	cmd = new_cmd(pipes[0]);
-	free(line);
-	
-	return (cmd);
 }

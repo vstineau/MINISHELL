@@ -23,6 +23,7 @@ char	*ft_strcpy(char *dest, char *src)
 	i = 0;
 	while (src[i])
 	{
+		write(1, "aa\n", 3);
 		dest[i] = src[i];
 		i++;
 	}
@@ -44,3 +45,14 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	ft_memset(s, 0, nmemb * size);
 	return (s);
 }
+
+int	ft_strlen(char *s)
+{
+	int	i ;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
