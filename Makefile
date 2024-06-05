@@ -8,7 +8,8 @@ SRC_NAME = main.c \
 					 signal.c \
 					 utils.c \
 					 ft_split.c \
-					 free.c 
+					 free.c \
+					 redirection.c 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

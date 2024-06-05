@@ -10,7 +10,7 @@ int main()
 	//sigemptyset(&sig.sa_mask);
 	//init_signals(&sig);
 	char *line;
-	char	*prompt = ""B_BLUE"\u279C "B_WHITE" mini"B_RED"shell "RESET"";
+	char	*prompt = ""B_GREEN"\001\u279C\002 "BHI_BLUE" minishell"RESET"";
 	while (1)
 	{
 		line = readline(prompt);

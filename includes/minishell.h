@@ -18,20 +18,29 @@ static int g_signal_received;
 typedef enum
 {
 	PIPE = 0,
-	TO_OUTFILE,
-	TO_OUTFILE_APPEND,
-	TO_INFILE,
-	TO_HEREDOC,
+	CMD
 }				t_token;
+
+typedef enum
+{
+	APPEND = 0,
+	NO_APPEND,
+	HEREDOC,
+	NO_HEREDOC,
+	WIDE
+}				t_redirect;
 
 typedef struct s_cmd
 {
 	char	*cmd;
 	char	*infile;
+	char	*heredoc;
 	char	*outfile;
 	char	**arg;
 	t_token	pipe;
+	t_redirect	type;
 	struct s_cmd	*next;
+	struct s_cmd	*first;
 }						t_cmd;
 
 
@@ -46,6 +55,7 @@ size_t	count_words(char const *s, char c);
 //----------PARSING--------------------//
 int	init_signals(struct sigaction *sa);
 t_cmd	*parse(char *line);
+void	infile(char *s, t_cmd **c);
 //----------FREE_______________________//
 void	free_split(char **split);
 
