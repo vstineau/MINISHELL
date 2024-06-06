@@ -38,26 +38,29 @@ typedef struct s_cmd
 	char	*outfile;
 	char	**arg;
 	t_token	pipe;
-	t_redirect	type;
+	t_redirect	redirect;
 	struct s_cmd	*next;
 	struct s_cmd	*first;
 }						t_cmd;
 
-
-//----------UTILS----------------------//
+//------------UTILS----------------------//
 char	**ft_split(char const *s, char c);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_memset(void *s, int c, size_t n);
 int		ft_strlen(char *s);
-;
+char *get_prompt(char *prompt);
 char	*ft_strcpy(char *dest, char *src);
 size_t	count_words(char const *s, char c);
-//----------PARSING--------------------//
+//----------PARSING----------------------//
 int	init_signals(struct sigaction *sa);
 t_cmd	*parse(char *line);
 void	infile(char *s, t_cmd **c);
-//----------FREE_______________________//
+//-------------FREE----------------------//
 void	free_split(char **split);
+//----------EXECUTION--------------------//
+void exec(t_cmd *c, char **envp);
+//----------BUILTINS---------------------//
+void cd(char *path, char **envp);
 
 #endif
 

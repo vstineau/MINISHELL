@@ -11,8 +11,12 @@
             "id": "a2d60841f523729a",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "FUNCTION ALLOWED.md",
+                "mode": "source",
+                "source": false
+              }
             }
           },
           {
@@ -21,26 +25,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "EXECUTION.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8011478402ae8b66",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "PARSING.md",
+                "file": "Redirections.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -106,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "PARSING.md",
+                "file": "FUNCTION ALLOWED.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "PARSING.md",
+                "file": "FUNCTION ALLOWED.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +137,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "PARSING.md"
+                "file": "FUNCTION ALLOWED.md"
               }
             }
           }
@@ -167,16 +158,19 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "8011478402ae8b66",
+  "active": "a2d60841f523729a",
   "lastOpenFiles": [
-    "TLDR FUNCTION ALLOWED.md",
-    "Untitled.md",
-    "Redirections.md",
-    "PARSING.md",
-    "LEAK CHECK.md",
+    "cd.md",
     "EXECUTION.md",
-    "Untitled",
+    "PARSING.md",
+    "Redirections.md",
+    "chain_list.md",
+    "FUNCTION ALLOWED.md",
     "Untitled.canvas",
+    "|.md",
+    "LEAK CHECK.md",
+    "Untitled.md",
+    "Untitled",
     "2024-05-22.md",
     "PARSING.md~",
     "Untitled 1.canvas",

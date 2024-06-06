@@ -9,7 +9,10 @@ SRC_NAME = main.c \
 					 utils.c \
 					 ft_split.c \
 					 free.c \
-					 redirection.c 
+					 redirection.c \
+					 prompt.c \
+					 execution.c \
+					 cd.c 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

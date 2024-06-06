@@ -5,7 +5,7 @@ void	infile(char *s, t_cmd **c)
 {
 	if(++*s == '<')
 	{
-		(*c)->type = HEREDOC;
+		(*c)->redirect = HEREDOC;
 		while (*s != 'n' && *s)
 		{
 			(*c)->heredoc = s;
@@ -21,7 +21,7 @@ void	infile(char *s, t_cmd **c)
 	}
 	else
 	{
-		(*c)->type = NO_HEREDOC;
+		(*c)->redirect = NO_HEREDOC;
 		while (*s == ' ' && *s)
 			s++;
 		while (*s != ' ' && *s)

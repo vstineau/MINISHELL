@@ -42,6 +42,10 @@
 	These functions return a null-terminated string containing an absolute pathname that is the current working directory of the calling process.  The pathname  is  returned as the function result and via the argument buf, if present. The  getcwd()  function copies an absolute pathname of the current working directory to the array pointed to by buf, which is of length size. If the length of the absolute pathname of the current working  directory,  including the terminating null byte, exceeds size bytes, NULL is returned, and errno is set to ERANGE; an application should check for this error, and allocate a larger buffer  if necessary 
 	On  success, these functions return a pointer to a string containing the pathname of the current working directory.  In the case of getcwd() and getwd() this is the same value as buf. On  failure,  these  functions  return NULL, and errno is set to indicate the error.The contents of the array pointed to by buf are undefined on error.
 ## - **chdir :**
+int chdir(const char *path)
+chdir() changes the current working directory of the calling process to the directory specified in path.
+On success, zero is returned.  On error, -1 is returned, and errno is set appropriately.
+
 ## - **stat :**
 ## - **lstat :**
 ## - **fstat :** 

@@ -4,7 +4,6 @@
 t_cmd	*parse(char *s)
 {
 	t_cmd *c;
-	int	i;
 
 	c = (t_cmd *){0};
 	c->first = c;

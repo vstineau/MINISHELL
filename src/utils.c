@@ -23,7 +23,6 @@ char	*ft_strcpy(char *dest, char *src)
 	i = 0;
 	while (src[i])
 	{
-		write(1, "aa\n", 3);
 		dest[i] = src[i];
 		i++;
 	}
