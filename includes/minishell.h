@@ -54,6 +54,7 @@ size_t	count_words(char const *s, char c);
 int	init_signals(struct sigaction *sa);
 t_cmd	*parse(char *line);
 void	infile(char *s, t_cmd **c);
+void	outfile(char *s, t_cmd **c);
 //-------------FREE----------------------//
 void	free_split(char **split);
 //----------EXECUTION--------------------//

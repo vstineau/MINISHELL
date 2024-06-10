@@ -41,14 +41,51 @@ char *get_home(char **envp, char *home)
 	return (NULL);
 }
 
+char *get_home_allocated(char **envp, char *home)
+{
+	int	i;
+	int	j;
+	char	*h;
+
+	h = ft_calloc(50, 1);
+	if (!h)
+		return (NULL);
+	i = 0;
+	while(envp[i])
+	{
+	 j = 0;
+		if (envp[i][j] == home[j])
+		{
+			while(envp[i][j] == home[j])
+				j++;
+			if (envp[i][j] == '/')
+			{
+				ft_strcpy(h, envp[i] + j);
+				return (h);
+			}
+		}
+		i++;
+	}
+	free(h);
+	return (NULL);
+}
 
 void	cd(char *path, char **envp)
 {
-	char *pwd;
+	char	*pwd;
 
 	if (path == NULL)
 	{
 		chdir(get_home(envp, "HOME="));
+		return ;
+	}
+	if (*path == '~')
+	{
+		if (!(pwd = get_home_allocated(envp, "HOME=")))
+			return ; //free exit
+		pwd = ft_strjoin_free(pwd, path + 1);
+		chdir(pwd);
+		free(pwd);
 		return ;
 	}
 	pwd = getcwd(NULL, 0);

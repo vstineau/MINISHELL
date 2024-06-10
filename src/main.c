@@ -15,9 +15,11 @@ int main(int argc, char **argv, char **envp)
 	char	prompt[4097];
 
 	//while (1)
-	///{
+	//{
 		line = readline(get_prompt(prompt));
 		cd(NULL, envp);
+		line = readline(get_prompt(prompt));
+		cd("~/COMMON_CORE/", envp);
 		line = readline(get_prompt(prompt));
 	//	c = parse(line);
 		//exec(c, envp);

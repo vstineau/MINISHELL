@@ -32,3 +32,17 @@ void	infile(char *s, t_cmd **c)
 		}
 	}
 }
+
+void	outfile(char *s, t_cmd **c)
+{
+	if (++*s == '>')
+		(*c)->redirect = APPEND;
+	else
+		(*c)->redirect = NO_APPEND;
+	while (*s != ' ' && *s)
+	{
+		(*c)->outfile  = s;
+		s++;
+		(*c)->outfile++;
+	}
+}

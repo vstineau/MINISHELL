@@ -12,7 +12,8 @@ SRC_NAME = main.c \
 					 redirection.c \
 					 prompt.c \
 					 execution.c \
-					 cd.c 
+					 cd.c \
+					 quotes.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
