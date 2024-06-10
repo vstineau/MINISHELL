@@ -40,7 +40,6 @@ typedef struct s_cmd
 	t_token	pipe;
 	t_redirect	redirect;
 	struct s_cmd	*next;
-	struct s_cmd	*first;
 }						t_cmd;
 
 //------------UTILS----------------------//

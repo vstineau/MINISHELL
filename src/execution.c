@@ -3,6 +3,6 @@
 
 void exec(t_cmd *c, char **envp)
 {
-	cd(c->arg[0]);
+	cd(c->arg[0], envp);
 	
 }
