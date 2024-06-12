@@ -5,10 +5,10 @@ t_cmd	*ft_lstnew()
 {
 	t_cmd *new_cmd;
 
-	new_cmd = malloc(sizeof(t_cmd *));
+	new_cmd = ft_calloc(sizeof(t_cmd *), 1);
 	if (!new_cmd)
 		return (NULL);
-	new_cmd = (t_cmd *){0};
+	//new_cmd = (t_cmd *){0};
 	return (new_cmd);
 }
 

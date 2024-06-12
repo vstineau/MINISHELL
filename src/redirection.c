@@ -3,32 +3,33 @@
 
 void	infile(char *s, t_cmd **c)
 {
-	if(++*s == '<')
+	char *key;
+	char *line;
+
+	if (*s + 1 == '\0' || *s + 2 == '\0')
+		return ;
+	key = NULL;
+	if(*s == '<')
 	{
-		(*c)->redirect = HEREDOC;
-		while (*s != 'n' && *s)
+		*(*c)->redirect = HEREDOC;
+		while (*s != ' ' && *s)
+			*key++ = *s++;
+		line = readline(BHI_BLACK">"RESET);
+		while (ft_strcmp(key, line))
 		{
-			(*c)->heredoc = s;
-			s++;
-			(*c)->heredoc++;
-		}
-		while (*s != 'n' && *s)
-		{
-			(*c)->infile = s;
-			s++;
-			(*c)->infile++;
+			line = readline(BHI_BLACK">"RESET);
 		}
 	}
 	else
 	{
-		(*c)->redirect = NO_HEREDOC;
+		*(*c)->redirect = NO_HEREDOC;
 		while (*s == ' ' && *s)
 			s++;
 		while (*s != ' ' && *s)
 		{
 			(*c)->infile = s;
-			s++;
 			(*c)->infile++;
+			s++;
 		}
 	}
 }
@@ -36,9 +37,9 @@ void	infile(char *s, t_cmd **c)
 void	outfile(char *s, t_cmd **c)
 {
 	if (++*s == '>')
-		(*c)->redirect = APPEND;
+		*(*c)->redirect = APPEND;
 	else
-		(*c)->redirect = NO_APPEND;
+		*(*c)->redirect = NO_APPEND;
 	while (*s != ' ' && *s)
 	{
 		(*c)->outfile  = s;

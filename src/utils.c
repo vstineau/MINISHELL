@@ -1,6 +1,16 @@
 
 #include "../includes/minishell.h"
 
+int	ft_strcmp(char *s1, char *s2)
+{
+	while (*s1 && *s2)
+	{
+		if (*s1++ != *s2++)
+			return (*s1 - *s2);
+	}
+	return (*s1 - *s2);
+}
+
 void	*ft_memset(void *s, int c, size_t n)
 {
 	size_t		i;

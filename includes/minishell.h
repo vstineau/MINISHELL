@@ -1,4 +1,4 @@
-#ifndef MINISHELL_H
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include <unistd.h>
@@ -23,7 +23,7 @@ typedef enum
 
 typedef enum
 {
-	APPEND = 0,
+	APPEND,
 	NO_APPEND,
 	HEREDOC,
 	NO_HEREDOC,
@@ -38,7 +38,7 @@ typedef struct s_cmd
 	char	*outfile;
 	char	**arg;
 	t_token	pipe;
-	t_redirect	redirect;
+	t_redirect	*redirect;
 	struct s_cmd	*next;
 }						t_cmd;
 
@@ -47,7 +47,8 @@ char	**ft_split(char const *s, char c);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_memset(void *s, int c, size_t n);
 int		ft_strlen(char *s);
-char *get_prompt(char *prompt);
+int		ft_strcmp(char *s1, char *s2);
+char	*get_prompt(char *prompt);
 char	*ft_strcpy(char *dest, char *src);
 size_t	count_words(char const *s, char c);
 //----------PARSING----------------------//
