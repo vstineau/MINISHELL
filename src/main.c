@@ -37,8 +37,10 @@ int main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline(get_prompt(prompt));
+		if (line)
+			add_history(line);
 		c = parse(line);
-		printlist(c);
+		//printlist(c);
 	}
 	return (0);
 }

@@ -5,7 +5,7 @@ t_cmd	*ft_lstnew()
 {
 	t_cmd *new_cmd;
 
-	new_cmd = ft_calloc(sizeof(t_cmd *), 1);
+	new_cmd = ft_calloc(sizeof(t_cmd), 1);
 	if (!new_cmd)
 		return (NULL);
 	//new_cmd = (t_cmd *){0};
@@ -43,10 +43,10 @@ t_cmd	*parse(char *s)
 	current = c;
 	while (*s != '\0')
 	{
-		if ((*s == '<' && *(s + 1) != '<') || (*s == '<' && *(s + 1) != '<'))
-			infile(s, &c);
-		else if ((*s == '>' && *(s + 1) == '>') || (*s == '>' && *(s + 1) == '>'))
-			outfile(s, &c);
+		if (*s == '<')
+			s = infile(s, c);
+		else if (*s == '>')
+			s = outfile(s, &c);
 		else if (*s == '"')
 			;
 		else if (*s == '\'')

@@ -26,7 +26,7 @@ typedef enum
 	APPEND,
 	NO_APPEND,
 	HEREDOC,
-	NO_HEREDOC,
+	NO_HEREDOC ,
 	WIDE
 }				t_redirect;
 
@@ -38,7 +38,7 @@ typedef struct s_cmd
 	char	*outfile;
 	char	**arg;
 	t_token	pipe;
-	t_redirect	*redirect;
+	t_redirect	redirect;
 	struct s_cmd	*next;
 }						t_cmd;
 
@@ -54,14 +54,15 @@ size_t	count_words(char const *s, char c);
 //----------PARSING----------------------//
 int	init_signals(struct sigaction *sa);
 t_cmd	*parse(char *line);
-void	infile(char *s, t_cmd **c);
-void	outfile(char *s, t_cmd **c);
+char	*infile(char *s, t_cmd *c);
+char	*outfile(char *s, t_cmd **c);
 //-------------FREE----------------------//
 void	free_split(char **split);
 //----------EXECUTION--------------------//
 void exec(t_cmd *c, char **envp);
 //----------BUILTINS---------------------//
-void cd(char *path, char **envp);
+void	cd(char *path, char **envp);
+void	pwd(void);
 
 #endif
 

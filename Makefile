@@ -13,6 +13,7 @@ SRC_NAME = main.c \
 					 prompt.c \
 					 execution.c \
 					 cd.c \
+					 pwd.c \
 					 quotes.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 

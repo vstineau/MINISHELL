@@ -1,49 +1,58 @@
 
 #include "../includes/minishell.h"
 
-void	infile(char *s, t_cmd **c)
+char	*infile(char *s, t_cmd *c)
 {
-	char *key;
+	char key[4096];
 	char *line;
+	int i;
 
-	if (*s + 1 == '\0' || *s + 2 == '\0')
-		return ;
-	key = NULL;
-	if(*s == '<')
+	i = 0;
+	if (*s && *s + 1 == '\0')
+		return (s); // exit syntax error:
+	if(*s && *(s + 1) == '<')
 	{
-		*(*c)->redirect = HEREDOC;
-		while (*s != ' ' && *s)
-			*key++ = *s++;
-		line = readline(BHI_BLACK">"RESET);
+		s += 2;
+		while(*s == ' ')
+			s++;
+		c->redirect = HEREDOC;
+		while ( *s && *s != ' ')
+		{
+			key[i++] = *s++;
+		}
+		line = readline(BHI_BLACK"> "RESET);
 		while (ft_strcmp(key, line))
 		{
-			line = readline(BHI_BLACK">"RESET);
+			printf("key = %s, line = %s\n", key, line);
+			//use open and write to write heredoc in a temporary file
 		}
 	}
 	else
 	{
-		*(*c)->redirect = NO_HEREDOC;
+		c->redirect = NO_HEREDOC;
 		while (*s == ' ' && *s)
 			s++;
 		while (*s != ' ' && *s)
 		{
-			(*c)->infile = s;
-			(*c)->infile++;
+			c->infile = s;
+			c->infile++;
 			s++;
 		}
 	}
+	return (s);
 }
 
-void	outfile(char *s, t_cmd **c)
+char	*outfile(char *s, t_cmd **c)
 {
 	if (++*s == '>')
-		*(*c)->redirect = APPEND;
+		(*c)->redirect = APPEND;
 	else
-		*(*c)->redirect = NO_APPEND;
+		(*c)->redirect = NO_APPEND;
 	while (*s != ' ' && *s)
 	{
 		(*c)->outfile  = s;
 		s++;
 		(*c)->outfile++;
 	}
+	return (s);
 }
