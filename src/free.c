@@ -8,7 +8,6 @@ void	free_Cmd(t_cmd *cmd)
 		free(cmd->cmd);
 		free(cmd->infile);
 		free(cmd->outfile);
-		free(cmd->heredoc);
 		free_split(cmd->arg);
 		cmd = cmd->next;
 	}

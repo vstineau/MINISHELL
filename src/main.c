@@ -12,8 +12,7 @@ void	printlist(t_cmd *cmd)
 		printf("cmd nb %d = %s\n", i, current->cmd);
 		printf("infile nb %d = %s\n", i, current->infile);
 		printf("outfile nb %d = %s\n", i, current->outfile);
-		printf("heredoc nb %d = %s\n", i, current->heredoc);
-		printf("first arg nb %d = %s\n", i, current->arg[0]);
+		//printf("first arg nb %d = %s\n", i, current->arg[0]);
 		i++;
 		current = current->next;
 	}
@@ -40,7 +39,7 @@ int main(int argc, char **argv, char **envp)
 		if (line)
 			add_history(line);
 		c = parse(line);
-		//printlist(c);
+		printlist(c);
 	}
 	return (0);
 }

@@ -10,6 +10,7 @@ SRC_NAME = main.c \
 					 ft_split.c \
 					 free.c \
 					 redirection.c \
+					 heredoc.c \
 					 prompt.c \
 					 execution.c \
 					 cd.c \

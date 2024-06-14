@@ -9,9 +9,14 @@
 # include <stddef.h>
 # include <signal.h>
 # include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "color.h"
+
+//__int128
+
 
 static int g_signal_received;
 
@@ -34,7 +39,6 @@ typedef struct s_cmd
 {
 	char	*cmd;
 	char	*infile;
-	char	*heredoc;
 	char	*outfile;
 	char	**arg;
 	t_token	pipe;
@@ -56,6 +60,8 @@ int	init_signals(struct sigaction *sa);
 t_cmd	*parse(char *line);
 char	*infile(char *s, t_cmd *c);
 char	*outfile(char *s, t_cmd **c);
+char*	heredoc(char *s);
+char	*no_heredoc(char *s);
 //-------------FREE----------------------//
 void	free_split(char **split);
 //----------EXECUTION--------------------//

@@ -50,6 +50,7 @@ On success, zero is returned.  On error, -1 is returned, and errno is set approp
 ## - **lstat :**
 ## - **fstat :** 
 ## - **unlink :** 
+unlink - call the unlink function to remove the specified file
 ## - **execve :**
 ## - **dup :**
 ## - **dup2 :**
