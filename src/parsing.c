@@ -1,14 +1,16 @@
 
 #include "../includes/minishell.h"
 
-t_cmd	*ft_lstnew()
+t_cmd	*ft_lstnew(char *s)
 {
 	t_cmd *new_cmd;
 
 	new_cmd = ft_calloc(sizeof(t_cmd), 1);
 	if (!new_cmd)
-		return (NULL);
-	//new_cmd = (t_cmd *){0};
+		return (NULL);// exit error
+	new_cmd->arg = ft_calloc(count_words(s, ' ') * sizeof(char *),1);
+	if (!new_cmd->arg)
+		return (NULL);// exit error
 	return (new_cmd);
 }
 
@@ -38,8 +40,10 @@ t_cmd	*parse(char *s)
 {
 	t_cmd *c;
 	t_cmd *current;
+	int	i_arg;
 
-	c = ft_lstnew();
+	i_arg = 0;
+	c = ft_lstnew(s);
 	current = c;
 	while (*s != '\0')
 	{
@@ -50,7 +54,7 @@ t_cmd	*parse(char *s)
 		else if (*s == '"')
 			;
 		else if (*s == '\'')
-			;
+			s += single_quotes(s, c, i_arg++);
 		else if (*s == '|')
 		{
 			;

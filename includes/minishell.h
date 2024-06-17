@@ -64,6 +64,7 @@ int	infile(char *s, t_cmd *c);
 int	outfile(char *s, t_cmd *c);
 int	heredoc(char *s, t_cmd *c);
 int	no_heredoc(char *s, t_cmd *c);
+int	single_quotes(char *s, t_cmd *c, int i);
 //-------------FREE----------------------//
 void	free_split(char **split);
 //----------EXECUTION--------------------//
