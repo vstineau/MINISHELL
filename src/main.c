@@ -19,7 +19,7 @@ void	printlist(t_cmd *cmd)
 }
 
 
-int main(int argc, char **argv, char **envp)
+int main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
 	(void)argv;
@@ -39,7 +39,7 @@ int main(int argc, char **argv, char **envp)
 		if (line)
 			add_history(line);
 		c = parse(line);
-		printlist(c);
+	//	printlist(c);
 	}
 	return (0);
 }

@@ -8,19 +8,21 @@ static void	putline_fd(char *s, int fd)
 	write(fd, "\n", 1);
 }
 
-char	*heredoc(char *s)
+int	heredoc(char *s, t_cmd *c)
 {
 	char	key[4096];
 	char	*line;
 	int	i;
+	int	j;
 	int fd;
 
 	ft_memset(key, 0, 4096);
 	i = 0;
-	while(*s == ' ')
-		s++;
-	while ( *s && *s != ' ')
-		key[i++] = *s++;
+	j = 0;
+	while(s[i] == ' ')
+		i++;
+	while ( s[i] && s[i] != ' ')
+		key[j++] = s[i++];
 	line = readline(BHI_BLACK"> "RESET);
 	open("heredoc", O_CREAT, S_IRWXU);
 	fd = open("heredoc", O_WRONLY);
@@ -31,20 +33,24 @@ char	*heredoc(char *s)
 		line = readline(BHI_BLACK"> "RESET);
 	}
 	free(line);
+	c->infile = "heredoc";
 	// unlink("heredoc"); pour supprimer le fichier dnas l'exec
-	return ("heredoc");
+	return (i);
 }
 
-char	*no_heredoc(char *s)
+int	no_heredoc(char *s, t_cmd *c)
 {
-	char	*file;
 	int	i;
+	int	j;
 
-	file = NULL;
+	c->infile = ft_calloc(ft_strlen(s) + 1, 1);
+	if (!c->infile)
+		return (0); // print error et exit
 	i = 0;
-	while(*s == ' ')
-		s++;
-	while ( *s && *s != ' ')
-		file[i++] = *s++;
-	return (file);
+	j = 0;
+	while(s[i] == ' ')
+		i++;
+	while (s[i] && s[i] != ' ')
+		c->infile[j++] = s[i++];
+	return (i);
 }

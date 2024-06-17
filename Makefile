@@ -11,6 +11,7 @@ SRC_NAME = main.c \
 					 free.c \
 					 redirection.c \
 					 heredoc.c \
+					 env_variables.c \
 					 prompt.c \
 					 execution.c \
 					 cd.c \

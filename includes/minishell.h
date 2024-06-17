@@ -17,6 +17,7 @@
 
 //__int128
 
+# define PATH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 static int g_signal_received;
 
@@ -40,6 +41,7 @@ typedef struct s_cmd
 	char	*cmd;
 	char	*infile;
 	char	*outfile;
+	char	*path;
 	char	**arg;
 	t_token	pipe;
 	t_redirect	redirect;
@@ -58,10 +60,10 @@ size_t	count_words(char const *s, char c);
 //----------PARSING----------------------//
 int	init_signals(struct sigaction *sa);
 t_cmd	*parse(char *line);
-char	*infile(char *s, t_cmd *c);
-char	*outfile(char *s, t_cmd **c);
-char*	heredoc(char *s);
-char	*no_heredoc(char *s);
+int	infile(char *s, t_cmd *c);
+int	outfile(char *s, t_cmd *c);
+int	heredoc(char *s, t_cmd *c);
+int	no_heredoc(char *s, t_cmd *c);
 //-------------FREE----------------------//
 void	free_split(char **split);
 //----------EXECUTION--------------------//

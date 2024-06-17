@@ -44,18 +44,20 @@ t_cmd	*parse(char *s)
 	while (*s != '\0')
 	{
 		if (*s == '<')
-			s = infile(s, c);
+			s += infile(s, c);
 		else if (*s == '>')
-			s = outfile(s, &c);
+			s += outfile(s, c);
 		else if (*s == '"')
 			;
 		else if (*s == '\'')
 			;
 		else if (*s == '|')
 		{
-			ft_lstadd_back(&c, ft_lstnew());
-			current = current->next;
+			;
+		//	ft_lstadd_back(&c, ft_lstnew());
+		//	current = current->next;
 		}
+		printf("line = %s\n", s);
 		s++;
 	}
 	return (c);

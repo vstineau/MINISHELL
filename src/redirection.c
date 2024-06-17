@@ -1,37 +1,62 @@
 
 #include "../includes/minishell.h"
 
-char	*infile(char *s, t_cmd *c)
+static int	get_outfile(char *s, t_cmd *c)
 {
-	if (*s && *s + 1 == '\0')
-		return (s); // exit syntax error:
-	if(*s && *(s + 1) == '<')
-	{
-		s += 2;
-		c->redirect = HEREDOC;
-		c->infile = heredoc(s);
-	}
-	else
-	{
-		s ++;
-		c->redirect = NO_HEREDOC;
-		c->infile = no_heredoc(s);
-		printf("infile = %s\n",c->infile);
-	}
-	return (s);
+	int	i;
+	int	j;
+
+	c->outfile = ft_calloc(ft_strlen(s) + 1, 1);
+	if (!c->outfile)
+		return (0); // print error et exit
+	i = 0;
+	j = 0;
+	while (s[i] && s[i] == ' ')
+		i++;
+	while (s[i] && s[i] != ' ')
+		c->outfile[j++] = s[i++];
+	return (i);
 }
 
-char	*outfile(char *s, t_cmd **c)
+int	infile(char *s, t_cmd *c)
 {
-	if (++*s == '>')
-		(*c)->redirect = APPEND;
-	else
-		(*c)->redirect = NO_APPEND;
-	while (*s != ' ' && *s)
+	int	i;
+
+	i = 0;
+	if (*s && *s + 1 == '\0')
+		return (0); // exit syntax error:
+	if(*s && *(s + 1) == '<')
 	{
-		(*c)->outfile  = s;
-		s++;
-		(*c)->outfile++;
+		i += 2;
+		c->redirect = HEREDOC;
+		i += heredoc(s + i, c);
 	}
-	return (s);
+	else
+	{
+		i++;
+		c->redirect = NO_HEREDOC;
+		i += no_heredoc(s + i, c);
+	}
+	return (i);
+}
+
+int	outfile(char *s, t_cmd *c)
+{
+	int	i;
+
+	i = 0;
+	if (*s && *s + 1 == '\0')
+		return (0); // exit syntax error:
+	if (*s && *(s + 1) == '>')
+	{
+		i += 2;
+		c->redirect = APPEND;
+	}
+	else
+	{
+		i++;
+		c->redirect = NO_APPEND;
+	}
+	i += get_outfile(s + i, c);
+	return (i);
 }
