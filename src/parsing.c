@@ -35,43 +35,6 @@ void	ft_lstadd_back(t_cmd **cmd, t_cmd *new)
 	previous->next = new;
 }
 
-static int	get_cmd(char *s, t_cmd *c, int *i_arg)
-{
-	int i;
-
-	i = 0;
-	if (c->cmd)
-	{
-		while (s[i] && s[i] != ' ')
-			i++;
-		c->cmd = ft_calloc(i + 1, 1);
-		if (!c->arg)
-			return (0); // error et exit
-		i = 0;
-		while (s[i] && s[i] != ' ')
-		{
-			c->cmd[i] = s[i];
-			i++;
-		}
-		return (i);
-	}
-	else
-	{
-		while (s[i] && s[i] != ' ')
-			i++;
-		c->arg[*i_arg] = ft_calloc(i + 1, 1);
-		if (!c->arg)
-			return (0); // error et exit
-		i = 0;
-		while (s[i] && s[i] != ' ')
-		{
-			c->arg[*i_arg][i] = s[i];
-			i++;
-		}
-		return (i);
-	}
-}
-
 t_cmd	*parse(char *s, char **envp)
 {
 	t_cmd *c;
@@ -93,7 +56,7 @@ t_cmd	*parse(char *s, char **envp)
 			s += env_variables(s, envp, c, i_arg++);
 		}
 		else if (*s == '"')
-			;
+			s += double_quotes(s, c, envp, &i_arg);
 		else if (*s == '\'')
 			s += single_quotes(s, c, i_arg++);
 		else if (*s == '|')

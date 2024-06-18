@@ -56,7 +56,9 @@ int		ft_strlen(char *s);
 int		ft_strcmp(char *s1, char *s2);
 char	*get_prompt(char *prompt);
 char	*ft_strcpy(char *dest, char *src);
+char	*ft_strncpy(char *dest, char *src, int n);
 size_t	count_words(char const *s, char c);
+char	*ft_strjoin_free(char *s1, char *s2);
 //----------PARSING----------------------//
 int	init_signals(struct sigaction *sa);
 t_cmd	*parse(char *line, char **envp);
@@ -65,7 +67,10 @@ int	outfile(char *s, t_cmd *c);
 int	heredoc(char *s, t_cmd *c);
 int	no_heredoc(char *s, t_cmd *c);
 int	single_quotes(char *s, t_cmd *c, int i);
+int	double_quotes(char *s, t_cmd *c,char **envp, int *i);
 int	env_variables(char *s, char **envp, t_cmd *c, int i);
+char *get_env_variable(char *var, char **envp);
+int	get_cmd(char *s, t_cmd *c, int *i_arg);
 //-------------FREE----------------------//
 void	free_split(char **split);
 //----------EXECUTION--------------------//

@@ -9,6 +9,7 @@ SRC_NAME = main.c \
 					 utils.c \
 					 ft_split.c \
 					 free.c \
+					 cmd.c \
 					 redirection.c \
 					 heredoc.c \
 					 env_variables.c \

@@ -1,7 +1,7 @@
 
 #include "../includes/minishell.h"
 
-static char *get_env_variable(char *var, char **envp)
+char *get_env_variable(char *var, char **envp)
 {
 	int	i;
 	int	j;
