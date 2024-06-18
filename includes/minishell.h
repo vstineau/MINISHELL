@@ -71,6 +71,6 @@ void exec(t_cmd *c, char **envp);
 //----------BUILTINS---------------------//
 void	cd(char *path, char **envp);
 void	pwd(void);
-
+void	echo(char **av);
 #endif
 
