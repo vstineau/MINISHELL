@@ -38,7 +38,7 @@ int main(int argc, char *argv[], char *envp[])
 		line = readline(get_prompt(prompt));
 		if (line)
 			add_history(line);
-		c = parse(line);
+		c = parse(line, envp);
 	//	printlist(c);
 	}
 	return (0);

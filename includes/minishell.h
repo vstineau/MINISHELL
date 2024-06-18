@@ -59,12 +59,13 @@ char	*ft_strcpy(char *dest, char *src);
 size_t	count_words(char const *s, char c);
 //----------PARSING----------------------//
 int	init_signals(struct sigaction *sa);
-t_cmd	*parse(char *line);
+t_cmd	*parse(char *line, char **envp);
 int	infile(char *s, t_cmd *c);
 int	outfile(char *s, t_cmd *c);
 int	heredoc(char *s, t_cmd *c);
 int	no_heredoc(char *s, t_cmd *c);
 int	single_quotes(char *s, t_cmd *c, int i);
+int	env_variables(char *s, char **envp, t_cmd *c, int i);
 //-------------FREE----------------------//
 void	free_split(char **split);
 //----------EXECUTION--------------------//
