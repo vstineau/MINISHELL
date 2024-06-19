@@ -36,6 +36,12 @@ typedef enum
 	WIDE
 }				t_redirect;
 
+typedef struct s_minishell
+{
+	int	code_error;
+	char **env;
+}				t_minishell;
+
 typedef struct s_cmd
 {
 	char	*cmd;
@@ -51,16 +57,20 @@ typedef struct s_cmd
 //------------UTILS----------------------//
 char	**ft_split(char const *s, char c);
 void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_realloc(void *old, size_t old_length, size_t new_length);
+char	*ft_strdup(char *s);
 void	*ft_memset(void *s, int c, size_t n);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
 int		ft_strlen(char *s);
 int		ft_strcmp(char *s1, char *s2);
-char	*get_prompt(char *prompt);
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strncpy(char *dest, char *src, int n);
 size_t	count_words(char const *s, char c);
 char	*ft_strjoin_free(char *s1, char *s2);
+char	*get_prompt(char *prompt, t_minishell *info);
 //----------PARSING----------------------//
 int	init_signals(struct sigaction *sa);
+char	**get_env(char **envp);
 t_cmd	*parse(char *line, char **envp);
 int	infile(char *s, t_cmd *c);
 int	outfile(char *s, t_cmd *c);

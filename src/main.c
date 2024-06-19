@@ -23,11 +23,13 @@ int main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
 	(void)argv;
-	(void)envp;
+	t_minishell info;
 	t_cmd	*c;
 	//struct sigaction	sig;
 
 	c = (t_cmd *){0};
+	info = (t_minishell){0};
+	info.env = get_env(envp);
 	//sigemptyset(&sig.sa_mask);
 	//init_signals(&sig);
 	char *line;
@@ -35,7 +37,7 @@ int main(int argc, char *argv[], char *envp[])
 
 	while (1)
 	{
-		line = readline(get_prompt(prompt));
+		line = readline(get_prompt(prompt, &info));
 		if (line)
 			add_history(line);
 		c = parse(line, envp);

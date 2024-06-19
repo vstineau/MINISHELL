@@ -5,18 +5,6 @@
 static void	handle_sigint()
 {
 	rl_redisplay();
-	//if (//interactive mode)
-	//{
-	//	display_prompt();
-	//	return ;
-	//}
-	//else
-	//{
-	//	//kill le process en cour +
-	//	display_prompt();
-	//	return ;
-	//}
-
 }
 
 //CTRL + '\'
@@ -49,5 +37,4 @@ int	init_signals(struct sigaction *sa)
 	if (sigaction(SIGQUIT, sa, NULL) == -1)
 		return (0);
 	return (1);
-
 }
