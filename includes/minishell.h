@@ -57,6 +57,10 @@ int		ft_strcmp(char *s1, char *s2);
 char	*get_prompt(char *prompt);
 char	*ft_strcpy(char *dest, char *src);
 size_t	count_words(char const *s, char c);
+void    *ft_memcpy(void *dest, const void *src, size_t n);
+void	*ft_realloc(void *old, size_t old_length, size_t new_length);
+char    *ft_strdup(char *s);
+char	**get_env(char **envp);
 //----------PARSING----------------------//
 int	init_signals(struct sigaction *sa);
 t_cmd	*parse(char *line);
@@ -72,5 +76,6 @@ void exec(t_cmd *c, char **envp);
 void	cd(char *path, char **envp);
 void	pwd(void);
 void	echo(char **av);
+void	my_env(char **env);
 #endif
 

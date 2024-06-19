@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "cd.md",
+                "file": "BUILTINS.md",
                 "mode": "source",
                 "source": false
               }
@@ -43,8 +43,7 @@
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -110,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Sans titre.md",
+                "file": "BUILTINS.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Sans titre.md",
+                "file": "BUILTINS.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Sans titre.md"
+                "file": "BUILTINS.md"
               }
             }
           }
@@ -171,11 +170,11 @@
       "command-palette:Ouvrir la palette de commandes": false
     }
   },
-  "active": "c77d201a9e8ca33a",
+  "active": "a2d60841f523729a",
   "lastOpenFiles": [
+    "cd.md",
     "Sans titre.md",
     "Redirections.md",
-    "cd.md",
     "EXECUTION.md",
     "FUNCTION ALLOWED.md",
     "LEAK CHECK.md",
