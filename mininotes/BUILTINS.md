@@ -1,7 +1,7 @@
 ~~echo~~
 ~~cd~~
 ~~pwd~~
-export
+~~export~~
 unset
 env
 exit 
