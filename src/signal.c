@@ -1,39 +1,45 @@
 
 #include "../includes/minishell.h"
+#include <readline/readline.h>
 
 //CTRL + 'C'
-static void	handle_sigint()
-{
-	rl_redisplay();
-}
-
-//CTRL + '\'
-static void	handle_sigquit()
-{
-}
-
-static void	signal_handler(int signum, siginfo_t *info, void *context)
+static void	handle_sigint(int signum, siginfo_t *info, void *context)
 {
 	(void)info;
 	(void)context;
-	if (signum == SIGINT)
-	{
-		g_signal_received = SIGINT;
-		handle_sigint();
-	}
-	else if (signum == SIGQUIT)
-	{
-		g_signal_received = SIGQUIT;
-		handle_sigquit();
-	}
+	(void)signum;
+	// rl_on_new_line();
+	rl_done = true;
+}
+/*extern int rl_done = Flag to indicate that readline has finished with the current input
+   line and should return it. */
+
+//CTRL + '\'
+static void	handle_sigquit(int signum, siginfo_t *info, void *context)
+{
+	(void)info;
+	(void)context;
+	(void)signum;
+	g_signal_received = SIGQUIT;
+}
+
+void	check_signal(t_minishell *info)
+{
+	if (g_signal_received == SIGINT || g_signal_received == SIGQUIT)
+		info->code_error = 130;
+	else if (g_signal_received == SIGQUIT)
+		info->code_error = 131;
+	else
+		return ;
 }
 
 int	init_signals(struct sigaction *sa)
 {
-	sa->sa_sigaction = signal_handler;
+	sa->sa_sigaction = handle_sigint;
 	sa->sa_flags = SA_SIGINFO;
 	if (sigaction(SIGINT, sa, NULL) == -1)
 		return (0);
+	sa->sa_sigaction = handle_sigquit;
 	if (sigaction(SIGQUIT, sa, NULL) == -1)
 		return (0);
 	return (1);

@@ -69,7 +69,6 @@ size_t	count_words(char const *s, char c);
 char	*ft_strjoin_free(char *s1, char *s2);
 char	*get_prompt(char *prompt, t_minishell *info);
 //----------PARSING----------------------//
-int	init_signals(struct sigaction *sa);
 char	**get_env(char **envp);
 t_cmd	*parse(char *line, char **envp);
 int	infile(char *s, t_cmd *c);
@@ -81,6 +80,9 @@ int	double_quotes(char *s, t_cmd *c,char **envp, int *i);
 int	env_variables(char *s, char **envp, t_cmd *c, int i);
 char *get_env_variable(char *var, char **envp);
 int	get_cmd(char *s, t_cmd *c, int *i_arg);
+//----------SIGNALS----------------------//
+int	init_signals(struct sigaction *sa);
+void	check_signal(t_minishell *info);
 //-------------FREE----------------------//
 void	free_split(char **split);
 //----------EXECUTION--------------------//

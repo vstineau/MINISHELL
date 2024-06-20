@@ -52,7 +52,6 @@ t_cmd	*parse(char *s, char **envp)
 			s += outfile(s, c);
 		else if (*s == '$')
 		{
-			write(1, "ok\n", 3);
 			s += env_variables(s, envp, c, i_arg++);
 		}
 		else if (*s == '"')
@@ -65,7 +64,9 @@ t_cmd	*parse(char *s, char **envp)
 			current = current->next;
 		}
 		else
+		{
 			s += get_cmd(s, c, &i_arg);
+		}
 		printf("line = %s\n", s);
 	}
 	return (c);

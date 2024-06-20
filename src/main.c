@@ -18,29 +18,34 @@ void	printlist(t_cmd *cmd)
 	}
 }
 
-
 int main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
 	(void)argv;
 	t_minishell info;
 	t_cmd	*c;
-	//struct sigaction	sig;
+	struct sigaction	sig;
 
 	c = (t_cmd *){0};
 	info = (t_minishell){0};
 	info.env = get_env(envp);
-	//sigemptyset(&sig.sa_mask);
-	//init_signals(&sig);
+	sigemptyset(&sig.sa_mask);
+	init_signals(&sig);
 	char *line;
 	char	prompt[4097];
 
 	while (1)
 	{
+		check_signal(&info);
 		line = readline(get_prompt(prompt, &info));
 		if (line)
+		{
 			add_history(line);
-		c = parse(line, envp);
+			c = parse(line, envp);
+		}
+		else
+			return (1);
+
 	//	printlist(c);
 	}
 	return (0);

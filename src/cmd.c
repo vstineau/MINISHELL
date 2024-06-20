@@ -4,36 +4,44 @@
 static int	if_cmd(char *s, t_cmd *c, int *i_arg)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (s[i] && s[i] != ' ')
+	j = 0;
+	while (s[j] && (s[j] == ' ' || s[j] == '\t'))
+		j++;
+	while (s[i + j] && s[i + j] != ' ' && s[i + j] != '\t')
 		i++;
 	c->arg[*i_arg] = ft_calloc(i + 1, 1);
 	if (!c->arg)
 		return (0); // error et exit
 	i = 0;
-	while (s[i] && s[i] != ' ')
+	while (s[i + j] && s[i + j] != ' ' && s[i + j] != '\t')
 	{
-		c->arg[*i_arg][i] = s[i];
+		c->arg[*i_arg][i] = s[i + j];
 		i++;
 	}
-	return (i);
+	return (i + j);
 }
 
 int	get_cmd(char *s, t_cmd *c, int *i_arg)
 {
 	int i;
+	int j;
 
-	i = 0;
-	if (c->cmd)
+	if (!c->cmd)
 	{
-		while (s[i] && s[i] != ' ')
+		j = 0;
+		i = 0;
+		while (s[j] && (s[j] == ' ' || s[j] == '\t'))
+			j++;
+		while (s[i] && s[i] != ' ' && s[i + j] != '\t')
 			i++;
 		c->cmd = ft_calloc(i + 1, 1);
 		if (!c->arg)
 			return (0); // error et exit
 		i = 0;
-		while (s[i] && s[i] != ' ')
+		while (s[i] && s[i] != ' ' && s[i + j] != '\t')
 		{
 			c->cmd[i] = s[i];
 			i++;
