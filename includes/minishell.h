@@ -84,6 +84,7 @@ int	get_cmd(char *s, t_cmd *c, int *i_arg);
 int	init_signals(struct sigaction *sa);
 void	check_signal(t_minishell *info);
 //-------------FREE----------------------//
+void	free_cmd(t_cmd *cmd);
 void	free_split(char **split);
 //----------EXECUTION--------------------//
 void exec(t_cmd *c, char **envp);

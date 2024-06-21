@@ -8,7 +8,7 @@ t_cmd	*ft_lstnew(char *s)
 	new_cmd = ft_calloc(sizeof(t_cmd), 1);
 	if (!new_cmd)
 		return (NULL);// exit error
-	new_cmd->arg = ft_calloc(count_words(s, ' ') * sizeof(char *),1);
+	new_cmd->arg = ft_calloc((count_words(s, ' ') + 1) * sizeof(char *),1);
 	if (!new_cmd->arg)
 		return (NULL);// exit error
 	return (new_cmd);
@@ -41,6 +41,8 @@ t_cmd	*parse(char *s, char **envp)
 	t_cmd *current;
 	int	i_arg;
 
+	if (!s)
+		return (NULL);
 	i_arg = 0;
 	c = ft_lstnew(s);
 	current = c;

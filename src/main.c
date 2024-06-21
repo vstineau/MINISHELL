@@ -42,11 +42,14 @@ int main(int argc, char *argv[], char *envp[])
 		{
 			add_history(line);
 			c = parse(line, envp);
+			free(line);
+			free_cmd(c);
 		}
 		else
+		{
+			free_split(info.env);
 			return (1);
-
-	//	printlist(c);
+		}
 	}
 	return (0);
 }

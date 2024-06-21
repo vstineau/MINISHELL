@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FUNCTION ALLOWED.md",
+                "file": "PARSING.md",
                 "mode": "source",
                 "source": false
               }
@@ -97,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "FUNCTION ALLOWED.md",
+                "file": "PARSING.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "FUNCTION ALLOWED.md",
+                "file": "PARSING.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +137,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "FUNCTION ALLOWED.md"
+                "file": "PARSING.md"
               }
             }
           }
@@ -160,12 +160,12 @@
   },
   "active": "a2d60841f523729a",
   "lastOpenFiles": [
+    "FUNCTION ALLOWED.md",
     "cd.md",
     "EXECUTION.md",
     "PARSING.md",
     "Redirections.md",
     "chain_list.md",
-    "FUNCTION ALLOWED.md",
     "Untitled.canvas",
     "|.md",
     "LEAK CHECK.md",

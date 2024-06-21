@@ -3,6 +3,15 @@ functions used for parsing :
 - https://github.com/kibatche/parser-bison/blob/main/README.md 
 
 
+ORDRE DE PRIORITE :
+- ~
+- $
+- REDIRECTION;
+- CMD
+- "" et ''
+- arg
+
+
 handle [[Redirections]]
 
 get all the instruction in a [[chain_list]] we will send  to [[EXECUTION]]
