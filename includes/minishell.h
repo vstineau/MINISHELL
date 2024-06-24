@@ -61,6 +61,8 @@ void    *ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_realloc(void *old, size_t old_length, size_t new_length);
 char    *ft_strdup(char *s);
 char	**get_env(char **envp);
+void	sort_int_tab(char **tab, unsigned int size);
+void	ft_sort_strings(int num, char **s);
 //----------PARSING----------------------//
 int	init_signals(struct sigaction *sa);
 t_cmd	*parse(char *line);
