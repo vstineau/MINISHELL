@@ -18,6 +18,8 @@
 //__int128
 
 # define PATH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+# define ENV 1
+# define NO_ENV 0
 
 static int g_signal_received;
 
@@ -70,8 +72,9 @@ char	*ft_strjoin_free(char *s1, char *s2);
 char	*get_prompt(char *prompt, t_minishell *info);
 //----------PARSING----------------------//
 char	**get_env(char **envp);
-t_cmd	*parse(char *line, char **envp);
-int	infile(char *s, t_cmd *c);
+t_cmd	*parse(char *line, char **envp, t_minishell *info);
+int	tilde(t_cmd *c, char **envp, int i, t_minishell *info);
+int	infile(char *s, t_cmd *c, t_minishell *info);
 int	outfile(char *s, t_cmd *c);
 int	heredoc(char *s, t_cmd *c);
 int	no_heredoc(char *s, t_cmd *c);
@@ -84,7 +87,7 @@ int	get_cmd(char *s, t_cmd *c, int *i_arg);
 int	init_signals(struct sigaction *sa);
 void	check_signal(t_minishell *info);
 //-------------FREE----------------------//
-void	free_cmd(t_cmd *cmd);
+void	free_cmd(t_cmd *cmd, bool env, t_minishell *info);
 void	free_split(char **split);
 //----------EXECUTION--------------------//
 void exec(t_cmd *c, char **envp);

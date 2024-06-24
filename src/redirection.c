@@ -18,13 +18,18 @@ static int	get_outfile(char *s, t_cmd *c)
 	return (i);
 }
 
-int	infile(char *s, t_cmd *c)
+int	infile(char *s, t_cmd *c, t_minishell *info)
 {
 	int	i;
 
 	i = 0;
+	printf("line = %s\n", s);
 	if (*s && *s + 1 == '\0')
-		return (0); // exit syntax error:
+	{
+		free_cmd(c, ENV, info);
+		perror(HIBG_RED"syntax error"RESET);
+		exit(1);
+	}
 	if(*s && *(s + 1) == '<')
 	{
 		i += 2;

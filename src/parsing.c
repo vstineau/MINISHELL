@@ -1,16 +1,28 @@
 
 #include "../includes/minishell.h"
 
-t_cmd	*ft_lstnew(char *s)
+t_cmd	*ft_lstnew(char *s,t_cmd *c, t_minishell *info)
 {
 	t_cmd *new_cmd;
-
+	
+	new_cmd = NULL;
 	new_cmd = ft_calloc(sizeof(t_cmd), 1);
 	if (!new_cmd)
-		return (NULL);// exit error
-	new_cmd->arg = ft_calloc((count_words(s, ' ') + 1) * sizeof(char *),1);
+	{
+		free_cmd(c, ENV, info);
+		perror(BG_RED"memory allocation failed during parsing"RESET);
+		exit(1);
+	}
+	new_cmd->arg = NULL;
+	new_cmd->arg = ft_calloc((count_words(s, ' ') + 1), sizeof(char *));
 	if (!new_cmd->arg)
-		return (NULL);// exit error
+	{
+		free_cmd(c, ENV, info);
+		free(new_cmd);
+		perror(BG_RED"memory allocation failed during parsing"RESET);
+		exit(1);
+	}
+	s += 1;
 	return (new_cmd);
 }
 
@@ -35,7 +47,7 @@ void	ft_lstadd_back(t_cmd **cmd, t_cmd *new)
 	previous->next = new;
 }
 
-t_cmd	*parse(char *s, char **envp)
+t_cmd	*parse(char *s, char **envp, t_minishell *info)
 {
 	t_cmd *c;
 	t_cmd *current;
@@ -43,13 +55,14 @@ t_cmd	*parse(char *s, char **envp)
 
 	if (!s)
 		return (NULL);
-	i_arg = 0;
-	c = ft_lstnew(s);
+	i_arg =0;
+	c = NULL;
+	c = ft_lstnew(s, c, info);
 	current = c;
 	while (*s != '\0')
 	{
 		if (*s == '<')
-			s += infile(s, c);
+			s += infile(s, c, info);
 		else if (*s == '>')
 			s += outfile(s, c);
 		else if (*s == '$')
@@ -62,14 +75,13 @@ t_cmd	*parse(char *s, char **envp)
 			s += single_quotes(s, c, i_arg++);
 		else if (*s == '|')
 		{
-			ft_lstadd_back(&c, ft_lstnew(s));
+			ft_lstadd_back(&c, ft_lstnew(s, c, info));
 			current = current->next;
 		}
 		else
 		{
 			s += get_cmd(s, c, &i_arg);
 		}
-		printf("line = %s\n", s);
 	}
 	return (c);
 }

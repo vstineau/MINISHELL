@@ -8,8 +8,8 @@ static void	handle_sigint(int signum, siginfo_t *info, void *context)
 	(void)info;
 	(void)context;
 	(void)signum;
-	// rl_on_new_line();
 	rl_done = true;
+	unlink("heredoc");
 }
 /*extern int rl_done = Flag to indicate that readline has finished with the current input
    line and should return it. */

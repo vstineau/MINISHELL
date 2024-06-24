@@ -41,9 +41,9 @@ int main(int argc, char *argv[], char *envp[])
 		if (line)
 		{
 			add_history(line);
-			c = parse(line, envp);
+			c = parse(line, envp, &info);
 			free(line);
-			free_cmd(c);
+			free_cmd(c, NO_ENV, &info);
 		}
 		else
 		{
