@@ -2,6 +2,6 @@
 ~~cd~~
 ~~pwd~~
 ~~export~~
-unset
+~~unset~~
 env
 exit 
