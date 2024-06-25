@@ -1,20 +1,6 @@
 
 #include "../includes/minishell.h"
 
-int	ft_strncmp( const char *first, const char *second, size_t length)
-{
-	unsigned int	i;
-
-	i = 0;
-	if (length == 0)
-		return (0);
-	while (first[i] == second[i] && i < length - 1 && first[i])
-	{
-		i++;
-	}
-	return (((unsigned char *)first)[i] - ((unsigned char *)second)[i]);
-}
-
 char	*ft_strchr(const char *s, int c)
 {
 	char	*ptr;
@@ -29,16 +15,6 @@ char	*ft_strchr(const char *s, int c)
 		ptr++;
 	}
 	return (ptr);
-}
-
-int	env_size(char **env)
-{
-	int i;
-
-	i = 0;
-	while (env[i])
-		i++;
-	return (i);
 }
 
 char	**ft_print_export(char **env)
