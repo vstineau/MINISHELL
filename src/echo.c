@@ -1,21 +1,7 @@
 
 #include "../includes/minishell.h"
 
-int	ft_strncmp( const char *first, const char *second, size_t length)
-{
-	unsigned int	i;
-
-	i = 0;
-	if (length == 0)
-		return (0);
-	while (first[i] == second[i] && i < length - 1 && first[i])
-	{
-		i++;
-	}
-	return (((unsigned char *)first)[i] - ((unsigned char *)second)[i]);
-}
-
-int	check_echo_args(char *av)
+int	check_echo_args(char *av, int pos)
 {
 	int		i;
 	int		len;
@@ -29,11 +15,11 @@ int	check_echo_args(char *av)
 			if (av[i] == 'n')
 				i++;
 			else
-				return (0);
+				return (pos);
 		}
-		return (1);
+		return (pos + 1);
 	}
-	return (0);
+	return (pos);
 }
 
 void	ft_putstr_fd(char *s, int fd)
@@ -53,8 +39,17 @@ void	ft_putstr_fd(char *s, int fd)
 void	echo(char **av, int fd)
 {
 	int	i;
+	int	j;
 
-	i = check_echo_args(av[0]);
+	j = 0;
+	i = 1;
+	while (av[j])
+	{
+		i = check_echo_args(av[i], i);
+		if (j == i)
+			break ;
+		j++;
+	}
 	while (av[i] != NULL)
 	{
 		ft_putstr_fd(av[i], fd);
@@ -63,6 +58,12 @@ void	echo(char **av, int fd)
 		i++;
 
 	}
-	if (check_echo_args(av[0]) != 1)
+	if (check_echo_args(av[1], 1) == 1)
 		ft_putstr_fd("\n", fd);
+}
+
+int	main(int ac, char **av)
+{
+	echo(av, 1);
+	(void) ac;
 }
