@@ -36,19 +36,33 @@ int	check_echo_args(char *av)
 	return (0);
 }
 
-void	echo(char **av)
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	if (s == NULL)
+		return ;
+	i = 0;
+	while (s[i] != '\0')
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+}
+
+void	echo(char **av, int fd)
 {
 	int	i;
 
 	i = check_echo_args(av[0]);
 	while (av[i] != NULL)
 	{
-		printf("%s", av[i]);
+		ft_putstr_fd(av[i], fd);
 		if (av[i + 1] != NULL)
-			printf(" ");
+			ft_putstr_fd(" ", fd);
 		i++;
 
 	}
 	if (check_echo_args(av[0]) != 1)
-		printf("\n");
+		ft_putstr_fd("\n", fd);
 }
