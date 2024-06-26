@@ -58,12 +58,12 @@ void	echo(char **av, int fd)
 		i++;
 
 	}
-	if (check_echo_args(av[1], 1) == 1)
+	if (check_echo_args(av[0], 0) == 0)
 		ft_putstr_fd("\n", fd);
 }
 
-int	main(int ac, char **av)
+/*int	main(int ac, char **av)
 {
 	echo(av, 1);
 	(void) ac;
-}
+}*/

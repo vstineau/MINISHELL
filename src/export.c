@@ -60,7 +60,7 @@ char	*get_first_av(char *av)
 	return (av1);
 }
 
-char **export(char **av, char **env)
+char	**our_export(char **av, char **env)
 {
 	char *av1;
 	int	i;
@@ -116,7 +116,7 @@ char **export(char **av, char **env)
 	return (env);
 }
 
-int	main(int ac, char **av, char **env)
+/*int	main(int ac, char **av, char **env)
 {
     (void)ac;
     int i = 0;
@@ -136,4 +136,4 @@ int	main(int ac, char **av, char **env)
 		i++;
 	}
 	free (e);
-}
+}*/

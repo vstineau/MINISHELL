@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "echo.md",
+                "file": "BUILTINS.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "echo.md",
+                "file": "BUILTINS.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "echo.md",
+                "file": "BUILTINS.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "echo.md"
+                "file": "BUILTINS.md"
               }
             }
           }
@@ -148,12 +148,12 @@
   },
   "active": "a2d60841f523729a",
   "lastOpenFiles": [
+    "echo.md",
     "BUILTINS.md",
     "export.md",
     "Sans titre.canvas",
     "EXECUTION.md",
     "chain_list.md",
-    "echo.md",
     "cd.md",
     "PARSING.md",
     "2024-06-21.md",

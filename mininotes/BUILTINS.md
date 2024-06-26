@@ -3,5 +3,5 @@
 ~~pwd~~
 ~~export~~
 ~~unset~~
-env
-exit 
+~~env~~
+~~exit~~ 

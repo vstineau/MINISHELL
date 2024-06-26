@@ -36,7 +36,7 @@ char	**unset(char *av, char **env)
 	return (env2);
 }
 
-int	main(int ac, char **av, char **env)
+/*int	main(int ac, char **av, char **env)
 {
 	(void)ac;
     int i = 0;
@@ -56,4 +56,4 @@ int	main(int ac, char **av, char **env)
 		i++;
 	}
 	free (e);
-}
+}*/

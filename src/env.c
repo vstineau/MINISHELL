@@ -1,7 +1,7 @@
 
 #include "../includes/minishell.h"
 
-void	my_env(char **env)
+void	our_env(char **env)
 {
 	int	i;
 

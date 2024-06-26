@@ -21,6 +21,12 @@
 
 static int g_signal_received;
 
+typedef struct s_minishell
+{
+    int    code_error;
+    char **env;
+}                t_minishell;
+
 typedef enum
 {
 	PIPE = 0,
@@ -80,6 +86,10 @@ void exec(t_cmd *c, char **envp);
 void	cd(char *path, char **envp);
 void	pwd(void);
 void	echo(char **av, int fd);
-void	my_env(char **env);
+void	our_env(char **env);
+//void    our_exit(t_cmd *c, t_minishell *info);
+char	**our_export(char **av, char **env);
+char	**unset(char *av, char **env);
+
 #endif
 
