@@ -21,7 +21,7 @@
 # define ENV 1
 # define NO_ENV 0
 
-static int g_signal_received;
+extern int g_signal_received;
 
 typedef enum
 {
@@ -76,8 +76,8 @@ t_cmd	*parse(char *line, char **envp, t_minishell *info);
 int	tilde(t_cmd *c, char **envp, int i, t_minishell *info);
 int	infile(char *s, t_cmd *c, t_minishell *info);
 int	outfile(char *s, t_cmd *c);
-int	heredoc(char *s, t_cmd *c);
-int	no_heredoc(char *s, t_cmd *c);
+int	heredoc(char *s, t_cmd *c, t_minishell *info);
+int	no_heredoc(char *s, t_cmd *c, t_minishell *info);
 int	single_quotes(char *s, t_cmd *c, int i);
 int	double_quotes(char *s, t_cmd *c,char **envp, int *i);
 int	env_variables(char *s, char **envp, t_cmd *c, int i);

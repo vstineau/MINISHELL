@@ -8,7 +8,7 @@ static void	putline_fd(char *s, int fd)
 	write(fd, "\n", 1);
 }
 
-int	heredoc(char *s, t_cmd *c)
+int	heredoc(char *s, t_cmd *c, t_minishell *info)
 {
 	char	key[4096];
 	char	*line;
@@ -21,31 +21,49 @@ int	heredoc(char *s, t_cmd *c)
 	j = 0;
 	while(s[i] == ' ')
 		i++;
+	if (!s[i])
+	{
+		perror(BG_RED"syntax error"RESET);
+		return (i);
+	}
 	while ( s[i] && s[i] != ' ')
 		key[j++] = s[i++];
 	line = readline(BHI_BLACK"> "RESET);
+	if (!line)
+	{
+		free_cmd(c, ENV, info);
+		exit(1);
+	}
 	open("heredoc", O_CREAT, S_IRWXU);
 	fd = open("heredoc", O_WRONLY);
-	while (ft_strcmp(key, line))
+	while (ft_strcmp(key, line) && g_signal_received != SIGINT)
 	{
 		putline_fd(line, fd);
 		free(line);
 		line = readline(BHI_BLACK"> "RESET);
+		if (!line)
+		{
+			free_cmd(c, ENV, info);
+			exit(1);
+		}
 	}
 	free(line);
 	c->infile = "heredoc";
-	// unlink("heredoc"); pour supprimer le fichier dnas l'exec
 	return (i);
 }
 
-int	no_heredoc(char *s, t_cmd *c)
+int	no_heredoc(char *s, t_cmd *c, t_minishell *info)
 {
 	int	i;
 	int	j;
 
-	c->infile = ft_calloc(ft_strlen(s) + 1, 1);
+	c->infile = NULL;// ft_calloc(ft_strlen(s) + 1, 1);
 	if (!c->infile)
-		return (0); // print error et exit
+		{
+			perror(BG_RED"memory allocation failed during parsing"RESET);
+			free_cmd(c, ENV, info);
+			exit(1);
+		}
 	i = 0;
 	j = 0;
 	while(s[i] == ' ')

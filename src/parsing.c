@@ -53,6 +53,7 @@ t_cmd	*parse(char *s, char **envp, t_minishell *info)
 	t_cmd *current;
 	int	i_arg;
 
+	g_signal_received = 0;
 	if (!s)
 		return (NULL);
 	i_arg =0;
