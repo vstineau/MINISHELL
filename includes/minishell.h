@@ -10,10 +10,12 @@
 # include <signal.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "color.h"
+# include <stdint.h>
 
 //__int128
 
@@ -70,6 +72,15 @@ char	**get_env(char **envp);
 void	ft_sort_strings(int num, char **s);
 int		ft_strncmp( const char *first, const char *second, size_t length);
 int		env_size(char **envp);
+void	ft_bzero(void *s, size_t n);
+char	*ft_strjoin(char const *s1, char const *s2);
+void	ft_close(int pip[2], int infile);
+char	*ft_strchr(const char *s, int c);
+int		check_infile(char *file);
+int		exit_close(int pip[2]);
+char	*free_return(char **cmd, char *endfile);
+void	free_all(char *path, char **cmd);
+
 
 //----------PARSING----------------------//
 int	init_signals(struct sigaction *sa);
@@ -81,7 +92,13 @@ int	no_heredoc(char *s, t_cmd *c);
 //-------------FREE----------------------//
 void	free_split(char **split);
 //----------EXECUTION--------------------//
-void exec(t_cmd *c, char **envp);
+char	*find_path(char **env, char *av);
+char	**find_cmd(char *av);
+void	exec(t_cmd *c, char **envp);
+char	*return_path(char **cmd, char *endfile, char *path);
+void	apply_exec_first_bns(char *av, char **env, char *file, int pip[2]);
+void	apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av);
+void	apply_exec_last_bns(char *av, char **env, int outfile, int fd);
 //----------BUILTINS---------------------//
 void	cd(char *path, char **envp);
 void	pwd(void);
