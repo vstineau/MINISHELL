@@ -47,6 +47,17 @@ void	ft_lstadd_back(t_cmd **cmd, t_cmd *new)
 	previous->next = new;
 }
 
+int	get_pipe(char *s, int *i, t_cmd **current, t_minishell *info)
+{
+	*i = 0;
+	ft_lstadd_back(current, ft_lstnew(s, *current, info));
+	*current = (*current)->next;
+	(*current)->pipe = PIPE;
+	ft_lstadd_back(current, ft_lstnew(s, *current, info));
+	*current = (*current)->next;
+	return (1);
+}
+
 t_cmd	*parse(char *s, char **envp, t_minishell *info)
 {
 	t_cmd *c;
@@ -62,26 +73,27 @@ t_cmd	*parse(char *s, char **envp, t_minishell *info)
 	current = c;
 	while (*s != '\0')
 	{
+		while (*s == ' ')
+			s++;
+		printf(B_GREEN" *s  = %c\n"RESET, *s);
 		if (*s == '<')
-			s += infile(s, c, info);
+			s += infile(s, current, info);
 		else if (*s == '>')
-			s += outfile(s, c);
+			s += outfile(s, current);
 		else if (*s == '$')
-		{
-			s += env_variables(s, envp, c, i_arg++);
-		}
+			s += env_variables(s, envp, current, i_arg++);
 		else if (*s == '"')
-			s += double_quotes(s, c, envp, &i_arg);
+			s += double_quotes(s, current, envp, &i_arg);
 		else if (*s == '\'')
-			s += single_quotes(s, c, i_arg++);
+			s += single_quotes(s, current, i_arg++);
 		else if (*s == '|')
 		{
-			ft_lstadd_back(&c, ft_lstnew(s, c, info));
-			current = current->next;
+			s += get_pipe(s, &i_arg, &current, info);
 		}
 		else
 		{
-			s += get_cmd(s, c, &i_arg);
+			printf(B_YELLOW"i[%d]\n"RESET, i_arg);
+			s += get_cmd(s, current, &i_arg);
 		}
 	}
 	return (c);

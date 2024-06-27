@@ -39,16 +39,17 @@ void	check_signal(t_minishell *info)
 		return ;
 }
 
-int	init_signals(struct sigaction *sa)
+int	init_signals(t_minishell *info)
 {
-	sa->sa_sigaction = handle_sigint;
-	sa->sa_flags = SA_SIGINFO;
+	sigemptyset(&info->sig.sa_mask);
+	info->sig.sa_sigaction = handle_sigint;
+	info->sig.sa_flags = SA_SIGINFO;
 	rl_event_hook = (void *)test;
-	if (sigaction(SIGINT, sa, NULL) == -1)
+	if (sigaction(SIGINT, &info->sig, NULL) == -1)
 		return (0);
 	//sa->sa_sigaction = handle_sigquit;
-	sa->sa_handler = SIG_IGN;
-	if (sigaction(SIGQUIT, sa, NULL) == -1)
+	info->sig.sa_handler = SIG_IGN;
+	if (sigaction(SIGQUIT, &info->sig, NULL) == -1)
 		return (0);
 	return (1);
 }

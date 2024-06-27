@@ -13,14 +13,16 @@ static int	if_cmd(char *s, t_cmd *c, int *i_arg)
 	while (s[i + j] && s[i + j] != ' ' && s[i + j] != '\t')
 		i++;
 	c->arg[*i_arg] = ft_calloc(i + 1, 1);
-	if (!c->arg)
+	if (!c->arg[*i_arg])
 		return (0); // error et exit
 	i = 0;
 	while (s[i + j] && s[i + j] != ' ' && s[i + j] != '\t')
 	{
 		c->arg[*i_arg][i] = s[i + j];
+		printf(B_YELLOW"arg[iarg][i] = %c s[i + j] = %c\n"RESET, c->arg[*i_arg][i], s[i + j]);
 		i++;
 	}
+	*i_arg += 1;
 	return (i + j);
 }
 
@@ -35,19 +37,22 @@ int	get_cmd(char *s, t_cmd *c, int *i_arg)
 		i = 0;
 		while (s[j] && (s[j] == ' ' || s[j] == '\t'))
 			j++;
-		while (s[i] && s[i] != ' ' && s[i + j] != '\t')
+		while (s[i + j] && s[i + j] != ' ' && s[i + j] != '\t')
 			i++;
 		c->cmd = ft_calloc(i + 1, 1);
 		if (!c->arg)
 			return (0); // error et exit
 		i = 0;
-		while (s[i] && s[i] != ' ' && s[i + j] != '\t')
+		while (s[j + i] && s[j + i] != ' ' && s[i + j] != '\t')
 		{
-			c->cmd[i] = s[i];
+			c->cmd[i] = s[i + j];
 			i++;
 		}
+		*i_arg += 1;
 		return (i);
 	}
 	else
+	{
 		return (if_cmd(s, c, i_arg));
+	}
 }

@@ -25,8 +25,8 @@ extern int g_signal_received;
 
 typedef enum
 {
-	PIPE = 0,
-	CMD
+	CMD = 0,
+	PIPE
 }				t_token;
 
 typedef enum
@@ -42,6 +42,7 @@ typedef struct s_minishell
 {
 	int	code_error;
 	char **env;
+	struct sigaction sig;
 }				t_minishell;
 
 typedef struct s_cmd
@@ -84,7 +85,7 @@ int	env_variables(char *s, char **envp, t_cmd *c, int i);
 char *get_env_variable(char *var, char **envp);
 int	get_cmd(char *s, t_cmd *c, int *i_arg);
 //----------SIGNALS----------------------//
-int	init_signals(struct sigaction *sa);
+int	init_signals(t_minishell *info);
 void	check_signal(t_minishell *info);
 //-------------FREE----------------------//
 void	free_cmd(t_cmd *cmd, bool env, t_minishell *info);

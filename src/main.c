@@ -12,11 +12,16 @@ void	printlist(t_cmd *cmd)
 	current = cmd;
 	while (current)
 	{
-		printf("cmd nb %d = %s\n", i, current->cmd);
-		printf("infile nb %d = %s\n", i, current->infile);
-		printf("outfile nb %d = %s\n", i, current->outfile);
+		printf(BHI_CYAN"cmd nb %d = %s\n"RESET, i, current->cmd);
+		printf(BHI_GREEN"infile nb %d = %s\n"RESET, i, current->infile);
+		printf(BHI_MAGENTA"outfile nb %d = %s\n"RESET, i, current->outfile);
+		printf(BHI_RED"pipe %d\n"RESET, current->pipe);
 		while (current->arg[j])
-			printf("first arg nb %d = %s\n", i, current->arg[j++]);
+		{
+			printf(BHI_YELLOW"arg[%d] = %s\n"RESET, j, current->arg[j]);
+			j++;
+		}
+		printf(BHI_BLUE" ---------------------------- \n"RESET);
 		i++;
 		current = current->next;
 	}
@@ -28,18 +33,15 @@ int main(int argc, char *argv[], char *envp[])
 	(void)argv;
 	t_minishell info;
 	t_cmd	*c;
-	struct sigaction	sig;
+	char *line;
+	char	prompt[4097];
 
 	c = (t_cmd *){0};
 	info = (t_minishell){0};
 	info.env = get_env(envp);
-	sigemptyset(&sig.sa_mask);
-	init_signals(&sig);
-	char *line;
-	char	prompt[4097];
-	int i = 0;
 	while (1)
 	{
+		init_signals(&info);
 		check_signal(&info);
 		line = readline(get_prompt(prompt, &info));
 		if (line)
@@ -47,6 +49,7 @@ int main(int argc, char *argv[], char *envp[])
 			add_history(line);
 			c = parse(line, envp, &info);
 			free(line);
+			printlist(c);
 			free_cmd(c, NO_ENV, &info);
 		}
 		else
@@ -54,7 +57,6 @@ int main(int argc, char *argv[], char *envp[])
 			free_split(info.env);
 			return (1);
 		}
-		i++;
 	}
 	return (0);
 }
