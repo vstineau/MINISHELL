@@ -14,7 +14,7 @@ t_cmd	*ft_lstnew(char *s,t_cmd *c, t_minishell *info)
 		exit(1);
 	}
 	new_cmd->arg = NULL;
-	new_cmd->arg = ft_calloc((count_words(s, ' ') + 1), sizeof(char *));
+	new_cmd->arg = ft_calloc((count_arg(s) + 1), sizeof(char *));
 	if (!new_cmd->arg)
 	{
 		free_cmd(c, ENV, info);
@@ -75,7 +75,6 @@ t_cmd	*parse(char *s, char **envp, t_minishell *info)
 	{
 		while (*s == ' ')
 			s++;
-		printf(B_GREEN" *s  = %c\n"RESET, *s);
 		if (*s == '<')
 			s += infile(s, current, info);
 		else if (*s == '>')
@@ -92,7 +91,7 @@ t_cmd	*parse(char *s, char **envp, t_minishell *info)
 		}
 		else
 		{
-			printf(B_YELLOW"i[%d]\n"RESET, i_arg);
+			printf(B_GREEN" *s  = %c\n"RESET, *s);
 			s += get_cmd(s, current, &i_arg);
 		}
 	}

@@ -57,7 +57,7 @@ int	no_heredoc(char *s, t_cmd *c, t_minishell *info)
 	int	i;
 	int	j;
 
-	c->infile = NULL;// ft_calloc(ft_strlen(s) + 1, 1);
+	c->infile = ft_calloc(ft_strlen(s) + 1, 1);
 	if (!c->infile)
 		{
 			perror(BG_RED"memory allocation failed during parsing"RESET);

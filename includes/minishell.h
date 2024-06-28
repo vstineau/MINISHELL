@@ -69,6 +69,7 @@ int		ft_strcmp(char *s1, char *s2);
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strncpy(char *dest, char *src, int n);
 size_t	count_words(char const *s, char c);
+int	count_arg(char *s);
 char	*ft_strjoin_free(char *s1, char *s2);
 char	*get_prompt(char *prompt, t_minishell *info);
 //----------PARSING----------------------//

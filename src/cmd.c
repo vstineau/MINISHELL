@@ -19,7 +19,6 @@ static int	if_cmd(char *s, t_cmd *c, int *i_arg)
 	while (s[i + j] && s[i + j] != ' ' && s[i + j] != '\t')
 	{
 		c->arg[*i_arg][i] = s[i + j];
-		printf(B_YELLOW"arg[iarg][i] = %c s[i + j] = %c\n"RESET, c->arg[*i_arg][i], s[i + j]);
 		i++;
 	}
 	*i_arg += 1;
@@ -48,7 +47,6 @@ int	get_cmd(char *s, t_cmd *c, int *i_arg)
 			c->cmd[i] = s[i + j];
 			i++;
 		}
-		*i_arg += 1;
 		return (i);
 	}
 	else

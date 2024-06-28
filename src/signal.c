@@ -29,6 +29,14 @@ static void	test()
 //	g_signal_received = SIGQUIT;
 //}
 //
+//int	init_sigint(t_minishell *info)
+//{
+//	info->sa_sigaction = handle_sigquit;
+//	if (sigaction(SIGQUIT, &info->sig, NULL) == -1)
+//		return (0);
+//	return (1);
+//}
+
 void	check_signal(t_minishell *info)
 {
 	if (g_signal_received == SIGINT || g_signal_received == SIGQUIT)
@@ -47,7 +55,6 @@ int	init_signals(t_minishell *info)
 	rl_event_hook = (void *)test;
 	if (sigaction(SIGINT, &info->sig, NULL) == -1)
 		return (0);
-	//sa->sa_sigaction = handle_sigquit;
 	info->sig.sa_handler = SIG_IGN;
 	if (sigaction(SIGQUIT, &info->sig, NULL) == -1)
 		return (0);

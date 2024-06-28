@@ -7,16 +7,16 @@ void	printlist(t_cmd *cmd)
 {
 	t_cmd *current;
 	int i = 0;
-	int j = 0;
 
 	current = cmd;
 	while (current)
 	{
+		int j = 0;
 		printf(BHI_CYAN"cmd nb %d = %s\n"RESET, i, current->cmd);
 		printf(BHI_GREEN"infile nb %d = %s\n"RESET, i, current->infile);
 		printf(BHI_MAGENTA"outfile nb %d = %s\n"RESET, i, current->outfile);
 		printf(BHI_RED"pipe %d\n"RESET, current->pipe);
-		while (current->arg[j])
+		while (current->arg[j] && current->arg[j][0] != '\0')
 		{
 			printf(BHI_YELLOW"arg[%d] = %s\n"RESET, j, current->arg[j]);
 			j++;

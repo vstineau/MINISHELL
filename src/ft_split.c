@@ -41,6 +41,25 @@ static void	free_all(char **split, size_t count)
 	free(split);
 }
 
+int	count_arg(char *s)
+{
+	int	i;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while(s[i])
+	{
+		while (s[i] && (s[i] == ' ' || s[i] == '\t'))
+			i++;
+		if (s[i] &&  (s[i] != ' ' || s[i] != '\t'))
+			count++;
+		while (s[i] && (s[i] != ' ' && s[i] != '\t'))
+			i++;
+	}
+	return (count);
+}
+
 size_t	count_words(char const *s, char c)
 {
 	size_t	l;
