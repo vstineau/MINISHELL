@@ -54,6 +54,7 @@ typedef struct s_cmd
 	char	*outfile;
 	char	*path;
 	char	**arg;
+	int		fd;
 	t_token	pipe;
 	t_redirect	redirect;
 	struct s_cmd	*next;
@@ -108,20 +109,18 @@ void	free_alls(char *path, char **cmd);
 //----------EXECUTION--------------------//
 char	*find_path(char **env, char *av);
 char	**find_cmd(char *av);
-void	exec(t_cmd *c, char **envp);
 char	*return_path(char **cmd, char *endfile, char *path);
 void	apply_exec_first_bns(char *av, char **env, char *file, int pip[2]);
 void	apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av);
 void	apply_exec_last_bns(char *av, char **env, int outfile, int fd);
-int		is_builtin(char **cmd);
 //----------BUILTINS---------------------//
 void	cd(char *path, char **envp);
 void	pwd(void);
 void	echo(char **av, int fd);
 void	our_env(char **env);
-//void    our_exit(t_cmd *c, t_minishell *info);
+void    our_exit(t_cmd *c, t_minishell *info);
 char	**our_export(char **av, char **env);
-char	**unset(char *av, char **env);
+char	**unset(char **av, char **env);
 
 #endif
 

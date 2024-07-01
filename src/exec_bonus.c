@@ -88,7 +88,7 @@ void	exec_last(char *av, char **env, char *file, int fd)
 	close (outfile);
 }
 
-int	main(int ac, char **av, char **env)
+void	exec(int ac, char **av, char **env)
 {
 	int	i;
 	int	pipout;

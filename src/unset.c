@@ -1,7 +1,7 @@
 
 #include "../includes/minishell.h"
 
-char	**unset(char *av, char **env)
+//char	**unset(char *av, char **env)
 {
 	char	**env2;
 	int		i;
@@ -30,6 +30,48 @@ char	**unset(char *av, char **env)
 			return (env2);
 		}
 		i++;
+	}
+	if (i == env_size(env))
+		env2 = get_env(env);
+	return (env2);
+}
+
+char	**unset(char **av, char **env)
+{
+	char	**env2;
+	int		i;
+	int		len;
+	int		j;
+	int		k;
+
+	j = 0;
+	env2 = NULL;
+	i = 0;
+	k = 0;
+	while (av[k])
+	{
+		len = ft_strlen(av[k]);
+		while (env[i])
+		{
+			if (ft_strncmp(env[i], av[k], len) == 0)
+			{
+				env2 = calloc(sizeof(char *), env_size(env)); 
+				while (j < i)
+				{
+					env2[j] = ft_strdup(env[j]);
+					j++;
+				}
+				while (j < env_size(env) - 1)
+				{
+					env2[j] = ft_strdup(env[j + 1]);
+					j++;
+				}
+				return (env2);
+			}
+			i++;
+		}
+		i = 0;
+		k++;
 	}
 	if (i == env_size(env))
 		env2 = get_env(env);
