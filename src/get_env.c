@@ -1,7 +1,7 @@
 
 #include "../includes/minishell.h"
 
-static int	env_size(char **envp)
+int	env_size(char **envp)
 {
 	int	i;
 
