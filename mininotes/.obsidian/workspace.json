@@ -4,31 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "3cb397a271dee068",
+        "id": "b461e64eb18812bf",
         "type": "tabs",
         "children": [
           {
-            "id": "a2d60841f523729a",
+            "id": "7ff8a7382f8d2a04",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "LEAK CHECK.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f1ff67278b62e97b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Redirections.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -97,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "LEAK CHECK.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "LEAK CHECK.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "LEAK CHECK.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -158,17 +138,17 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a2d60841f523729a",
+  "active": "7ff8a7382f8d2a04",
   "lastOpenFiles": [
-    "chain_list.md",
     "PARSING.md",
+    "Redirections.md",
+    "LEAK CHECK.md",
+    "chain_list.md",
     "FUNCTION ALLOWED.md",
     "cd.md",
     "EXECUTION.md",
-    "Redirections.md",
     "Untitled.canvas",
     "|.md",
-    "LEAK CHECK.md",
     "Untitled.md",
     "Untitled",
     "2024-05-22.md",

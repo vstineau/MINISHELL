@@ -49,10 +49,11 @@ int	double_quotes(char *s, t_cmd *c,char **envp, int *i)
 			c->arg[*i] = ft_strjoin_free(c->arg[*i], e_var);
 			free(e_var);
 			i++;
-			j++;
 		}
 		else
 			c->arg[*i][j - 1] = s[j];
+		j++;
 	}
+	*i += 1;
 	return (j);
 }

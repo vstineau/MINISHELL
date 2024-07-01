@@ -1,11 +1,11 @@
 
 #include "../includes/minishell.h"
 
-int	tilde(t_cmd *c, char **envp, int i, t_minishell *info)
+int	tilde(t_cmd *c, int i, t_minishell *info)
 {
 	if (!c->cmd)
 	{
-		c->cmd = get_env_variable("HOME=", envp);
+		c->cmd = get_env_variable("HOME=", info->env);
 		if (!c->cmd)
 		{
 			free_cmd(c, ENV, info);
@@ -15,7 +15,7 @@ int	tilde(t_cmd *c, char **envp, int i, t_minishell *info)
 	}
 	else
 	{
-		c->arg[i] = get_env_variable("HOME=", envp);
+		c->arg[i] = get_env_variable("HOME=", info->env);
 		if (!c->arg[i])
 		{
 			free_cmd(c, ENV, info);

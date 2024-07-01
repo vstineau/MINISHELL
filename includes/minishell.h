@@ -75,7 +75,7 @@ char	*get_prompt(char *prompt, t_minishell *info);
 //----------PARSING----------------------//
 char	**get_env(char **envp);
 t_cmd	*parse(char *line, char **envp, t_minishell *info);
-int	tilde(t_cmd *c, char **envp, int i, t_minishell *info);
+int	tilde(t_cmd *c, int i, t_minishell *info);
 int	infile(char *s, t_cmd *c, t_minishell *info);
 int	outfile(char *s, t_cmd *c);
 int	heredoc(char *s, t_cmd *c, t_minishell *info);

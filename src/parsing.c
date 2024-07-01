@@ -75,6 +75,8 @@ t_cmd	*parse(char *s, char **envp, t_minishell *info)
 	{
 		while (*s == ' ')
 			s++;
+		if (*s == '~')
+			s += tilde(current, i_arg, info);
 		if (*s == '<')
 			s += infile(s, current, info);
 		else if (*s == '>')
@@ -86,14 +88,9 @@ t_cmd	*parse(char *s, char **envp, t_minishell *info)
 		else if (*s == '\'')
 			s += single_quotes(s, current, i_arg++);
 		else if (*s == '|')
-		{
 			s += get_pipe(s, &i_arg, &current, info);
-		}
 		else
-		{
-			printf(B_GREEN" *s  = %c\n"RESET, *s);
 			s += get_cmd(s, current, &i_arg);
-		}
 	}
 	return (c);
 }

@@ -3,6 +3,9 @@ functions used for parsing :
 - https://github.com/kibatche/parser-bison/blob/main/README.md 
 
 
+get cmd ()
+	 parcours de la chaine jusqua espace pipe ou Redirectiion
+
 ORDRE DE PRIORITE :
 - ~
 - $
