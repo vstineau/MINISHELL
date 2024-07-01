@@ -63,7 +63,6 @@ typedef struct s_cmd
 char	**ft_split(char const *s, char c);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_realloc(void *old, size_t old_length, size_t new_length);
-char	*ft_strdup(char *s);
 void	*ft_memset(void *s, int c, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 int		ft_strlen(char *s);
@@ -71,8 +70,6 @@ int		ft_strcmp(char *s1, char *s2);
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strncpy(char *dest, char *src, int n);
 size_t	count_words(char const *s, char c);
-void    *ft_memcpy(void *dest, const void *src, size_t n);
-void	*ft_realloc(void *old, size_t old_length, size_t new_length);
 char    *ft_strdup(char *s);
 char	**get_env(char **envp);
 void	ft_sort_strings(int num, char **s);
@@ -84,8 +81,6 @@ void	ft_close(int pip[2], int infile);
 char	*ft_strchr(const char *s, int c);
 int		check_infile(char *file);
 int		exit_close(int pip[2]);
-char	*free_return(char **cmd, char *endfile);
-void	free_all(char *path, char **cmd);
 int	count_arg(char *s);
 char	*ft_strjoin_free(char *s1, char *s2);
 char	*get_prompt(char *prompt, t_minishell *info);
@@ -108,6 +103,8 @@ void	check_signal(t_minishell *info);
 //-------------FREE----------------------//
 void	free_cmd(t_cmd *cmd, bool env, t_minishell *info);
 void	free_split(char **split);
+char	*free_return(char **cmd, char *endfile);
+void	free_alls(char *path, char **cmd);
 //----------EXECUTION--------------------//
 char	*find_path(char **env, char *av);
 char	**find_cmd(char *av);

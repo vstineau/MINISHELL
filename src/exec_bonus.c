@@ -24,7 +24,7 @@ int	exec_first(char *av, char **env, char *file)
 		cmd = find_cmd(av);
 		if (path != NULL && cmd != NULL)
 			apply_exec_first_bns(av, env, file, pip);
-		free_all(path, cmd);
+		free_alls(path, cmd);
 		exit_close(pip);
 	}
 	return (close(pip[1]), pip[0]);
@@ -49,7 +49,7 @@ int	exec_midle(char *av, char **env, int fd)
 		cmd = find_cmd(av);
 		if (path != NULL && cmd != NULL)
 			apply_exec_middle_bonus(fd, pip, env, av);
-		free_all(path, cmd);
+		free_alls(path, cmd);
 		close (fd);
 		close (pip[1]);
 		exit (-1);

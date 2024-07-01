@@ -15,39 +15,6 @@ int	ft_strncmp( const char *first, const char *second, size_t length)
 	return (((unsigned char *)first)[i] - ((unsigned char *)second)[i]);
 }
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
-{
-	size_t		i;
-	char		*dest1;
-	const char	*src1;
-
-	if (!dest && !src)
-		return (dest);
-	i = 0;
-	dest1 = dest;
-	src1 = src;
-	while (i < n)
-	{
-		dest1[i] = src1[i];
-		i++;
-	}
-	return (dest1);
-}
-
-void	*ft_realloc(void *old, size_t old_length, size_t new_length)
-{
-	void	*new_ptr;
-
-	new_ptr = ft_calloc(new_length, 1);
-	if (new_ptr == NULL)
-		return (NULL);
-	if (old == NULL)
-		return (new_ptr);
-	ft_memcpy(new_ptr, old, old_length);
-	free(old);
-	return (new_ptr);
-}
-
 int	ft_strcmp(char *s1, char *s2)
 {
 	while (*s1 && *s2)
@@ -58,24 +25,6 @@ int	ft_strcmp(char *s1, char *s2)
 		s2++;
 	}
 	return (*s1 - *s2);
-}
-
-char	*ft_strdup(char *s)
-{
-	size_t	i;
-	char	*dst;
-
-	i = 0;
-	dst = malloc(sizeof(char) * ft_strlen(s) + 1);
-	if (dst == 0)
-		return (NULL);
-	while (s[i])
-	{
-		dst[i] = s[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
 }
 
 void	*ft_memset(void *s, int c, size_t n)
@@ -254,7 +203,7 @@ int	exit_close(int pip[2])
 	exit (-1);
 }
 
-void	free_all(char *path, char **cmd)
+void	free_alls(char *path, char **cmd)
 {
 	free_split(cmd);
 	free(path);
