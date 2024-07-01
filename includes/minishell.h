@@ -80,8 +80,6 @@ int		check_infile(char *file);
 int		exit_close(int pip[2]);
 char	*free_return(char **cmd, char *endfile);
 void	free_all(char *path, char **cmd);
-
-
 //----------PARSING----------------------//
 int	init_signals(struct sigaction *sa);
 t_cmd	*parse(char *line);
@@ -99,6 +97,7 @@ char	*return_path(char **cmd, char *endfile, char *path);
 void	apply_exec_first_bns(char *av, char **env, char *file, int pip[2]);
 void	apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av);
 void	apply_exec_last_bns(char *av, char **env, int outfile, int fd);
+int		is_builtin(char **cmd);
 //----------BUILTINS---------------------//
 void	cd(char *path, char **envp);
 void	pwd(void);
