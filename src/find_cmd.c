@@ -55,6 +55,8 @@ char	*path_ok(char *av)
 	cmd = find_cmd(av);
 	if (cmd == NULL)
 		return (NULL);
+	if (is_builtin(cmd) == 1)
+		
 	path = *cmd;
 	if (access(path, F_OK | X_OK) == 0)
 	{
