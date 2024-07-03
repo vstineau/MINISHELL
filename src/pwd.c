@@ -1,11 +1,11 @@
 
 #include "../includes/minishell.h"
 
-void	pwd(void)
+void	pwd(int	fd)
 {
 	char *pwd;
 
 	pwd = getcwd(NULL, 0);
-	printf("%s\n", pwd);
+	ft_putstr_fd(pwd, fd);
 	free(pwd);
 }

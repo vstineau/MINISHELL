@@ -1,7 +1,7 @@
 
 #include "../includes/minishell.h"
 
-void	our_env(char **env)
+void	our_env(char **env, int fd)
 {
 	int	i;
 
@@ -9,9 +9,7 @@ void	our_env(char **env)
 	while (env[i])
 	{
 		if (env[i] != NULL)
-		{
-			printf("%s\n", env[i]);
-		}
+			ft_putstr_fd(env[i], fd);
 		i++;
 	}
 }

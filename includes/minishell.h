@@ -82,9 +82,10 @@ void	ft_close(int pip[2], int infile);
 char	*ft_strchr(const char *s, int c);
 int		check_infile(char *file);
 int		exit_close(int pip[2]);
-int	count_arg(char *s);
+int		count_arg(char *s);
 char	*ft_strjoin_free(char *s1, char *s2);
 char	*get_prompt(char *prompt, t_minishell *info);
+void	ft_putstr_fd(char *s, int fd);
 //----------PARSING----------------------//
 char	**get_env(char **envp);
 t_cmd	*parse(char *line, char **envp, t_minishell *info);
@@ -115,9 +116,9 @@ void	apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av);
 void	apply_exec_last_bns(char *av, char **env, int outfile, int fd);
 //----------BUILTINS---------------------//
 void	cd(char *path, char **envp);
-void	pwd(void);
+void	pwd(int	fd);
 void	echo(char **av, int fd);
-void	our_env(char **env);
+void	our_env(char **env, int fd);
 void    our_exit(t_cmd *c, t_minishell *info);
 char	**our_export(char **av, char **env);
 char	**unset(char **av, char **env);
