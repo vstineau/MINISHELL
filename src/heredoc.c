@@ -1,11 +1,47 @@
 
 #include "../includes/minishell.h"
 
+void	no_expand_heredoc(char *s, char *line, t_iterator *a)
+{
+	int	i;
+
+	i = 0;
+	while ((s + a->i)[i] && check_char((s + a->i)[i], " \t"))
+	{
+		(line + a->j)[i] = (s + a->i)[i];
+	}
+	a->i += i;
+	a->j += i;
+}
+
 static void	putline_fd(char *s, int fd)
 {
 	while(*s)
 		write(fd, s++, 1);
 	write(fd, "\n", 1);
+}
+
+static int	no_heredoc2(char *s, t_cmd *c, t_minishell *info)
+{
+	char	key[4096];
+	int	i = 1;
+	
+	ft_memset(key, 0, 4096);
+	if (*s == '$')
+	{
+		while (s[i] && check_char(s[i], " \t"))
+		{
+			key[i - 1] = s[i];
+			i++;
+		}
+		key[i - 1] = '=';
+		c->infile = ft_strjoin_free(c->infile, get_env_variable(key, info->env));
+	}
+	else if (*s == '<')
+		i += infile(s, c, info);
+	else if (*s == '>')
+		i += outfile(s, c);
+	return (i);
 }
 
 int	heredoc(char *s, t_cmd *c, t_minishell *info)
@@ -19,7 +55,7 @@ int	heredoc(char *s, t_cmd *c, t_minishell *info)
 	ft_memset(key, 0, 4096);
 	i = 0;
 	j = 0;
-	while(s[i] == ' ')
+	while(!check_char(s[i], "~ \t|><$"))
 		i++;
 	if (!s[i])
 	{
@@ -57,6 +93,8 @@ int	no_heredoc(char *s, t_cmd *c, t_minishell *info)
 	int	i;
 	int	j;
 
+	if (c->infile)
+		free(c->infile);
 	c->infile = ft_calloc(ft_strlen(s) + 1, 1);
 	if (!c->infile)
 		{
@@ -66,9 +104,10 @@ int	no_heredoc(char *s, t_cmd *c, t_minishell *info)
 		}
 	i = 0;
 	j = 0;
-	while(s[i] == ' ')
+	while(!check_char(s[i], "  \t"))
 		i++;
-	while (s[i] && s[i] != ' ')
+	while(s[i]  && !check_char(s[i], "  \t|><$"))
 		c->infile[j++] = s[i++];
-	return (i);
+	return (i + no_heredoc2(s, c, info));
 }
+

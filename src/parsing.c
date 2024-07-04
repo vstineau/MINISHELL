@@ -76,13 +76,13 @@ t_cmd	*parse(char *s, char **envp, t_minishell *info)
 		while (*s == ' ')
 			s++;
 		if (*s == '~')
-			s += tilde(current, i_arg, info);
+			;///s += tilde(current, i_arg, info);
 		if (*s == '<')
 			s += infile(s, current, info);
 		else if (*s == '>')
 			s += outfile(s, current);
 		else if (*s == '$')
-			s += env_variables(s, envp, current, i_arg++);
+			;//s += env_variables(s, envp, current, i_arg++);
 		else if (*s == '"')
 			s += double_quotes(s, current, envp, &i_arg);
 		else if (*s == '\'')
@@ -94,3 +94,9 @@ t_cmd	*parse(char *s, char **envp, t_minishell *info)
 	}
 	return (c);
 }
+
+
+
+
+
+

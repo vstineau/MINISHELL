@@ -1,26 +1,5 @@
-
 #include "../includes/minishell.h"
 
-//char	*new_env_variable(char *var)
-//{
-//	int	i;
-//	int	l;
-//	char	*s;
-//
-//	i = 0;
-//	l = ft_strlen(var);
-//	s = NULL;
-//	s = ft_calloc(1, l);
-//	if (!s)
-//		return (NULL); // free exit error
-//	while (i < l - 1)
-//	{
-//		s[i] = var[i];
-//		i++;
-//	}
-//	return (s);
-//}
-//
 char *get_env_variable(char *var, char **envp)
 {
 	int	i;
@@ -51,24 +30,36 @@ char *get_env_variable(char *var, char **envp)
 	return (NULL);
 }
 
-int	env_variables(char *s, char **envp, t_cmd *c, int i)
+int	expand_env_v(char *s, char *line, t_minishell *info, t_iterator *a)
 {
 	int	j;
 	char	key[4096];
+	char *var;
 
 	j = 1;
+	var = NULL;
 	ft_memset(key, 0, 4096);
-	while (s[j] && s[j] != ' ')
+	while (s[j] && check_char(s[j], " \t"))
 	{
 		key[j - 1] = s[j];
 		j++;
 	}
 	key[j - 1] = '=';
-	c->arg[i] = get_env_variable(key, envp);
-	if (!c->arg[i])
+	var = get_env_variable(key, info->env);
+	if (!var)
+		return (0);
+	else
 	{
-		;//exit error free
-		//c->arg[i] = new_env_variable(key);
+		line = ft_realloc(line, ft_strlen(line), ft_strlen(line) + ft_strlen(var) + 1);
+		if (line == NULL)
+		{
+			free_cmd(NULL, ENV, info);
+			perror(BG_RED"memory allocation failed during parsing"RESET);
+			exit(1);
+		}
+		ft_memcpy(line + a->j, var, ft_strlen(var));
 	}
-	return (j);
+	a->i += j;
+	free(var);
+	return (ft_strlen(var));
 }

@@ -50,7 +50,5 @@ int	get_cmd(char *s, t_cmd *c, int *i_arg)
 		return (i);
 	}
 	else
-	{
 		return (if_cmd(s, c, i_arg));
-	}
 }

@@ -1,27 +1,32 @@
 
 #include "../includes/minishell.h"
 
-int	tilde(t_cmd *c, int i, t_minishell *info)
+int	tilde(char *s, char *line, t_minishell *info, t_iterator *a)
 {
-	if (!c->cmd)
+	int	len_home;
+	int	len_line;
+	char *home;
+
+	len_line = ft_strlen(s);
+	home = get_env_variable("HOME=", info->env);
+	if (!home)
 	{
-		c->cmd = get_env_variable("HOME=", info->env);
-		if (!c->cmd)
-		{
-			free_cmd(c, ENV, info);
-			perror(BG_RED"memory allocation failed during parsing"RESET);
-			exit(1);
-		}
+		ft_memcpy(line + a->j, s + a->i, 1);
+		return (1);
 	}
 	else
 	{
-		c->arg[i] = get_env_variable("HOME=", info->env);
-		if (!c->arg[i])
+		len_home = ft_strlen(home);
+		line = ft_realloc(line, len_line, len_home + len_line + 1);
+		if (line == NULL)
 		{
-			free_cmd(c, ENV, info);
+			free_cmd(NULL, ENV, info);
 			perror(BG_RED"memory allocation failed during parsing"RESET);
 			exit(1);
 		}
+		ft_memcpy(line + a->i, home, len_home);
+		a->i += 1;
 	}
-	return (1);
+	free(home);
+	return (len_home);
 }

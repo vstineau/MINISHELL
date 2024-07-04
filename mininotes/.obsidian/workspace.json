@@ -11,8 +11,12 @@
             "id": "7ff8a7382f8d2a04",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "PARSING.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "PARSING.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "PARSING.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "PARSING.md"
+              }
             }
           }
         ]
@@ -140,14 +148,14 @@
   },
   "active": "7ff8a7382f8d2a04",
   "lastOpenFiles": [
-    "PARSING.md",
-    "Redirections.md",
-    "LEAK CHECK.md",
-    "chain_list.md",
     "FUNCTION ALLOWED.md",
+    "LEAK CHECK.md",
+    "PARSING.md",
+    "chain_list.md",
     "cd.md",
-    "EXECUTION.md",
     "Untitled.canvas",
+    "Redirections.md",
+    "EXECUTION.md",
     "|.md",
     "Untitled.md",
     "Untitled",

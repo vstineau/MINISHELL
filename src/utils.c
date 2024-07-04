@@ -20,6 +20,20 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	return (dest1);
 }
 
+int	check_char(char c, char *s)
+{
+	int	i;
+
+	i = 0;
+	while(s[i])
+	{
+		if (s[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	*ft_realloc(void *old, size_t old_length, size_t new_length)
 {
 	void	*new_ptr;

@@ -5,6 +5,7 @@ SRC_PATH = src/
 OBJ_PATH = obj/
 SRC_NAME = main.c \
 					 parsing.c \
+					 expand.c \
 					 get_env.c \
 					 signal.c \
 					 utils.c \

@@ -11,6 +11,22 @@ int	len_quote(char *s, char c)
 	return (i);
 }
 
+void	expand_doubles_quotes(t_iterator *a)
+{
+	if (a->doubles_quotes)
+		a->doubles_quotes = false;
+	else 
+		a->doubles_quotes = true;
+}
+
+void	expand_single_quotes(t_iterator *a)
+{
+	if (a->single_quotes)
+		a->single_quotes = false;
+	else 
+		a->single_quotes = true;
+}
+
 int	single_quotes(char *s, t_cmd *c, int i)
 {
 	int	j;

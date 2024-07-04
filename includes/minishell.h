@@ -23,6 +23,14 @@
 
 extern int g_signal_received;
 
+typedef struct s_iterator
+{
+	int	i;
+	int	j;
+	bool	single_quotes;
+	bool	doubles_quotes;
+}		t_iterator;
+
 typedef enum
 {
 	CMD = 0,
@@ -72,10 +80,17 @@ size_t	count_words(char const *s, char c);
 int	count_arg(char *s);
 char	*ft_strjoin_free(char *s1, char *s2);
 char	*get_prompt(char *prompt, t_minishell *info);
+int	check_char(char c, char *s);
+//----------EXPAND----------------------//
+char	*expand(char *s, t_minishell *info);
+int	tilde(char *s, char *line, t_minishell *info, t_iterator *a);
+int	expand_env_v(char *s, char *line, t_minishell *info, t_iterator *a);
+void	no_expand_heredoc(char *s, char *line, t_iterator *a);
+void	expand_doubles_quotes(t_iterator *a);
+void	expand_single_quotes(t_iterator *a);
 //----------PARSING----------------------//
 char	**get_env(char **envp);
 t_cmd	*parse(char *line, char **envp, t_minishell *info);
-int	tilde(t_cmd *c, int i, t_minishell *info);
 int	infile(char *s, t_cmd *c, t_minishell *info);
 int	outfile(char *s, t_cmd *c);
 int	heredoc(char *s, t_cmd *c, t_minishell *info);
