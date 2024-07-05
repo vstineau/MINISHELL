@@ -83,11 +83,11 @@ char	*get_prompt(char *prompt, t_minishell *info);
 int	check_char(char c, char *s);
 //----------EXPAND----------------------//
 char	*expand(char *s, t_minishell *info);
-int	tilde(char *s, char *line, t_minishell *info, t_iterator *a);
-int	expand_env_v(char *s, char *line, t_minishell *info, t_iterator *a);
+int	tilde(char *s, char **line, t_minishell *info, t_iterator *a);
+int	expand_env_v(char *s, char **line, t_minishell *info, t_iterator *a);
 void	no_expand_heredoc(char *s, char *line, t_iterator *a);
-void	expand_doubles_quotes(t_iterator *a);
-void	expand_single_quotes(t_iterator *a);
+int	expand_doubles_quotes(t_iterator *a, char *line);
+int	expand_single_quotes(t_iterator *a, char *line);
 //----------PARSING----------------------//
 char	**get_env(char **envp);
 t_cmd	*parse(char *line, char **envp, t_minishell *info);
