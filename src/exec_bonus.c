@@ -1,7 +1,7 @@
 
 #include "../includes/minishell.h"
 
-int	exec_first(char *av, char **env, char *file)
+int	exec_first(char *av, char **env,  t_cmd *c)
 {
 	int		id;
 	int		pip[2];
@@ -9,28 +9,34 @@ int	exec_first(char *av, char **env, char *file)
 	char	**cmd;
 	int		infile;
 
-	if (pipe(pip) == -1)
-		perror("");
+	if (c->pipe == PIPE)
+	{
+		if (pipe(pip) == -1)
+			perror("");
+	}
 	id = fork();
 	if (id == -1)
 		perror("");
 	if (id == 0)
 	{
-		infile = check_infile(file);
-		if (infile == -1)
-			exit_close(pip);
-		close(infile);
+		if (c->infile)
+		{
+			infile = check_infile(c->infile);
+			if (infile == -1)
+				exit_close(pip);
+			close(infile);
+		}
 		path = find_path(env, av);
 		cmd = find_cmd(av);
 		if (path != NULL && cmd != NULL)
-			apply_exec_first_bns(av, env, file, pip);
+			apply_exec_first_bns(av, env, c->infile, pip, c);
 		free_alls(path, cmd);
 		exit_close(pip);
 	}
-	return (close(pip[1]), pip[0]);
+	return (pip[0]);
 }
 
-int	exec_midle(char *av, char **env, int fd)
+int	exec_midle(char *av, char **env, int fd, t_cmd *c)
 {
 	char	*path;
 	char	**cmd;
@@ -48,7 +54,7 @@ int	exec_midle(char *av, char **env, int fd)
 		path = find_path(env, av);
 		cmd = find_cmd(av);
 		if (path != NULL && cmd != NULL)
-			apply_exec_middle_bonus(fd, pip, env, av);
+			apply_exec_middle_bonus(fd, pip, env, av, c);
 		free_alls(path, cmd);
 		close (fd);
 		close (pip[1]);
@@ -59,7 +65,7 @@ int	exec_midle(char *av, char **env, int fd)
 	return (pip[0]);
 }
 
-void	exec_last(char *av, char **env, char *file, int fd)
+void	exec_last(char *av, char **env, char *file, int fd, t_cmd *c)
 {
 	int		id;
 	char	*path;
@@ -77,7 +83,7 @@ void	exec_last(char *av, char **env, char *file, int fd)
 		path = find_path(env, av);
 		cmd = find_cmd(av);
 		if (path != NULL && cmd != NULL)
-			apply_exec_last_bns(av, env, outfile, fd);
+			apply_exec_last_bns(av, env, outfile, fd, c);
 		close (outfile);
 		free_split(cmd);
 		free(path);
@@ -88,24 +94,30 @@ void	exec_last(char *av, char **env, char *file, int fd)
 	close (outfile);
 }
 
-void	exec(int ac, char **av, char **env)
+void	exec(char **env, t_cmd *c)
 {
 	int	i;
 	int	pipout;
 
 	i = 2;
 	pipout = 42;
-	while (i < ac - 1)
+	if (c->cmd)
 	{
-		if (i == 2)
-			pipout = exec_first(av[2], env, av[1]);
-		else if (i == ac - 2)
-			exec_last(av[ac - 2], env, av[ac - 1], pipout);
-		else if (i > 2 && i < ac - 2)
-			pipout = exec_midle(av[i], env, pipout);
-		i++;
+		pipout = exec_first(c->cmd, env, c);
 	}
+	//while (i < ac - 1)
+	//{
+	//	if (i == 2)
+	//		pipout = exec_first(av[2], env, av[1], c);
+	//	else if (i == ac - 2)
+	//		exec_last(av[ac - 2], env, av[ac - 1], pipout, c);
+	//	else if (i > 2 && i < ac - 2)
+	//		pipout = exec_midle(av[i], env, pipout, c);
+	//	i++;
+	//}
+
 	while (wait(NULL) > 0)
 		;
 	close (pipout);
+	
 }
