@@ -2,7 +2,7 @@
 #include "../includes/minishell.h"
 
 //char	**unset(char *av, char **env)
-{
+/*{
 	char	**env2;
 	int		i;
 	int		len;
@@ -34,7 +34,7 @@
 	if (i == env_size(env))
 		env2 = get_env(env);
 	return (env2);
-}
+}*/
 
 char	**unset(char **av, char **env)
 {

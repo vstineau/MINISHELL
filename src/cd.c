@@ -41,10 +41,9 @@ char *get_home(char **envp, char *home)
 	return (NULL);
 }
 
-void	cd(char *path, char **envp)
+void	cd(char **arg, char **envp)
 {
-	char	*pwd;
-
+/*	char	*pwd;
 	if (path == NULL)
 	{
 		chdir(get_home(envp, "HOME="));
@@ -62,6 +61,33 @@ void	cd(char *path, char **envp)
 	pwd = getcwd(NULL, 0);
 	pwd = ft_strjoin_free(pwd, "/");
 	pwd = ft_strjoin_free(pwd, path);
+	chdir(pwd);
+	free(pwd);*/
+	int		i;
+	char	*pwd;
+	
+	i = 0;
+	while (arg[i])
+		i++;
+	if (i > 1)
+		printf("%s\n", "cd: too many arguments");
+	if (arg[0] == NULL)
+	{
+		chdir(get_home(envp, "HOME="));
+		return ;
+	}
+	if (*arg[0] == '~')
+	{
+		if (!(pwd = get_env_variable("HOME=", envp)))
+			return ; //free exit
+		pwd = ft_strjoin_free(pwd, arg[0] + 1);
+		chdir(pwd);
+		free(pwd);
+		return ;
+	}
+	pwd = getcwd(NULL, 0);
+	pwd = ft_strjoin_free(pwd, "/");
+	pwd = ft_strjoin_free(pwd, arg[0]);
 	chdir(pwd);
 	free(pwd);
 }

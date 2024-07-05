@@ -114,13 +114,14 @@ char	*return_path(char **cmd, char *endfile, char *path);
 void	apply_exec_first_bns(char *av, char **env, char *file, int pip[2]);
 void	apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av);
 void	apply_exec_last_bns(char *av, char **env, int outfile, int fd);
+void	exec_builtin(t_cmd *c, t_minishell *info);
 //----------BUILTINS---------------------//
-void	cd(char *path, char **envp);
+void	cd(char **arg, char **envp);
 void	pwd(int	fd);
 void	echo(char **av, int fd);
 void	our_env(char **env, int fd);
 void    our_exit(t_cmd *c, t_minishell *info);
-char	**our_export(char **av, char **env);
+char	**our_export(char **av, char **env, int fd);
 char	**unset(char **av, char **env);
 
 #endif

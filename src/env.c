@@ -9,7 +9,10 @@ void	our_env(char **env, int fd)
 	while (env[i])
 	{
 		if (env[i] != NULL)
+		{
 			ft_putstr_fd(env[i], fd);
+			ft_putstr_fd("\n", fd);
+		}
 		i++;
 	}
 }

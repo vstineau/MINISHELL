@@ -7,5 +7,6 @@ void	pwd(int	fd)
 
 	pwd = getcwd(NULL, 0);
 	ft_putstr_fd(pwd, fd);
+	ft_putstr_fd("\n", fd);
 	free(pwd);
 }

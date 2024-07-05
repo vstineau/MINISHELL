@@ -55,41 +55,46 @@ __int128	ato__i128(const char *str)
     }
 }*/
 
-//void    our_exit(t_cmd *c, t_minishell *info, char *error_code)
-void	our_exit(char **env, char *error_code)
+void    our_exit(t_cmd *c, t_minishell *info)
 {
 	int			i;
 	__int128	atoi_crack;
 	int			value;
 
 	value = 0;
-	atoi_crack = ato__i128(error_code);
+	if (c->arg[0] == NULL)
+	{
+		free_cmd(c, ENV, info);
+		exit (0);
+	}
+	atoi_crack = ato__i128(c->arg[0]);
 	//__int128 num = (__int128)atoi_crack;
     //print_uint128(num);
 	printf("\n");
-	free_cmd(c, ENV, info);
-	if (error_code[0] == '-')
+
+	if (c->arg[0][0] == '-')
 		i = 1;
 	else
 		i = 0;
-	while (i < ft_strlen(error_code))
+	while (i < ft_strlen(c->arg[0]))
 	{
-		if (ft_isdigit(error_code[i]) == 1)
+		if (ft_isdigit(c->arg[0][i]) == 1)
 			i++;
 		else
 			exit (2);
 	}
 	if ((atoi_crack > LLONG_MAX || atoi_crack < LLONG_MIN) 
-		&& (ft_strlen(error_code) > 20))
+		&& (ft_strlen(c->arg[0]) > 20))
 		exit (2);
 	value = (atoi_crack % 256);
 	//printf("%i\n", value);
+	free_cmd(c, ENV, info);
 	exit (value);
 }
 
-int	main(int ac, char **av, char **env)
+/*int	main(int ac, char **av, char **env)
 {
 	(void) ac;
 	(void) av;
 	our_exit(env, "9223372036854775807");
-}
+}*/

@@ -21,18 +21,18 @@ void	exec_builtin(t_cmd *c, t_minishell *info)
 	if (ft_strcmp(c->cmd, "echo") == 0) 
 		echo(c->arg, c->fd);
 	if (ft_strcmp(c->cmd, "cd") == 0)
-		cd(c->path, info->env);
+		cd(c->arg, info->env);
 	if (ft_strcmp(c->cmd, "pwd") == 0)
 		pwd(c->fd);
 	if (ft_strcmp(c->cmd, "export") == 0)
-		our_export(c->arg, info->env);
+		info->env = our_export(c->arg, info->env, c->fd);
 	if (ft_strcmp(c->cmd, "unset") == 0)
-		unset(c->arg, info->env);
+		info->env = unset(c->arg, info->env);
 	if (ft_strcmp(c->cmd, "env") == 0)
 		our_env(info->env, c->fd);
 	if (ft_strcmp(c->cmd, "exit") == 0)
 		our_exit(c, info);
 	if (i == 0)
-		i = 0;
+		printf("TA MERE\n");
 		//exec(		
 }

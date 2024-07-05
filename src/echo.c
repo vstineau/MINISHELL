@@ -28,7 +28,7 @@ void	echo(char **av, int fd)
 	int	j;
 
 	j = 0;
-	i = 1;
+	i = 0;
 	while (av[j])
 	{
 		i = check_echo_args(av[i], i);

@@ -1,23 +1,7 @@
 
 #include "../includes/minishell.h"
 
-char	*ft_strchr(const char *s, int c)
-{
-	char	*ptr;
-
-	ptr = (char *)s;
-	while (*ptr != (char) c)
-	{
-		if (*ptr == '\0')
-		{
-			return (NULL);
-		}
-		ptr++;
-	}
-	return (ptr);
-}
-
-char	**ft_print_export(char **env)
+char	**ft_print_export(char **env, int fd)
 {
 	int		i;
 	char	**env2;
@@ -29,7 +13,9 @@ char	**ft_print_export(char **env)
 	ft_sort_strings(len, env);
 	while (env[i])
 	{
-		printf("declare -x %s\n", env[i]);
+		ft_putstr_fd("declare -x ", fd);
+		ft_putstr_fd(env[i], fd);
+		ft_putstr_fd("\n", fd);
 		i++;
 	}
 	return (env2);
@@ -60,7 +46,7 @@ char	*get_first_av(char *av)
 	return (av1);
 }
 
-char	**our_export(char **av, char **env)
+char	**our_export(char **av, char **env, int fd)
 {
 	char *av1;
 	int	i;
@@ -72,9 +58,9 @@ char	**our_export(char **av, char **env)
 	i = 0;
 	len = 0;
 	env2 = NULL;
-	if (av[1] == NULL)
-		return (ft_print_export(env));
-	av1 = get_first_av(av[1]);
+	if (av[0] == NULL)
+		return (ft_print_export(env, fd));
+	av1 = get_first_av(av[0]);
 	if (av1 == NULL)
 		return (env2 = get_env(env));
 	len = ft_strlen(av1);
@@ -83,7 +69,7 @@ char	**our_export(char **av, char **env)
 		if (ft_strncmp(env[i], av1, len) == 0)
 		{
 			j = env_size(env);
-			len = ft_strlen(av[1]);
+			len = ft_strlen(av[0]);
 			env2 = ft_calloc(sizeof(char *), (j + 1));
 			j = 0;
 			while (env[j])
@@ -92,7 +78,7 @@ char	**our_export(char **av, char **env)
 					env2[j] = ft_strdup(env[j]);
 				j++;
 			}
-			env2[i] = ft_strdup(av[1]);
+			env2[i] = ft_strdup(av[0]);
 			free(av1);
 			return (env2);
 		}
@@ -109,7 +95,7 @@ char	**our_export(char **av, char **env)
 			env2[i] = ft_strdup(env[i]);
 			i++;
 		}
-		env2[i] = ft_strdup(av[1]);
+		env2[i] = ft_strdup(av[0]);
 		free(av1);
 		return (env2);
 	}

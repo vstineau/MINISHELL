@@ -48,8 +48,9 @@ int main(int argc, char *argv[], char *envp[])
 		{
 			add_history(line);
 			c = parse(line, envp, &info);
+			exec_builtin(c, &info);
 			free(line);
-			printlist(c);
+			//printlist(c);
 			free_cmd(c, NO_ENV, &info);
 		}
 		else
