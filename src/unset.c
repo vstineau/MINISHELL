@@ -48,9 +48,12 @@ char	**unset(char **av, char **env)
 	env2 = NULL;
 	i = 0;
 	k = 0;
+	if (av[k] == NULL)
+		return (env2 = get_env(env));
 	while (av[k])
 	{
 		len = ft_strlen(av[k]);
+		i = 0;
 		while (env[i])
 		{
 			if (ft_strncmp(env[i], av[k], len) == 0)
@@ -70,9 +73,10 @@ char	**unset(char **av, char **env)
 			}
 			i++;
 		}
-		i = 0;
 		k++;
 	}
+	//printf("%d\n", i);
+	//printf("%d\n", env_size(env));
 	if (i == env_size(env))
 		env2 = get_env(env);
 	return (env2);
