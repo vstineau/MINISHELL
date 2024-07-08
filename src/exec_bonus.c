@@ -7,7 +7,6 @@ int	exec_first(char *av, char **env,  t_cmd *c)
 	int		pip[2];
 	char	*path;
 	char	**cmd;
-	int		infile;
 
 	if (c->pipe == PIPE)
 	{
@@ -19,19 +18,13 @@ int	exec_first(char *av, char **env,  t_cmd *c)
 		perror("");
 	if (id == 0)
 	{
-		if (c->infile)
-		{
-			infile = check_infile(c->infile);
-			if (infile == -1)
-				exit_close(pip);
-			close(infile);
-		}
 		path = find_path(env, av);
-		cmd = find_cmd(av);
+		cmd = c->arg;
 		if (path != NULL && cmd != NULL)
-			apply_exec_first_bns(av, env, c->infile, pip, c);
+			apply_exec_first_bns(av, env, pip, c);
 		free_alls(path, cmd);
-		exit_close(pip);
+		if (c->pipe == PIPE)
+			exit_close(pip);
 	}
 	return (pip[0]);
 }
@@ -99,7 +92,7 @@ void	exec(char **env, t_cmd *c)
 	int	i;
 	int	pipout;
 
-	i = 2;
+	i = 0;
 	pipout = 42;
 	if (c->cmd)
 	{
