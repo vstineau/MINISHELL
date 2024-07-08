@@ -81,6 +81,7 @@ int	count_arg(char *s);
 char	*ft_strjoin_free(char *s1, char *s2);
 char	*get_prompt(char *prompt, t_minishell *info);
 int	check_char(char c, char *s);
+int	is_uppercase(char c);
 //----------EXPAND----------------------//
 char	*expand(char *s, t_minishell *info);
 int	tilde(char *s, char **line, t_minishell *info, t_iterator *a);
@@ -90,7 +91,7 @@ int	expand_doubles_quotes(t_iterator *a, char *line);
 int	expand_single_quotes(t_iterator *a, char *line);
 //----------PARSING----------------------//
 char	**get_env(char **envp);
-t_cmd	*parse(char *line, char **envp, t_minishell *info);
+t_cmd	*parse(char *line, t_minishell *info);
 int	infile(char *s, t_cmd *c, t_minishell *info);
 int	outfile(char *s, t_cmd *c);
 int	heredoc(char *s, t_cmd *c, t_minishell *info);

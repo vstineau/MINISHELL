@@ -34,7 +34,6 @@ int main(int argc, char *argv[], char *envp[])
 	t_minishell info;
 	t_cmd	*c;
 	char *line;
-	char *line2;
 	char	prompt[4097];
 
 	c = (t_cmd *){0};
@@ -48,11 +47,9 @@ int main(int argc, char *argv[], char *envp[])
 		if (line)
 		{
 			add_history(line);
-			line2 = expand(line, &info);
-			printf("line expand before parsing = [%s]\n", line2);
-			free(line2);
-			exit(1);
-			c = parse(line, envp, &info);
+			line = expand(line, &info);
+			printf("line  expand  = [%s]\n", line);
+			c = parse(line, &info);
 			free(line);
 			printlist(c);
 			free_cmd(c, NO_ENV, &info);

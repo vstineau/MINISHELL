@@ -11,7 +11,6 @@ char *get_env_variable(char *var, char **envp)
 	while(envp[i])
 	{
 	 j = 0;
-		printf("envp[i] = %s\n", envp[i]);
 		if (envp[i][j] == var[j])
 		{
 			while(envp[i][j] == var[j])
@@ -35,38 +34,38 @@ int	expand_env_v(char *s, char **line, t_minishell *info, t_iterator *a)
 {
 	int	j;
 	char	key[4096];
-	char *var;
+	char	*var;
+	int	len_var;
+	int	len_line;
 
-	j = 1;
+	len_line = ft_strlen(*line);
+	if (len_line < ft_strlen(s))
+		len_line = ft_strlen(s);
+	j = 1 + a->i;
 	var = NULL;
 	ft_memset(key, 0, 4096);
-	printf("s = %s\n", s);
-	while (s[j] && check_char(s[j], "\'\"$"))
-		j++;
-	while (s[j] && !check_char(s[j], " \t\"\'"))
+	while (s[j] && !check_char(s[j], " \t") && is_uppercase(s[j]))
 	{
-		key[j - 1] = s[j];
+		key[j - a->i - 1] = s[j];
 		j++;
 	}
-	key[j - 1] = '=';
-	printf("key = %s\n", key);
+	key[j - a->i - 1] = '=';
 	var = get_env_variable(key, info->env);
-	printf("var = %s\n", var);
-	exit(1);
 	if (!var)
 		return (0);
 	else
 	{
-		*line = ft_realloc(*line, ft_strlen(*line), ft_strlen(*line) + ft_strlen(var) + 1);
+		len_var = ft_strlen(var);
+		*line = ft_realloc(*line, len_line, len_line + len_var + 1);
 		if (*line == NULL)
 		{
 			free_cmd(NULL, ENV, info);
 			perror(BG_RED"memory allocation failed during parsing"RESET);
 			exit(1);
 		}
-		ft_memcpy(*line + a->j, var, ft_strlen(var));
+		ft_memcpy(*line + a->j, var, len_var);
 	}
-	a->i += j;
+	a->i += j - a->i;
 	free(var);
-	return (ft_strlen(var));
+	return (len_var);
 }

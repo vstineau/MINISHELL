@@ -20,6 +20,14 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	return (dest1);
 }
 
+int	is_uppercase(char c)
+{
+	if (c >= 'A' && c <= 'Z')
+		return (1);
+	else
+		return (0);
+}
+
 int	check_char(char c, char *s)
 {
 	int	i;

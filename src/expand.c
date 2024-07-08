@@ -21,7 +21,7 @@ char	*expand(char *s, t_minishell *info)
 			a.j += tilde(s, &line, info, &a);
 		else if (s[a.i] == '$' && !a.single_quotes)
 			a.j += expand_env_v(s, &line, info, &a);
-		else if (s[a.i] == '<' && s[a.i - 1] == '<' && !a.single_quotes && !a.doubles_quotes)
+		else if (s[a.i] == '<' && s[a.i + 1] == '<' && !a.single_quotes && !a.doubles_quotes)
 			no_expand_heredoc(s, line, &a);
 		else if (s[a.i] == '"' && !a.single_quotes)
 			a.j += expand_doubles_quotes(&a, line);
@@ -29,9 +29,6 @@ char	*expand(char *s, t_minishell *info)
 			a.j += expand_single_quotes(&a, line);
 		else
 			line[a.j++] = s[a.i++];
-		printf("s = [%s]\n", s);
-		printf("i = [%d] j = [%d]\n", a.i, a.j);
-		printf("l = [%s]\n", line);
 	}
 	return (line);
 }

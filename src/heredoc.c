@@ -4,14 +4,21 @@
 void	no_expand_heredoc(char *s, char *line, t_iterator *a)
 {
 	int	i;
+	int	j;
 
+	line[a->j++] = s[a->i];
+	line[a->j++] = s[a->i++];
 	i = 0;
-	while ((s + a->i)[i] && check_char((s + a->i)[i], " \t"))
+	j = 0;
+	while (s[i + j] && check_char(s[i + j], " \t"))
+		j++;
+	while (s[a->i + i + j] && !check_char(s[a->i + i + j], " \t"))
 	{
-		(line + a->j)[i] = (s + a->i)[i];
+		(line + a->j)[i - 1] = (s + a->i)[i + j];
+		i++;
 	}
-	a->i += i;
-	a->j += i;
+	a->i += i + j;
+	a->j += i - 1;
 }
 
 static void	putline_fd(char *s, int fd)

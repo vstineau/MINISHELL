@@ -58,7 +58,7 @@ int	get_pipe(char *s, int *i, t_cmd **current, t_minishell *info)
 	return (1);
 }
 
-t_cmd	*parse(char *s, char **envp, t_minishell *info)
+t_cmd	*parse(char *s, t_minishell *info)
 {
 	t_cmd *c;
 	t_cmd *current;
@@ -75,18 +75,10 @@ t_cmd	*parse(char *s, char **envp, t_minishell *info)
 	{
 		while (*s == ' ')
 			s++;
-		if (*s == '~')
-			;///s += tilde(current, i_arg, info);
 		if (*s == '<')
 			s += infile(s, current, info);
 		else if (*s == '>')
 			s += outfile(s, current);
-		else if (*s == '$')
-			;//s += env_variables(s, envp, current, i_arg++);
-		else if (*s == '"')
-			s += double_quotes(s, current, envp, &i_arg);
-		else if (*s == '\'')
-			s += single_quotes(s, current, i_arg++);
 		else if (*s == '|')
 			s += get_pipe(s, &i_arg, &current, info);
 		else
