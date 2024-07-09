@@ -44,6 +44,10 @@ int	get_cmd(char *s, t_cmd *c, int *i_arg)
 		i = 0;
 		while (s[j + i] && s[j + i] != ' ' && s[i + j] != '\t')
 		{
+			if (s[i + j)] == "\'")
+				;//single_quotes();
+			else if (s[i + j)] == "\"")
+				;//double_quotes();
 			c->cmd[i] = s[i + j];
 			i++;
 		}

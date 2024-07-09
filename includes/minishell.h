@@ -96,7 +96,7 @@ int	infile(char *s, t_cmd *c, t_minishell *info);
 int	outfile(char *s, t_cmd *c);
 int	heredoc(char *s, t_cmd *c, t_minishell *info);
 int	no_heredoc(char *s, t_cmd *c, t_minishell *info);
-int	single_quotes(char *s, t_cmd *c, int i);
+int	single_quotes(char *s, t_cmd *c, int i, int k);
 int	double_quotes(char *s, t_cmd *c,char **envp, int *i);
 int	env_variables(char *s, char **envp, t_cmd *c, int i);
 char *get_env_variable(char *var, char **envp);

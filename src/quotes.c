@@ -33,16 +33,11 @@ int	expand_single_quotes(t_iterator *a, char *line)
 	return (1);
 }
 
-int	single_quotes(char *s, t_cmd *c, int i)
+int	single_quotes(char *s, t_cmd *c, int i, int k)
 {
 	int	j;
-	int	k;
 
 	j = 1;
-	k = 0;
-	c->arg[i] = ft_calloc(len_quote(s + j, '\'') + 1, 1);
-	if (!c->arg[i])
-		return (0); // error et exit
 	while (s[j] && s[j] != '\'')
 		c->arg[i][k++] = s[j++];
 	j++;
