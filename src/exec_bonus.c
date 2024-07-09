@@ -11,11 +11,11 @@ int	exec_first(char *av, char **env,  t_cmd *c)
 	if (c->pipe == PIPE)
 	{
 		if (pipe(pip) == -1)
-			perror("");
+			perror("A0");
 	}
 	id = fork();
 	if (id == -1)
-		perror("");
+		perror("A1");
 	if (id == 0)
 	{
 		path = find_path(env, av);
@@ -24,7 +24,10 @@ int	exec_first(char *av, char **env,  t_cmd *c)
 			apply_exec_first_bns(av, env, pip, c);
 		free_alls(path, cmd);
 		if (c->pipe == PIPE)
+		{
+			printf("JUUURE\n");
 			exit_close(pip);
+		}
 	}
 	return (pip[0]);
 }
@@ -111,6 +114,6 @@ void	exec(char **env, t_cmd *c)
 
 	while (wait(NULL) > 0)
 		;
-	close (pipout);
+	//close (pipout);
 	
 }
