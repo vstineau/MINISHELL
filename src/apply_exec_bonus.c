@@ -55,12 +55,12 @@ void	apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av, t_cmd *c)
 	char	*path;
 	char	**cmd;
 
-	if (c->infile) 
+	if (c->next && c->next->pipe == PIPE)
 	{
 		if (dup2(fd, STDIN_FILENO) == -1)
 			perror("");
 	}
-	if (c->outfile) 
+	if (c->next && c->next->pipe == PIPE)
 	{
 		if (dup2(pip[1], STDOUT_FILENO) == -1)
 		perror("");
@@ -68,7 +68,15 @@ void	apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av, t_cmd *c)
 	close(fd);
 	close(pip[1]);
 	path = find_path(env, av);
-	cmd = find_cmd(av);
+	cmd = ft_calloc(sizeof(char **), env_size(c->arg) + 2);
+	cmd[0] = av;
+	int i = 1;
+	while (c->arg[i - 1])
+	{
+		cmd[i] = ft_calloc(sizeof(char *), ft_strlen(c->arg[i - 1]) + 1);
+		ft_memcpy(cmd[i], c->arg[i - 1], ft_strlen(c->arg[i - 1]));
+		i++;
+	}
 	if (execve(path, cmd, env) == -1)
 	{
 		close (pip[0]);

@@ -8,7 +8,7 @@ int	exec_first(char *av, char **env,  t_cmd *c)
 	char	*path;
 	char	**cmd;
 
-	if (c->pipe == PIPE)
+	if (c->next && c->next->pipe == PIPE)
 	{
 		if (pipe(pip) == -1)
 			perror("A0");
@@ -29,7 +29,7 @@ int	exec_first(char *av, char **env,  t_cmd *c)
 			exit_close(pip);
 		}
 	}
-	return (pip[0]);
+	return (pip[1]);
 }
 
 int	exec_midle(char *av, char **env, int fd, t_cmd *c)
@@ -39,8 +39,11 @@ int	exec_midle(char *av, char **env, int fd, t_cmd *c)
 	int		id;
 	int		pip[2];
 
-	if (pipe(pip) == -1)
-		exit(EXIT_FAILURE);
+	if (c->next && c->next->pipe == PIPE)
+	{
+		if (pipe(pip) == -1)
+			exit(EXIT_FAILURE);
+	}
 	id = fork();
 	if (id == -1)
 		perror("");
@@ -51,15 +54,15 @@ int	exec_midle(char *av, char **env, int fd, t_cmd *c)
 		cmd = find_cmd(av);
 		if (path != NULL && cmd != NULL)
 			apply_exec_middle_bonus(fd, pip, env, av, c);
-		free_alls(path, cmd);
 		close (fd);
 		close (pip[1]);
 		exit (-1);
 	}
-	close(pip[1]);
+	//close(pip[1]);
 	close(fd);
 	return (pip[0]);
 }
+
 
 void	exec_last(char *av, char **env, char *file, int fd, t_cmd *c)
 {
@@ -99,7 +102,7 @@ void	exec(char **env, t_cmd *c)
 	pipout = 42;
 	if (c->cmd)
 	{
-		pipout = exec_first(c->cmd, env, c);
+		pipout = exec_midle(c->cmd, env, pipout, c);
 	}
 	//while (i < ac - 1)
 	//{
