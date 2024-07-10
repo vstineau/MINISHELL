@@ -15,4 +15,6 @@ void	our_env(char **env, int fd)
 		}
 		i++;
 	}
+	if (fd != 1)
+		close (fd);
 }

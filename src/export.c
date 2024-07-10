@@ -18,8 +18,9 @@ char	**ft_print_export(char **env, int fd)
 		ft_putstr_fd("\n", fd);
 		i++;
 	}
+	if (fd != 1)
+		close (fd);
 	return (env2);
-		
 }
 
 char	*get_first_av(char *av)

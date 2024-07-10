@@ -42,10 +42,11 @@ void	echo(char **av, int fd)
 		if (av[i + 1] != NULL)
 			ft_putstr_fd(" ", fd);
 		i++;
-
 	}
 	if (check_echo_args(av[0], 0) == 0)
-		ft_putstr_fd("\n", fd);
+		ft_putstr_fd("\n", fd);	
+	if (fd != 1)
+		close (fd);
 }
 
 /*int	main(int ac, char **av)
