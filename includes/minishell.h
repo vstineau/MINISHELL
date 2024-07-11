@@ -56,6 +56,7 @@ typedef struct s_cmd
 	char	**arg;
 	int		fd;
 	t_token	pipe;
+	int		previous_pipe;
 	t_redirect	redirect;
 	struct s_cmd	*next;
 }						t_cmd;
@@ -112,7 +113,7 @@ char	*find_path(char **env, char *av);
 char	**find_cmd(char *av);
 char	*return_path(char **cmd, char *endfile, char *path);
 void	apply_exec_first_bns(char *av, char **env, int pip[2], t_cmd *c);
-void	apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av, t_cmd *c);
+void	apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c);
 void	apply_exec_last_bns(char *av, char **env, int outfile, int fd, t_cmd *c);
 void	exec_builtin(t_cmd *c, t_minishell *info);
 void	exec(char **env, t_cmd *c);
