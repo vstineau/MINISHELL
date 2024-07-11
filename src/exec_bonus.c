@@ -39,11 +39,11 @@ int	exec_midle(char *av, char **env, int fd, t_cmd *c)
 	int		id;
 	int		pip[2];
 
-	if (c->next && c->next->pipe == PIPE)
-	{
-		if (pipe(pip) == -1)
-			exit(EXIT_FAILURE);
-	}
+	///if (c->next && c->next->pipe == PIPE)
+	//{
+	if (pipe(pip) == -1)
+		exit(EXIT_FAILURE);
+	//}
 	id = fork();
 	if (id == -1)
 		perror("");
@@ -58,7 +58,7 @@ int	exec_midle(char *av, char **env, int fd, t_cmd *c)
 		close (pip[1]);
 		exit (-1);
 	}
-	//close(pip[1]);
+	close(pip[1]);
 	close(fd);
 	return (pip[0]);
 }
@@ -100,9 +100,10 @@ void	exec(char **env, t_cmd *c)
 
 	i = 0;
 	pipout = 42;
-	if (c->cmd)
+	if (c)
 	{
 		pipout = exec_midle(c->cmd, env, pipout, c);
+		c = c->next;
 	}
 	//while (i < ac - 1)
 	//{
@@ -117,6 +118,6 @@ void	exec(char **env, t_cmd *c)
 
 	while (wait(NULL) > 0)
 		;
-	//close (pipout);
+	close (pipout);
 	
 }

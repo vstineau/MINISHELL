@@ -55,12 +55,12 @@ void	apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av, t_cmd *c)
 	char	*path;
 	char	**cmd;
 
-	if (c->next && c->next->pipe == PIPE)
+	if (c->infile)
 	{
 		if (dup2(fd, STDIN_FILENO) == -1)
 			perror("");
 	}
-	if (c->next && c->next->pipe == PIPE)
+	if (c->next && c->next->outfile)
 	{
 		if (dup2(pip[1], STDOUT_FILENO) == -1)
 		perror("");
