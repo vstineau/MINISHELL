@@ -29,21 +29,24 @@ void	echo(char **av, int fd)
 
 	j = 0;
 	i = 0;
-	while (av[j])
+	if (av)
 	{
-		i = check_echo_args(av[i], i);
-		if (j == i)
-			break ;
-		j++;
+		while (av[j])
+		{
+			i = check_echo_args(av[i], i);
+			if (j == i)
+				break ;
+			j++;
+		}
+		while (av[i] != NULL)
+		{
+			ft_putstr_fd(av[i], fd);
+			if (av[i + 1] != NULL)
+				ft_putstr_fd(" ", fd);
+			i++;
+		}
 	}
-	while (av[i] != NULL)
-	{
-		ft_putstr_fd(av[i], fd);
-		if (av[i + 1] != NULL)
-			ft_putstr_fd(" ", fd);
-		i++;
-	}
-	if (check_echo_args(av[0], 0) == 0)
+	if (av[0] == NULL || check_echo_args(av[0], 0) == 0)
 		ft_putstr_fd("\n", fd);	
 	if (fd != 1)
 		close (fd);
