@@ -31,7 +31,7 @@ char	*get_first_av(char *av)
 
 	i = 0;
 	if (ft_strchr(av, '=') == NULL)
-		return (NULL);
+		return (av);
 	len = ft_strlen(av);
 	while (av[i] != '=' && i < len)
 		i++;
