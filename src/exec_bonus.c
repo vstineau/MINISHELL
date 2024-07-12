@@ -7,9 +7,13 @@ int	exec_midle(t_minishell *info, int fd, t_cmd *c)
 	int		id;
 	int		pip[2];
 
-	if (c->next == NULL && c->previous_pipe != 1
-		&& (ft_strcmp(c->cmd, "exit") == 0))
-		our_exit(c, info);
+	if (c->next == NULL && c->previous_pipe != 1)
+	{
+		if (ft_strcmp(c->cmd, "exit") == 0)
+			our_exit(c, info);
+		if (ft_strcmp(c->cmd, "cd") == 0)
+			cd(c->arg, info->env);
+	}
 	if (pipe(pip) == -1)
 		exit(EXIT_FAILURE);
 	id = fork();
