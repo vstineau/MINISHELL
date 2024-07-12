@@ -14,12 +14,25 @@ int	is_builtin(t_cmd *c)
 	exit (130);
 }
 
-void	exec_builtin(t_cmd *c, t_minishell *info)
+void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2])
 {
 	int	i;
+	char	*path;
 	c->fd = 1;
 	if (c->outfile != NULL)
 		c->fd = open(c->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+//	else
+//		c->fd = fd;
+	if (c->previous_pipe == 1)
+	{
+		if (dup2(fd, STDIN_FILENO) == -1)
+			perror("");
+	}
+	if (c->next && c->next->pipe == PIPE)
+	{
+		if (dup2(pip[1], STDOUT_FILENO) == -1)
+			perror("");
+	}
 	i = is_builtin(c);
 	if (ft_strcmp(c->cmd, "echo") == 0) 
 		echo(c->arg, c->fd);
@@ -36,5 +49,9 @@ void	exec_builtin(t_cmd *c, t_minishell *info)
 	else if (ft_strcmp(c->cmd, "exit") == 0)
 		our_exit(c, info);
 	else if (i == 0)
-		exec(info->env, c);
+	{
+		path = find_path(info->env, c->cmd);
+		if (path != NULL)
+			apply_exec_middle_bonus(fd, pip, info->env, c);
+	}
 }

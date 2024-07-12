@@ -115,8 +115,9 @@ char	*return_path(char **cmd, char *endfile, char *path);
 void	apply_exec_first_bns(char *av, char **env, int pip[2], t_cmd *c);
 void	apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c);
 void	apply_exec_last_bns(char *av, char **env, int outfile, int fd, t_cmd *c);
-void	exec_builtin(t_cmd *c, t_minishell *info);
-void	exec(char **env, t_cmd *c);
+void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2]);
+void	exec(t_minishell *info, t_cmd *c);
+int		is_builtin(t_cmd *c);
 //----------BUILTINS---------------------//
 void	cd(char **arg, char **envp);
 void	pwd(int	fd);

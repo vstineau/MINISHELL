@@ -2,13 +2,14 @@
 #include "../includes/minishell.h"
 
 
-int	exec_midle(char *av, char **env, int fd, t_cmd *c)
+int	exec_midle(t_minishell *info, int fd, t_cmd *c)
 {
-	char	*path;
-//	char	**cmd;
 	int		id;
 	int		pip[2];
 
+	if (c->next == NULL && c->previous_pipe != 1
+		&& (ft_strcmp(c->cmd, "exit") == 0))
+		our_exit(c, info);
 	if (pipe(pip) == -1)
 		exit(EXIT_FAILURE);
 	id = fork();
@@ -17,10 +18,7 @@ int	exec_midle(char *av, char **env, int fd, t_cmd *c)
 	if (id == 0)
 	{
 		close(pip[0]);
-		path = find_path(env, av);
-		//cmd = find_cmd(av);
-		if (path != NULL)
-			apply_exec_middle_bonus(fd, pip, env, c);
+		exec_builtin(c, info, fd, pip);
 		close (fd);
 		close (pip[1]);
 		exit (-1);
@@ -30,7 +28,7 @@ int	exec_midle(char *av, char **env, int fd, t_cmd *c)
 	return (pip[0]);
 }
 
-void	exec(char **env, t_cmd *c)
+void	exec(t_minishell *info, t_cmd *c)
 {
 	int	i;
 	int	pipout;
@@ -40,7 +38,7 @@ void	exec(char **env, t_cmd *c)
 	while (c)
 	{
 		if (c->cmd)
-			pipout = exec_midle(c->cmd, env, pipout, c);
+			pipout = exec_midle(info, pipout, c);
 		if (c->pipe == PIPE)
 			c->next->previous_pipe = 1;
 		c = c->next;
