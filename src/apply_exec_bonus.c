@@ -47,34 +47,6 @@ void	apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c)
 		exit(-1);
 	}
 	free_split(cmd);
-	free(path);
 }
 
-void	apply_exec_last_bns(char *av, char **env, int outfile, int fd, t_cmd *c)
-{
-	char	*path;
-	char	**cmd;
 
-	path = find_path(env, av);
-	cmd = find_cmd(av);
-	if (c->infile) 
-	{
-		if (dup2(fd, STDIN_FILENO) == -1)
-			perror("");
-	}
-	if (c->outfile)
-	{
-		if (dup2(outfile, STDOUT_FILENO) == -1)
-			perror("");
-	}
-	close (fd);
-	close (outfile);
-	if (execve(path, cmd, env) == -1)
-	{
-		free (path);
-		free_split(cmd);
-		exit(-1);
-	}
-	free (path);
-	free_split(cmd);
-}

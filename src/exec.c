@@ -21,8 +21,6 @@ void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2])
 	c->fd = 1;
 	if (c->outfile != NULL)
 		c->fd = open(c->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-//	else
-//		c->fd = fd;
 	if (c->previous_pipe == 1)
 	{
 		if (dup2(fd, STDIN_FILENO) == -1)
