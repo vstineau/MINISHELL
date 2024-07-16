@@ -1,21 +1,42 @@
 
 #include "../includes/minishell.h"
 
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+
 char	**ft_print_export(char **env, int fd)
 {
 	int		i;
 	char	**env2;
 	int		len;
+	int		j;
 
+	j = 0;
 	len = env_size(env);
 	i = 0;
 	env2 = get_env(env);
 	ft_sort_strings(len, env);
 	while (env[i])
 	{
+		len = ft_strlen(env[i]);
 		ft_putstr_fd("declare -x ", fd);
-		ft_putstr_fd(env[i], fd);
+		while (env[i][j] != '=')
+		{
+			ft_putchar_fd(env[i][j], fd);
+			j++;
+		}
+		ft_putstr_fd("=", fd);
+		ft_putstr_fd("\"", fd);
+		while (j < len)
+		{
+			ft_putchar_fd(env[i][j], fd);
+			j++;
+		}
+		ft_putstr_fd("\"", fd);
 		ft_putstr_fd("\n", fd);
+		j = 0;
 		i++;
 	}
 	if (fd != 1)
@@ -54,7 +75,7 @@ char	**our_export(char **av, char **env, int fd)
 	int	len;
 	int j;
 	char **env2;
-
+	
 	j = 0;
 	i = 0;
 	len = 0;
