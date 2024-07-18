@@ -22,25 +22,30 @@ char	**ft_print_export(char **env, int fd)
 	{
 		len = ft_strlen(env[i]);
 		ft_putstr_fd("declare -x ", fd);
-		while (env[i][j] != '=')
+		while (env[i][j] != '=' && j < len)
 		{
 			ft_putchar_fd(env[i][j], fd);
 			j++;
 		}
-		ft_putstr_fd("=", fd);
-		ft_putstr_fd("\"", fd);
-		while (j < len)
+		j++;
+		if (ft_strchr(env[i], '=') != NULL)
 		{
-			ft_putchar_fd(env[i][j], fd);
-			j++;
+			ft_putstr_fd("=", fd);
+			ft_putstr_fd("\"", fd);
+			while (j < len)
+			{
+				ft_putchar_fd(env[i][j], fd);
+				j++;
+			}
+			ft_putstr_fd("\"", fd);
 		}
-		ft_putstr_fd("\"", fd);
 		ft_putstr_fd("\n", fd);
 		j = 0;
 		i++;
 	}
 	if (fd != 1)
 		close (fd);
+	free_split(env);
 	return (env2);
 }
 
@@ -51,20 +56,18 @@ char	*get_first_av(char *av)
 	int		len;
 
 	i = 0;
+	len = ft_strlen(av);
 	if (ft_strchr(av, '=') == NULL)
-		return (av);
+	{
+		av1 = malloc(sizeof(char) * len + 1);
+		ft_strcpy(av1, av);
+		return (av1);
+	}
 	len = ft_strlen(av);
 	while (av[i] != '=' && i < len)
 		i++;
-	av1 = malloc(sizeof(char) * i + 1);
-	i = 0;
-	while (av[i + 1] != '=')
-	{
-		av1[i] = av[i];
-		i++;
-	}
-	av1[i] = av[i];
-	av1[i+1] = '\0';
+	av1 = malloc(sizeof(char) * len + 1);
+	ft_strcpy(av1, av);
 	return (av1);
 }
 
@@ -101,7 +104,7 @@ char	**our_export(char **av, char **env, int fd)
 				j++;
 			}
 			env2[i] = ft_strdup(av[0]);
-			free(av1);
+			free_split(env);
 			return (env2);
 		}
 		if (ft_strncmp(env[i], av1, len) != 0)
@@ -117,10 +120,12 @@ char	**our_export(char **av, char **env, int fd)
 			env2[i] = ft_strdup(env[i]);
 			i++;
 		}
-		env2[i] = ft_strdup(av[0]);
+		env2[i] = ft_strdup(av1);
 		free(av1);
+		free_split(env);
 		return (env2);
 	}
+	free(av1);
 	return (env);
 }
 
