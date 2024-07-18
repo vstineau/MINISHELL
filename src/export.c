@@ -87,7 +87,10 @@ char	**our_export(char **av, char **env, int fd)
 		return (ft_print_export(env, fd));
 	av1 = get_first_av(av[0]);
 	if (av1 == NULL)
-		return (env2 = get_env(env));
+	{
+		free(av1);
+		return (env);
+	}
 	len = ft_strlen(av1);
 	while (env[i])
 	{
@@ -103,7 +106,8 @@ char	**our_export(char **av, char **env, int fd)
 					env2[j] = ft_strdup(env[j]);
 				j++;
 			}
-			env2[i] = ft_strdup(av[0]);
+			env2[i] = ft_strdup(av1);
+			free(av1);
 			free_split(env);
 			return (env2);
 		}

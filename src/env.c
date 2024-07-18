@@ -4,11 +4,13 @@
 void	our_env(char **env, int fd)
 {
 	int	i;
-
+	char *test;
+	
 	i = 0;
 	while (env[i])
 	{
-		if (env[i] != NULL && ft_strchr(env[i], '=') != NULL)
+		test = ft_strchr(env[i], '=');
+		if (env[i] != NULL && test != NULL && test[1] != '\0')
 		{
 			ft_putstr_fd(env[i], fd);
 			ft_putstr_fd("\n", fd);

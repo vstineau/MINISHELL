@@ -49,7 +49,7 @@ char	**unset(char **av, char **env)
 	i = 0;
 	k = 0;
 	if (av[k] == NULL)
-		return (env2 = get_env(env));
+		return (env2);
 	while (av[k])
 	{
 		len = ft_strlen(av[k]);
@@ -69,6 +69,7 @@ char	**unset(char **av, char **env)
 					env2[j] = ft_strdup(env[j + 1]);
 					j++;
 				}
+				free_split(env);
 				return (env2);
 			}
 			i++;
