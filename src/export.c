@@ -64,10 +64,11 @@ char	*get_first_av(char *av)
 		return (av1);
 	}
 	len = ft_strlen(av);
+	printf("%i\n", len);
 	while (av[i] != '=' && i < len)
 		i++;
 	av1 = malloc(sizeof(char) * len + 1);
-	ft_strcpy(av1, av);
+	ft_strncpy(av1, av, i);
 	return (av1);
 }
 
@@ -96,6 +97,7 @@ char	**our_export(char **av, char **env, int fd)
 	{
 		if (ft_strncmp(env[i], av1, len) == 0)
 		{
+			printf("TEST\n");
 			j = env_size(env);
 			len = ft_strlen(av[0]);
 			env2 = ft_calloc(sizeof(char *), (j + 1));
@@ -106,7 +108,7 @@ char	**our_export(char **av, char **env, int fd)
 					env2[j] = ft_strdup(env[j]);
 				j++;
 			}
-			env2[i] = ft_strdup(av1);
+			env2[i] = ft_strdup(av[0]);
 			free(av1);
 			free_split(env);
 			return (env2);

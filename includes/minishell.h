@@ -118,6 +118,8 @@ void	apply_exec_last_bns(char *av, char **env, int outfile, int fd, t_cmd *c);
 void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2]);
 void	exec(t_minishell *info, t_cmd *c);
 int		is_builtin(t_cmd *c);
+char	*get_first_av(char *av);
+
 //----------BUILTINS---------------------//
 void	cd(char **arg, char **envp);
 void	pwd(int	fd);

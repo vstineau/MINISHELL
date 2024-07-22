@@ -1,22 +1,25 @@
 
 #include "../includes/minishell.h"
 
-//char	**unset(char *av, char **env)
-/*{
-	char	**env2;
-	int		i;
-	int		len;
-	int		j;
+char	**free_split_get_env(char **env2, char **env)
+{
+	free_split(env2);
+	env2 = get_env(env);
+	free_split(env);
+	return (env2);
+}
 
-	j = 0;
-	env2 = NULL;
+char	**unset_each(char *av, char **env, int len, int j)
+{
+	int	i;
+	char **env2;
+	
 	i = 0;
-	len = ft_strlen(av);
+	env2 = calloc(sizeof(char *), env_size(env)); 
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], av, len) == 0)
 		{
-			env2 = calloc(sizeof(char *), env_size(env)); 
 			while (j < i)
 			{
 				env2[j] = ft_strdup(env[j]);
@@ -27,59 +30,37 @@
 				env2[j] = ft_strdup(env[j + 1]);
 				j++;
 			}
-			return (env2);
+			return (free_split(env), env2);
 		}
 		i++;
 	}
-	if (i == env_size(env))
-		env2 = get_env(env);
-	return (env2);
-}*/
+	return (free_split_get_env(env2, env));
+}
 
 char	**unset(char **av, char **env)
 {
 	char	**env2;
-	int		i;
 	int		len;
 	int		j;
 	int		k;
+	char	*av1;
 
 	j = 0;
-	env2 = NULL;
-	i = 0;
 	k = 0;
-	if (av[k] == NULL)
-		return (env2);
+	env2 = get_env(env);
 	while (av[k])
 	{
-		len = ft_strlen(av[k]);
-		i = 0;
-		while (env[i])
+		if (av[k] == NULL)
 		{
-			if (ft_strncmp(env[i], av[k], len) == 0)
-			{
-				env2 = calloc(sizeof(char *), env_size(env)); 
-				while (j < i)
-				{
-					env2[j] = ft_strdup(env[j]);
-					j++;
-				}
-				while (j < env_size(env) - 1)
-				{
-					env2[j] = ft_strdup(env[j + 1]);
-					j++;
-				}
-				free_split(env);
-				return (env2);
-			}
-			i++;
+			free_split(env);
+			return (env2);
 		}
+		av1 = get_first_av(av1);
+		len = ft_strlen(av1);
+		env2 = unset_each(av1, env2, len, j);
 		k++;
 	}
-	//printf("%d\n", i);
-	//printf("%d\n", env_size(env));
-	if (i == env_size(env))
-		env2 = get_env(env);
+	free_split(env);
 	return (env2);
 }
 
