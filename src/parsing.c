@@ -67,13 +67,13 @@ t_cmd	*parse(char *s, t_minishell *info)
 	g_signal_received = 0;
 	if (!s)
 		return (NULL);
-	i_arg =0;
+	i_arg = 0;
 	c = NULL;
 	c = ft_lstnew(s, c, info);
 	current = c;
 	while (*s != '\0')
 	{
-		while (*s == ' ')
+		while (*s == ' ' || *s == '\t')
 			s++;
 		if (*s == '<')
 			s += infile(s, current, info);
