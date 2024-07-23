@@ -1,7 +1,6 @@
 
 #include "../includes/minishell.h"
 
-
 int	exec_midle(t_minishell *info, int fd, t_cmd *c)
 {
 	int		id;
@@ -10,7 +9,7 @@ int	exec_midle(t_minishell *info, int fd, t_cmd *c)
 	if (c->next == NULL && c->previous_pipe != 1 && (is_builtin(c) == 1))
 	{
 		exec_builtin(c, info, fd, pip);
-		return(fd);
+		return (fd);
 	}
 	if (pipe(pip) == -1)
 		exit(EXIT_FAILURE);
@@ -48,5 +47,4 @@ void	exec(t_minishell *info, t_cmd *c)
 	while (wait(NULL) > 0)
 		;
 	close (pipout);
-	
 }

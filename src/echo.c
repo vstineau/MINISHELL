@@ -47,7 +47,7 @@ void	echo(char **av, int fd)
 		}
 	}
 	if (av[0] == NULL || check_echo_args(av[0], 0) == 0)
-		ft_putstr_fd("\n", fd);	
+		ft_putstr_fd("\n", fd);
 	if (fd != 1)
 		close (fd);
 }

@@ -84,7 +84,7 @@ char	**export_each(char **env, char *av1, int len, char *av)
 	{
 		if (ft_strncmp(env[i], av1, len) == 0)
 		{
-			env2 = calloc(sizeof(char *), env_size(env) + 1); 
+			env2 = calloc(sizeof(char *), env_size(env) + 1);
 			j = 0;
 			while (env[j])
 			{
@@ -122,17 +122,17 @@ char	**export_each(char **env, char *av1, int len, char *av)
 
 char	**our_export(char **av, char **env, int fd)
 {
-	char *av1;
-	int	i;
-	int	len;
-	int j;
-	char **env2;
-	int	k = 0;
+	char	*av1;
+	int		i;
+	int		len;
+	int		j;
+	char	**env2;
+	int		k = 0;
 
 	j = 0;
 	i = 0;
 	len = 0;
-	env2 = get_env(env);;
+	env2 = get_env(env);
 	if (av[0] == NULL)
 		return (free_split(env), ft_print_export(env2, fd));
 	while (av[k])
@@ -147,25 +147,3 @@ char	**our_export(char **av, char **env, int fd)
 	free_split(env);
 	return (env2);
 }
-
-/*int	main(int ac, char **av, char **env)
-{
-    (void)ac;
-    int i = 0;
-	//
-	//while (env[i])
-	//{
-	//	printf("%s\n", env[i]);
-	//	i++;
-	//}
-	char **e = export(av, env);
-	i = 0;
-	printf("/_____________________________\n");
-	while (e[i])
-	{
-	//	printf("%s\n", e[i]);
-		free(e[i]);
-		i++;
-	}
-	free (e);
-}*/

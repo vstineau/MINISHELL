@@ -1,7 +1,6 @@
 
 #include "../includes/minishell.h"
 #include <stdio.h>
-//#include <inttypes.h>
 
 int	ft_isdigit(int c)
 {
@@ -39,23 +38,7 @@ __int128	ato__i128(const char *str)
 	return (resultat * signe);
 }
 
-/*void print_uint128(__int128 value) {
-    if (value < 0) {
-        putchar('-');
-        value = -value;
-    }
-    
-    uint64_t high = value >> 64;
-    uint64_t low = value & 0xFFFFFFFFFFFFFFFF;
-
-    if (high == 0) {
-        printf("%" PRIu64, low);
-    } else {
-        printf("%" PRIu64 "%018" PRIu64, high, low);
-    }
-}*/
-
-void    our_exit(t_cmd *c, t_minishell *info)
+void	our_exit(t_cmd *c, t_minishell *info)
 {
 	int			i;
 	__int128	atoi_crack;
@@ -68,10 +51,7 @@ void    our_exit(t_cmd *c, t_minishell *info)
 		exit (0);
 	}
 	atoi_crack = ato__i128(c->arg[0]);
-	//__int128 num = (__int128)atoi_crack;
-    //print_uint128(num);
 	printf("\n");
-
 	if (c->arg[0][0] == '-')
 		i = 1;
 	else
@@ -83,18 +63,10 @@ void    our_exit(t_cmd *c, t_minishell *info)
 		else
 			exit (2);
 	}
-	if ((atoi_crack > LLONG_MAX || atoi_crack < LLONG_MIN) 
+	if ((atoi_crack > LLONG_MAX || atoi_crack < LLONG_MIN)
 		&& (ft_strlen(c->arg[0]) > 20))
 		exit (2);
 	value = (atoi_crack % 256);
-	//printf("%i\n", value);
 	free_cmd(c, ENV, info);
 	exit (value);
 }
-
-/*int	main(int ac, char **av, char **env)
-{
-	(void) ac;
-	(void) av;
-	our_exit(env, "9223372036854775807");
-}*/

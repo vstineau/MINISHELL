@@ -3,8 +3,8 @@
 
 char	*ft_strjoin_free(char *s1, char *s2)
 {
-	int	len1;
-	int	len2;
+	int		len1;
+	int		len2;
 	char	*join;
 
 	if (!s1 || !s2)
@@ -20,18 +20,18 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	return (join);
 }
 
-char *get_home(char **envp, char *home)
+char	*get_home(char **envp, char *home)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while(envp[i])
+	while (envp[i])
 	{
-	 j = 0;
+		j = 0;
 		if (envp[i][j] == home[j])
 		{
-			while(envp[i][j] == home[j])
+			while (envp[i][j] == home[j])
 				j++;
 			if (envp[i][j] == '/')
 				return (envp[i] + j);
@@ -43,29 +43,9 @@ char *get_home(char **envp, char *home)
 
 void	cd(char **arg, char **envp)
 {
-/*	char	*pwd;
-	if (path == NULL)
-	{
-		chdir(get_home(envp, "HOME="));
-		return ;
-	}
-	if (*path == '~')
-	{
-		if (!(pwd = get_env_variable("HOME=", envp)))
-			return ; //free exit
-		pwd = ft_strjoin_free(pwd, path + 1);
-		chdir(pwd);
-		free(pwd);
-		return ;
-	}
-	pwd = getcwd(NULL, 0);
-	pwd = ft_strjoin_free(pwd, "/");
-	pwd = ft_strjoin_free(pwd, path);
-	chdir(pwd);
-	free(pwd);*/
 	int		i;
 	char	*pwd;
-	
+
 	i = 0;
 	while (arg[i])
 		i++;
@@ -79,7 +59,7 @@ void	cd(char **arg, char **envp)
 	if (*arg[0] == '~')
 	{
 		if (!(pwd = get_env_variable("HOME=", envp)))
-			return ; //free exit
+			return ;
 		pwd = ft_strjoin_free(pwd, arg[0] + 1);
 		chdir(pwd);
 		free(pwd);

@@ -11,11 +11,11 @@ char	**free_split_get_env(char **env2, char **env)
 
 char	**unset_each(char *av, char **env, int len, int j)
 {
-	int	i;
-	char **env2;
-	
+	int		i;
+	char	**env2;
+
 	i = 0;
-	env2 = calloc(sizeof(char *), env_size(env)); 
+	env2 = calloc(sizeof(char *), env_size(env));
 	while (env[i])
 	{
 		while (env[i][len] != '=')

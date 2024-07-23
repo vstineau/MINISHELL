@@ -3,9 +3,9 @@
 
 void	our_env(char **env, int fd)
 {
-	int	i;
-	char *test;
-	
+	int		i;
+	char	*test;
+
 	i = 0;
 	while (env[i])
 	{

@@ -7,7 +7,8 @@ void	apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c)
 	char	*path;
 	char	**cmd;
 	int		infile;
-
+	int		i;
+	
 	if (c->infile)
 	{
 		infile = open(c->infile, O_RDONLY);
@@ -32,7 +33,7 @@ void	apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c)
 	path = find_path(env, c->cmd);
 	cmd = ft_calloc(sizeof(char **), env_size(c->arg) + 2);
 	cmd[0] = c->cmd;
-	int i = 1;
+	i = 1;
 	while (c->arg[i - 1])
 	{
 		cmd[i] = ft_calloc(sizeof(char *), ft_strlen(c->arg[i - 1]) + 1);
@@ -48,5 +49,4 @@ void	apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c)
 	}
 	free_split(cmd);
 }
-
 
