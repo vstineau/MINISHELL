@@ -64,7 +64,6 @@ char	*get_first_av(char *av)
 		return (av1);
 	}
 	len = ft_strlen(av);
-	printf("%i\n", len);
 	while (av[i] != '=' && i < len)
 		i++;
 	av1 = malloc(sizeof(char) * len + 1);
@@ -72,35 +71,20 @@ char	*get_first_av(char *av)
 	return (av1);
 }
 
-char	**our_export(char **av, char **env, int fd)
+char	**export_each(char **env, char *av1, int len, char *av)
 {
-	char *av1;
-	int	i;
-	int	len;
-	int j;
-	char **env2;
-	
+	char	**env2;
+	int		i;
+	int		j;
+
 	j = 0;
 	i = 0;
-	len = 0;
 	env2 = NULL;
-	if (av[0] == NULL)
-		return (ft_print_export(env, fd));
-	av1 = get_first_av(av[0]);
-	if (av1 == NULL)
-	{
-		free(av1);
-		return (env);
-	}
-	len = ft_strlen(av1);
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], av1, len) == 0)
 		{
-			printf("TEST\n");
-			j = env_size(env);
-			len = ft_strlen(av[0]);
-			env2 = ft_calloc(sizeof(char *), (j + 1));
+			env2 = calloc(sizeof(char *), env_size(env) + 1); 
 			j = 0;
 			while (env[j])
 			{
@@ -108,7 +92,7 @@ char	**our_export(char **av, char **env, int fd)
 					env2[j] = ft_strdup(env[j]);
 				j++;
 			}
-			env2[i] = ft_strdup(av[0]);
+			env2[i] = ft_strdup(av);
 			free(av1);
 			free_split(env);
 			return (env2);
@@ -126,13 +110,42 @@ char	**our_export(char **av, char **env, int fd)
 			env2[i] = ft_strdup(env[i]);
 			i++;
 		}
-		env2[i] = ft_strdup(av1);
+		env2[i] = ft_strdup(av);
 		free(av1);
 		free_split(env);
 		return (env2);
 	}
 	free(av1);
+	free_split(env2);
 	return (env);
+}
+
+char	**our_export(char **av, char **env, int fd)
+{
+	char *av1;
+	int	i;
+	int	len;
+	int j;
+	char **env2;
+	int	k = 0;
+
+	j = 0;
+	i = 0;
+	len = 0;
+	env2 = get_env(env);;
+	if (av[0] == NULL)
+		return (free_split(env), ft_print_export(env2, fd));
+	while (av[k])
+	{
+		av1 = get_first_av(av[k]);
+		if (av1 == NULL)
+			return (free(av1), free_split(env), env2);
+		len = ft_strlen(av1);
+		env2 = export_each(env2, av1, len, av[k]);
+		k++;
+	}
+	free_split(env);
+	return (env2);
 }
 
 /*int	main(int ac, char **av, char **env)
