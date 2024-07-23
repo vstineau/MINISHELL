@@ -79,7 +79,7 @@ char	*ft_strncpy(char *dest, char *src, int n);
 size_t	count_words(char const *s, char c);
 int	count_arg(char *s);
 char	*ft_strjoin_free(char *s1, char *s2);
-char	*get_prompt(char *prompt, t_minishell *info);
+char	*get_prompt(char *prompt, t_minishell *info, t_cmd *c);
 int	check_char(char c, char *s);
 int	is_uppercase(char c);
 //----------EXPAND----------------------//
@@ -93,25 +93,26 @@ int	expand_single_quotes(t_iterator *a, char *line);
 char	**get_env(char **envp);
 t_cmd	*parse(char *line, t_minishell *info);
 int	infile(char *s, t_cmd *c, t_minishell *info);
-int	outfile(char *s, t_cmd *c);
+int	outfile(char *s, t_cmd *c, t_minishell *info);
 int	heredoc(char *s, t_cmd *c, t_minishell *info);
 int	no_heredoc(char *s, t_cmd *c, t_minishell *info);
 int	single_quotes(char *s, t_cmd *c, int i, int k);
 int	double_quotes(char *s, t_cmd *c,char **envp, int *i);
 int	env_variables(char *s, char **envp, t_cmd *c, int i);
-char *get_env_variable(char *var, char **envp);
-int	get_cmd(char *s, t_cmd *c, int *i_arg);
+char *get_env_variable(char *var, char **envp, char *h, t_minishell *info);
+int	get_cmd(char *s, t_cmd *c, int *i_arg, t_minishell *info);
 //----------SIGNALS----------------------//
 int	init_signals(t_minishell *info);
 void	check_signal(t_minishell *info);
 //-------------FREE----------------------//
+void exit_free_perror(t_cmd *c, bool env, t_minishell *info, char *error);
 void	free_cmd(t_cmd *cmd, bool env, t_minishell *info);
 void	free_split(char **split);
 //----------EXECUTION--------------------//
 void exec(t_cmd *c, char **envp);
 //----------BUILTINS---------------------//
-void	cd(char *path, char **envp);
 void	pwd(void);
+void	cd(char *path, char **envp, t_minishell *info);
 
 #endif
 

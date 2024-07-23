@@ -10,11 +10,7 @@ char	*expand(char *s, t_minishell *info)
 	line = NULL;
 	line = ft_calloc(1, ft_strlen(s) + 1);
 	if (line == NULL)
-	{
-		free_cmd(NULL, ENV, info);
-		perror(BG_RED"memory allocation failed during parsing"RESET);
-		exit(1);
-	}
+		exit_free_perror(NULL, ENV, info, BG_RED"memory allocation failed during parsing"RESET);
 	while (s[a.i])
 	{
 		if (s[a.i] == '~' && (check_char(s[a.i - 1], " \t") || s[a.i - 1] == '\0') && !a.single_quotes && !a.doubles_quotes)

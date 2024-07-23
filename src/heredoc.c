@@ -42,12 +42,13 @@ static int	no_heredoc2(char *s, t_cmd *c, t_minishell *info)
 			i++;
 		}
 		key[i - 1] = '=';
-		c->infile = ft_strjoin_free(c->infile, get_env_variable(key, info->env));
+		c->infile = ft_strjoin_free(c->infile,
+			get_env_variable(key, info->env, NULL, info));
 	}
 	else if (*s == '<')
 		i += infile(s, c, info);
 	else if (*s == '>')
-		i += outfile(s, c);
+		i += outfile(s, c, info);
 	return (i);
 }
 
@@ -57,7 +58,7 @@ int	heredoc(char *s, t_cmd *c, t_minishell *info)
 	char	*line;
 	int	i;
 	int	j;
-	int fd;
+	int	fd;
 
 	ft_memset(key, 0, 4096);
 	i = 0;
@@ -73,10 +74,7 @@ int	heredoc(char *s, t_cmd *c, t_minishell *info)
 		key[j++] = s[i++];
 	line = readline(BHI_BLACK"> "RESET);
 	if (!line)
-	{
-		free_cmd(c, ENV, info);
-		exit(1);
-	}
+		exit_free_perror(c, ENV, info, NULL);
 	open("heredoc", O_CREAT, S_IRWXU);
 	fd = open("heredoc", O_WRONLY);
 	while (ft_strcmp(key, line) && g_signal_received != SIGINT)
@@ -85,10 +83,7 @@ int	heredoc(char *s, t_cmd *c, t_minishell *info)
 		free(line);
 		line = readline(BHI_BLACK"> "RESET);
 		if (!line)
-		{
-			free_cmd(c, ENV, info);
-			exit(1);
-		}
+			exit_free_perror(c, ENV, info, NULL);
 	}
 	free(line);
 	c->infile = "heredoc";
@@ -104,11 +99,8 @@ int	no_heredoc(char *s, t_cmd *c, t_minishell *info)
 		free(c->infile);
 	c->infile = ft_calloc(ft_strlen(s) + 1, 1);
 	if (!c->infile)
-		{
-			perror(BG_RED"memory allocation failed during parsing"RESET);
-			free_cmd(c, ENV, info);
-			exit(1);
-		}
+			exit_free_perror(c, ENV, info,
+				BG_RED"memory allocation failed during parsing"RESET);
 	i = 0;
 	j = 0;
 	while(!check_char(s[i], "  \t"))

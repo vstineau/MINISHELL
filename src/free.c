@@ -3,7 +3,7 @@
 
 void	free_cmd(t_cmd *cmd, bool env, t_minishell *info)
 {
-	t_cmd *temp;
+	t_cmd	*temp;
 
 	if (env)
 		free_split(info->env);
@@ -32,4 +32,12 @@ void	free_split(char **split)
 	while (split[i])
 		free(split[i++]);
 	free(split);
+}
+
+void	exit_free_perror(t_cmd *c, bool env, t_minishell *info, char *error)
+{
+	if (error)
+		perror(error);
+	free_cmd(c, env, info);
+	exit(1);
 }

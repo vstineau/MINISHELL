@@ -3,7 +3,7 @@
 
 void	pwd(void)
 {
-	char *pwd;
+	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
 	printf("%s\n", pwd);

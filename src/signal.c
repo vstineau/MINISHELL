@@ -12,11 +12,12 @@ static void	handle_sigint(int signum, siginfo_t *info, void *context)
 	rl_done = true;
 	unlink("heredoc");
 }
+
 /*extern int rl_done = Flag to indicate that readline has finished with the current input
    line and should return it. */
-static void	test()
+static void	test(void)
 {
-	return;
+	return ;
 }
 
 //CTRL + '\'
@@ -36,7 +37,6 @@ static void	test()
 //		return (0);
 //	return (1);
 //}
-
 void	check_signal(t_minishell *info)
 {
 	if (g_signal_received == SIGINT || g_signal_received == SIGQUIT)

@@ -4,7 +4,7 @@
 static int	cmd_get_quote(char *s, t_cmd *c, int j)
 {
 	char	quote;
-	int	i;
+	int		i;
 
 	i = 1;
 	if (*s == '\'')
@@ -19,7 +19,7 @@ static int	cmd_get_quote(char *s, t_cmd *c, int j)
 static int	arg_get_quote(char *s, t_cmd *c, int iarg, int j)
 {
 	char	quote;
-	int	i;
+	int		i;
 
 	i = 1;
 	if (*s == '\'')
@@ -30,7 +30,6 @@ static int	arg_get_quote(char *s, t_cmd *c, int iarg, int j)
 		c->arg[iarg][j++] = s[i++];
 	return (i);
 }
-
 
 static int	if_cmd(char *s, t_cmd *c, int *i_arg)
 {
@@ -59,19 +58,17 @@ static int	if_cmd(char *s, t_cmd *c, int *i_arg)
 	return (i);
 }
 
-int	get_cmd(char *s, t_cmd *c, int *i_arg)
+int	get_cmd(char *s, t_cmd *c, int *i_arg, t_minishell *info)
 {
 	int	i;
 	int	j;
 
 	if (!c->cmd)
 	{
-		i = 0;
-		while (s[i])
-			i++;
+		i = ft_strlen(s);
 		c->cmd = ft_calloc(i + 1, 1);
 		if (!c->arg)
-			return (0); // error et exit
+			exit_free_perror(c, ENV, info, BG_RED"memory allocation failed during parsing\n"RESET);
 		i = 0;
 		j = 0;
 		while (s[i] && s[i] != ' ' && s[i] != '\t')

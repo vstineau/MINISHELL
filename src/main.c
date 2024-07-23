@@ -43,7 +43,7 @@ int main(int argc, char *argv[], char *envp[])
 	{
 		init_signals(&info);
 		check_signal(&info);
-		line = readline(get_prompt(prompt, &info));
+		line = readline(get_prompt(prompt, &info, c));
 		if (line)
 		{
 			add_history(line);
