@@ -9,6 +9,21 @@ char	**free_split_get_env(char **env2, char **env)
 	return (env2);
 }
 
+char	**apply_unset_each(int j, int i, char **env, char **env2)
+{
+	while (j < i)
+	{
+		env2[j] = ft_strdup(env[j]);
+		j++;
+	}
+	while (j < env_size(env) - 1)
+	{
+		env2[j] = ft_strdup(env[j + 1]);
+		j++;
+	}
+	return (free_split(env), env2);
+}
+
 char	**unset_each(char *av, char **env, int len, int j)
 {
 	int		i;
@@ -21,19 +36,7 @@ char	**unset_each(char *av, char **env, int len, int j)
 		while (env[i][len] != '=')
 			len++;
 		if (ft_strncmp(env[i], av, ft_strlen(av)) == 0 && len == ft_strlen(av))
-		{
-			while (j < i)
-			{
-				env2[j] = ft_strdup(env[j]);
-				j++;
-			}
-			while (j < env_size(env) - 1)
-			{
-				env2[j] = ft_strdup(env[j + 1]);
-				j++;
-			}
-			return (free_split(env), env2);
-		}
+			return (apply_unset_each(j, i, env, env2));
 		i++;
 		len = 0;
 	}
@@ -64,25 +67,3 @@ char	**unset(char **av, char **env)
 	free_split(env);
 	return (env2);
 }
-
-/*int	main(int ac, char **av, char **env)
-{
-	(void)ac;
-    int i = 0;
-
-	while (env[i])
-	{
-		printf("%s\n", env[i]);
-		i++;
-	}
-	char **e = unset(av[1], env);
-	i = 0;
-	printf("/_____________________________\n");
-	while (e[i])
-	{
-		printf("%s\n", e[i]);
-		free(e[i]);
-		i++;
-	}
-	free (e);
-}*/

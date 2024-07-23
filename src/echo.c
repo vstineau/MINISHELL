@@ -22,6 +22,12 @@ int	check_echo_args(char *av, int pos)
 	return (pos);
 }
 
+void	close_fd(int fd)
+{
+	if (fd != 1)
+		close (fd);
+}
+
 void	echo(char **av, int fd)
 {
 	int	i;
@@ -48,12 +54,5 @@ void	echo(char **av, int fd)
 	}
 	if (av[0] == NULL || check_echo_args(av[0], 0) == 0)
 		ft_putstr_fd("\n", fd);
-	if (fd != 1)
-		close (fd);
+	close_fd(fd);
 }
-
-/*int	main(int ac, char **av)
-{
-	echo(av, 1);
-	(void) ac;
-}*/

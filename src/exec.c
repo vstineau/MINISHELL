@@ -17,9 +17,26 @@ int	is_builtin(t_cmd *c)
 	exit (130);
 }
 
+void	apply_exec_builtin(t_cmd *c, t_minishell *info)
+{
+	if (ft_strcmp(c->cmd, "echo") == 0)
+		echo(c->arg, c->fd);
+	if (ft_strcmp(c->cmd, "cd") == 0)
+		cd(c->arg, info->env);
+	if (ft_strcmp(c->cmd, "pwd") == 0)
+		pwd(c->fd);
+	if (ft_strcmp(c->cmd, "export") == 0)
+		info->env = our_export(c->arg, info->env, c->fd);
+	if (ft_strcmp(c->cmd, "unset") == 0)
+		info->env = unset(c->arg, info->env);
+	if (ft_strcmp(c->cmd, "env") == 0)
+		our_env(info->env, c->fd);
+	if (ft_strcmp(c->cmd, "exit") == 0)
+		our_exit(c, info);
+}
+
 void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2])
 {
-	int		i;
 	char	*path;
 
 	c->fd = 1;
@@ -35,25 +52,14 @@ void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2])
 		if (dup2(pip[1], STDOUT_FILENO) == -1)
 			perror("");
 	}
-	i = is_builtin(c);
-	if (ft_strcmp(c->cmd, "echo") == 0)
-		echo(c->arg, c->fd);
-	if (ft_strcmp(c->cmd, "cd") == 0)
-		cd(c->arg, info->env);
-	if (ft_strcmp(c->cmd, "pwd") == 0)
-		pwd(c->fd);
-	if (ft_strcmp(c->cmd, "export") == 0)
-		info->env = our_export(c->arg, info->env, c->fd);
-	if (ft_strcmp(c->cmd, "unset") == 0)
-		info->env = unset(c->arg, info->env);
-	if (ft_strcmp(c->cmd, "env") == 0)
-		our_env(info->env, c->fd);
-	if (ft_strcmp(c->cmd, "exit") == 0)
-		our_exit(c, info);
-	if (i == 0)
+	if (is_builtin(c) == 1)
+		apply_exec_builtin(c, info);
+	if (is_builtin(c) == 0)
 	{
 		path = find_path(info->env, c->cmd);
 		if (path != NULL)
 			apply_exec_middle_bonus(fd, pip, info->env, c);
+		if (c->outfile != NULL)
+			close (c->fd);
 	}
 }
