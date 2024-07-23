@@ -18,8 +18,11 @@ char	**unset_each(char *av, char **env, int len, int j)
 	env2 = calloc(sizeof(char *), env_size(env)); 
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], av, len) == 0)
+		while (env[i][j] != '=')
+			j++;
+		if (ft_strncmp(env[i], av, len) == 0 && j == len)
 		{
+			j = 0;
 			while (j < i)
 			{
 				env2[j] = ft_strdup(env[j]);
@@ -33,6 +36,7 @@ char	**unset_each(char *av, char **env, int len, int j)
 			return (free_split(env), env2);
 		}
 		i++;
+		j = 0;
 	}
 	return (free_split_get_env(env2, env));
 }
@@ -43,7 +47,6 @@ char	**unset(char **av, char **env)
 	int		len;
 	int		j;
 	int		k;
-	char	*av1;
 
 	j = 0;
 	k = 0;
@@ -55,9 +58,8 @@ char	**unset(char **av, char **env)
 			free_split(env);
 			return (env2);
 		}
-		av1 = get_first_av(av1);
-		len = ft_strlen(av1);
-		env2 = unset_each(av1, env2, len, j);
+		len = ft_strlen(av[k]);
+		env2 = unset_each(av[k], env2, len, j);
 		k++;
 	}
 	free_split(env);
