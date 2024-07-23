@@ -15,7 +15,8 @@ char *get_env_variable(char *var, char **envp)
 		{
 			while(envp[i][j] == var[j])
 				j++;
-			if (envp[i][j] && envp[i][j] != '=')
+			printf(B_RED"envp[i][j] = %c || var[j] = %c\n"RESET, envp[i][j], var[j]);
+			if (envp[i][j] && envp[i][j - 1] == var[j - 1] && var[j - 1] == '=')
 			{
 				h = ft_calloc(ft_strlen(envp[i] + j) + 1, 1);
 				if (!h)
@@ -24,6 +25,8 @@ char *get_env_variable(char *var, char **envp)
 				return (h);
 			}
 		}
+		printf(BHI_WHITE"envp[i] = %s\n"RESET, envp[i]);
+		printf(B_RED"i = %d\n"RESET, i);
 		i++;
 	}
 	free(h);
@@ -51,8 +54,13 @@ int	expand_env_v(char *s, char **line, t_minishell *info, t_iterator *a)
 	}
 	key[j - a->i - 1] = '=';
 	var = get_env_variable(key, info->env);
+	printf(BHI_BLUE"key = %s || var = %s\n"RESET, key, var);
 	if (!var)
+	{
+		while(s[a->i] && (s[a->i] != '\t' || s[a->i] != ' '))
+			a->i++;
 		return (0);
+	}
 	else
 	{
 		len_var = ft_strlen(var);
