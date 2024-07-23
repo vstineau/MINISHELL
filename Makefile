@@ -16,7 +16,6 @@ SRC_NAME = main.c \
 					 heredoc.c \
 					 env_variables.c \
 					 prompt.c \
-					 execution.c \
 					 cd.c \
 					 quotes.c \
 					 echo.c \

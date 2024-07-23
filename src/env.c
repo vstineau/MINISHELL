@@ -10,7 +10,7 @@ void	our_env(char **env, int fd)
 	while (env[i])
 	{
 		test = ft_strchr(env[i], '=');
-		if (env[i] != NULL && test != NULL && test[1] != '\0')
+		if (env[i] != NULL && test != NULL)
 		{
 			ft_putstr_fd(env[i], fd);
 			ft_putstr_fd("\n", fd);
