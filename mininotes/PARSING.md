@@ -6,8 +6,21 @@ functions used for parsing :
 get cmd ()
 	 parcours de la chaine jusqua espace pipe ou Redirectiion
 
+
+
+
+ifnfile et outfile
+
+{
+ if infile/outfile
+	 free infile/outfile
+
+}
+
+
+
 ORDRE DE PRIORITE :
-- ~
+- ~ (entre deux espaces ou suivi d'un '/')
 - $
 - REDIRECTION;
 - CMD

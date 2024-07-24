@@ -30,9 +30,9 @@ static char	*zero(char *dest)
 
 char	*ft_itoa(int n)
 {
-	int			l;
-	long int	nb;
-	char		*dest;
+	long int		nb;
+	int				l;
+	char			*dest;
 
 	nb = n;
 	l = leni(nb);
@@ -55,18 +55,17 @@ char	*ft_itoa(int n)
 	return (dest);
 }
 
-char *get_prompt(char *prompt, t_minishell *info)
+char	*get_prompt(char *prompt, t_minishell *info, t_cmd *c)
 {
-	int i;
-	int j;
-	char p[4096];
-	char *s;
+	int		i;
+	int		j;
+	char	p[4096];
+	char	*s;
 
 	s = ft_itoa(info->code_error);
 	if (!s)
-	{
-		;// exit error free;
-	}
+		exit_free_perror(c, ENV, info,
+			BG_RED"memory allocation failed during parsing"RESET);
 	getcwd(prompt, 4097);
 	ft_strcpy(p, prompt);
 	i = ft_strlen(prompt);

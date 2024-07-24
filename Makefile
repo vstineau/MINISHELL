@@ -2,9 +2,10 @@ NAME = minishell
 CC = cc #clang
 CFLAGS = -Wall -Wextra -Werror -MMD -g3 -O2 -fno-builtin
 SRC_PATH = src/
-OBJ_PATH = obj/
+OBJ_PATH = ../obj/
 SRC_NAME = main.c \
 					 parsing.c \
+					 expand.c \
 					 get_env.c \
 					 signal.c \
 					 utils.c \
@@ -14,9 +15,9 @@ SRC_NAME = main.c \
 					 tilde.c \
 					 redirection.c \
 					 heredoc.c \
+					 heredoc_utils.c \
 					 env_variables.c \
 					 prompt.c \
-					 execution.c \
 					 cd.c \
 					 pwd.c \
 					 quotes.c \
@@ -38,7 +39,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 all: $(NAME)
 
 clean:
-	rm -rf obj
+	rm -rf ../obj
 
 fclean: clean
 	rm -rf $(NAME)

@@ -25,6 +25,14 @@
 
 extern int g_signal_received;
 
+typedef struct s_iterator
+{
+	int	i;
+	int	j;
+	bool	single_quotes;
+	bool	doubles_quotes;
+}		t_iterator;
+
 typedef enum
 {
 	CMD = 0,
@@ -58,8 +66,6 @@ typedef struct s_cmd
 	t_redirect	redirect;
 	struct s_cmd	*next;
 }						t_cmd;
-
-//------------UTILS----------------------//
 char	**ft_split(char const *s, char c);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_realloc(void *old, size_t old_length, size_t new_length);
@@ -83,24 +89,35 @@ int		check_infile(char *file);
 int		exit_close(int pip[2]);
 int	count_arg(char *s);
 char	*ft_strjoin_free(char *s1, char *s2);
-char	*get_prompt(char *prompt, t_minishell *info);
+char	*get_prompt(char *prompt, t_minishell *info, t_cmd *c);
+int	check_char(char c, char *s);
+int	is_uppercase(char c);
+int	perror_and_return_i(char *s, int i);
+//----------EXPAND----------------------//
+char	*expand(char *s, t_minishell *info);
+int	tilde(char *s, char **line, t_minishell *info, t_iterator *a);
+int	expand_env_v(char *s, char **line, t_minishell *info, t_iterator *a);
+void	no_expand_heredoc(char *s, char *line, t_iterator *a);
+int	expand_doubles_quotes(t_iterator *a, char *line);
+int	expand_single_quotes(t_iterator *a, char *line);
 //----------PARSING----------------------//
 char	**get_env(char **envp);
-t_cmd	*parse(char *line, char **envp, t_minishell *info);
-int	tilde(t_cmd *c, int i, t_minishell *info);
+t_cmd	*parse(char *line, t_minishell *info);
 int	infile(char *s, t_cmd *c, t_minishell *info);
-int	outfile(char *s, t_cmd *c);
+int	outfile(char *s, t_cmd *c, t_minishell *info);
 int	heredoc(char *s, t_cmd *c, t_minishell *info);
+char	*fill_heredoc(char *line, t_cmd *c, int fd, t_minishell *info);
 int	no_heredoc(char *s, t_cmd *c, t_minishell *info);
-int	single_quotes(char *s, t_cmd *c, int i);
+int	single_quotes(char *s, t_cmd *c, int i, int k);
 int	double_quotes(char *s, t_cmd *c,char **envp, int *i);
 int	env_variables(char *s, char **envp, t_cmd *c, int i);
-char *get_env_variable(char *var, char **envp);
-int	get_cmd(char *s, t_cmd *c, int *i_arg);
+char *get_env_variable(char *var, char **envp, char *h, t_minishell *info);
+int	get_cmd(char *s, t_cmd *c, int *i_arg, t_minishell *info);
 //----------SIGNALS----------------------//
 int	init_signals(t_minishell *info);
 void	check_signal(t_minishell *info);
 //-------------FREE----------------------//
+void exit_free_perror(t_cmd *c, bool env, t_minishell *info, char *error);
 void	free_cmd(t_cmd *cmd, bool env, t_minishell *info);
 void	free_split(char **split);
 char	*free_return(char **cmd, char *endfile);
@@ -115,13 +132,13 @@ void	apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av);
 void	apply_exec_last_bns(char *av, char **env, int outfile, int fd);
 int		is_builtin(char **cmd);
 //----------BUILTINS---------------------//
-void	cd(char *path, char **envp);
 void	pwd(void);
 void	echo(char **av, int fd);
 void	our_env(char **env);
 //void    our_exit(t_cmd *c, t_minishell *info);
 char	**our_export(char **av, char **env);
 char	**unset(char *av, char **env);
+void	cd(char *path, char **envp, t_minishell *info);
 
 #endif
 

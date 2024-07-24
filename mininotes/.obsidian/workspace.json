@@ -13,6 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
+<<<<<<< HEAD
                 "file": "BUILTINS.md",
                 "mode": "source",
                 "source": false
@@ -26,6 +27,9 @@
               "type": "markdown",
               "state": {
                 "file": "exec.md",
+=======
+                "file": "PARSING.md",
+>>>>>>> origin/parsing
                 "mode": "source",
                 "source": false
               }
@@ -98,7 +102,11 @@
             "state": {
               "type": "backlink",
               "state": {
+<<<<<<< HEAD
                 "file": "exec.md",
+=======
+                "file": "PARSING.md",
+>>>>>>> origin/parsing
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +123,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+<<<<<<< HEAD
                 "file": "exec.md",
+=======
+                "file": "PARSING.md",
+>>>>>>> origin/parsing
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +150,11 @@
             "state": {
               "type": "outline",
               "state": {
+<<<<<<< HEAD
                 "file": "exec.md"
+=======
+                "file": "PARSING.md"
+>>>>>>> origin/parsing
               }
             }
           }
@@ -161,6 +177,7 @@
   },
   "active": "2a53600bf7268ab9",
   "lastOpenFiles": [
+<<<<<<< HEAD
     "exec.md",
     "BUILTINS.md",
     "echo.md",
@@ -175,6 +192,17 @@
     "Redirections.md",
     "FUNCTION ALLOWED.md",
     "LEAK CHECK.md",
+=======
+    "FUNCTION ALLOWED.md",
+    "LEAK CHECK.md",
+    "PARSING.md",
+    "chain_list.md",
+    "cd.md",
+    "Untitled.canvas",
+    "Redirections.md",
+    "EXECUTION.md",
+    "|.md",
+>>>>>>> origin/parsing
     "Untitled.md",
     "Untitled",
     "2024-05-22.md",

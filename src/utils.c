@@ -15,6 +15,42 @@ int	ft_strncmp( const char *first, const char *second, size_t length)
 	return (((unsigned char *)first)[i] - ((unsigned char *)second)[i]);
 }
 
+int	is_uppercase(char c)
+{
+	if (c >= 'A' && c <= 'Z')
+		return (1);
+	else
+		return (0);
+}
+
+int	check_char(char c, char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	*ft_realloc(void *old, size_t old_length, size_t new_length)
+{
+	void	*new_ptr;
+
+	new_ptr = ft_calloc(new_length, 1);
+	if (new_ptr == NULL)
+		return (NULL);
+	if (old == NULL)
+		return (new_ptr);
+	ft_memcpy(new_ptr, old, old_length);
+	free(old);
+	return (new_ptr);
+}
+
 int	ft_strcmp(char *s1, char *s2)
 {
 	while (*s1 && *s2)
@@ -108,20 +144,6 @@ void    *ft_memcpy(void *dest, const void *src, size_t n)
     return (dest1);
 }
 
-void    *ft_realloc(void *old, size_t old_length, size_t new_length)
-{
-    void    *new_ptr;
-
-    new_ptr = ft_calloc(new_length, 1);
-    if (new_ptr == NULL)
-        return (NULL);
-    if (old == NULL)
-        return (new_ptr);
-    ft_memcpy(new_ptr, old, old_length);
-    free(old);
-    return (new_ptr);
-}
-
 char    *ft_strdup(char *s)
 {
     size_t    i;
@@ -138,18 +160,6 @@ char    *ft_strdup(char *s)
     }
     dst[i] = '\0';
     return (dst);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned char	*p;
-
-	p = s;
-	while (n > 0)
-	{
-		*(p++) = 0;
-		n--;
-	}
 }
 
 int	check_infile(char *file)
@@ -243,4 +253,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	return (ptr);
 }
-

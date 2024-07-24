@@ -1,56 +1,89 @@
 
 #include "../includes/minishell.h"
 
-static int	if_cmd(char *s, t_cmd *c, int *i_arg)
+static int	cmd_get_quote(char *s, t_cmd *c, int j)
+{
+	char	quote;
+	int		i;
+
+	i = 1;
+	if (*s == '\'')
+		quote = '\'';
+	else
+		quote = '"';
+	while (s[i] && s[i] != quote)
+		c->cmd[j++] = s[i++];
+	return (i);
+}
+
+static int	arg_get_quote(char *s, t_cmd *c, int iarg, int j)
+{
+	char	quote;
+	int		i;
+
+	i = 1;
+	if (*s == '\'')
+		quote = '\'';
+	else
+		quote = '"';
+	while (s[i] && s[i] != quote)
+		c->arg[iarg][j++] = s[i++];
+	return (i);
+}
+
+static int	if_cmd(char *s, t_cmd *c, int *i_arg, t_minishell *info)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	j = 0;
-	while (s[j] && (s[j] == ' ' || s[j] == '\t'))
-		j++;
-	while (s[i + j] && s[i + j] != ' ' && s[i + j] != '\t')
+	while (s[i])
 		i++;
 	c->arg[*i_arg] = ft_calloc(i + 1, 1);
 	if (!c->arg[*i_arg])
-		return (0); // error et exit
+		exit_free_perror(c, ENV, info,
+			BG_RED"memory allocation failed during parsing\n"RESET);
 	i = 0;
-	while (s[i + j] && s[i + j] != ' ' && s[i + j] != '\t')
+	j = 0;
+	while (s[i] && s[i] != ' ' && s[i] != '\t')
 	{
-		c->arg[*i_arg][i] = s[i + j];
-		i++;
+		if (s[i] == '\'' || s[i] == '"')
+		{
+			i += arg_get_quote(s + i, c, *i_arg, i) + 1;
+			j = i - 2;
+		}
+		else
+			c->arg[*i_arg][j++] = s[i++];
 	}
 	*i_arg += 1;
-	return (i + j);
+	return (i);
 }
 
-int	get_cmd(char *s, t_cmd *c, int *i_arg)
+int	get_cmd(char *s, t_cmd *c, int *i_arg, t_minishell *info)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	if (!c->cmd)
 	{
-		j = 0;
-		i = 0;
-		while (s[j] && (s[j] == ' ' || s[j] == '\t'))
-			j++;
-		while (s[i + j] && s[i + j] != ' ' && s[i + j] != '\t')
-			i++;
+		i = ft_strlen(s);
 		c->cmd = ft_calloc(i + 1, 1);
 		if (!c->arg)
-			return (0); // error et exit
+			exit_free_perror(c, ENV,
+				info, BG_RED"memory allocation failed during parsing\n"RESET);
 		i = 0;
-		while (s[j + i] && s[j + i] != ' ' && s[i + j] != '\t')
+		j = 0;
+		while (s[i] && s[i] != ' ' && s[i] != '\t')
 		{
-			c->cmd[i] = s[i + j];
-			i++;
+			if (s[i] == '\'' || s[i] == '"')
+			{
+				i += cmd_get_quote(s + i, c, i) + 1;
+				j = i - 2;
+			}
+			else
+				c->cmd[j++] = s[i++];
 		}
 		return (i);
 	}
-	else
-	{
-		return (if_cmd(s, c, i_arg));
-	}
+	return (if_cmd(s, c, i_arg, info));
 }

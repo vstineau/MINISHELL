@@ -1,46 +1,49 @@
-
 #include "../includes/minishell.h"
 
-//char	*new_env_variable(char *var)
-//{
-//	int	i;
-//	int	l;
-//	char	*s;
-//
-//	i = 0;
-//	l = ft_strlen(var);
-//	s = NULL;
-//	s = ft_calloc(1, l);
-//	if (!s)
-//		return (NULL); // free exit error
-//	while (i < l - 1)
-//	{
-//		s[i] = var[i];
-//		i++;
-//	}
-//	return (s);
-//}
-//
-char *get_env_variable(char *var, char **envp)
+static int	utils_env1(char *s, t_iterator *a, int j)
+{
+	while (s[j] && !check_char(s[j], " \t"))
+		j++;
+	a->i += j - a->i;
+	return (0);
+}
+
+static int	utils_env2(char *var, int len_var, t_iterator *a, int j)
+{
+	a->i += j - a->i;
+	free(var);
+	return (len_var);
+}
+
+static void	fill_key(char key[4096], char *s, int *j, t_iterator *a)
+{
+	while (s[*j] && !check_char(s[*j], " \t") && is_uppercase(s[*j]))
+	{
+		key[*j - a->i - 1] = s[*j];
+		*j += 1;
+	}
+	key[*j - a->i - 1] = '=';
+}
+
+char	*get_env_variable(char *var, char **envp, char *h, t_minishell *info)
 {
 	int	i;
 	int	j;
-	char	*h;
 
 	i = 0;
-	h = NULL;
-	while(envp[i])
+	while (envp[i])
 	{
-	 j = 0;
+		j = 0;
 		if (envp[i][j] == var[j])
 		{
-			while(envp[i][j] == var[j])
+			while (envp[i][j] == var[j])
 				j++;
-			if (envp[i][j] && envp[i][j] != '=')
+			if (envp[i][j] && envp[i][j - 1] == var[j - 1] && var[j - 1] == '=')
 			{
 				h = ft_calloc(ft_strlen(envp[i] + j) + 1, 1);
 				if (!h)
-					return (NULL); // exit error free
+					exit_free_perror(NULL, ENV, info,
+						BG_RED"memory allocation failed during parsing"RESET);
 				ft_strcpy(h, envp[i] + j);
 				return (h);
 			}
@@ -51,24 +54,30 @@ char *get_env_variable(char *var, char **envp)
 	return (NULL);
 }
 
-int	env_variables(char *s, char **envp, t_cmd *c, int i)
+int	expand_env_v(char *s, char **line, t_minishell *info, t_iterator *a)
 {
-	int	j;
+	int		j;
 	char	key[4096];
+	char	*var;
+	int		len_line;
 
-	j = 1;
+	len_line = ft_strlen(*line);
+	if (len_line < ft_strlen(s))
+		len_line = ft_strlen(s);
+	j = 1 + a->i;
+	var = NULL;
 	ft_memset(key, 0, 4096);
-	while (s[j] && s[j] != ' ')
+	fill_key(key, s, &j, a);
+	var = get_env_variable(key, info->env, NULL, info);
+	if (!var)
+		return (utils_env1(s, a, j));
+	else
 	{
-		key[j - 1] = s[j];
-		j++;
+		*line = ft_realloc(*line, len_line, len_line + ft_strlen(var) + 1);
+		if (*line == NULL)
+			exit_free_perror(NULL, ENV, info,
+				BG_RED"memory allocation failed during parsing"RESET);
+		ft_memcpy(*line + a->j, var, ft_strlen(var));
 	}
-	key[j - 1] = '=';
-	c->arg[i] = get_env_variable(key, envp);
-	if (!c->arg[i])
-	{
-		;//exit error free
-		//c->arg[i] = new_env_variable(key);
-	}
-	return (j);
+	return (utils_env2(var, ft_strlen(var), a, j));
 }

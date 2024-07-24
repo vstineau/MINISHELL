@@ -11,11 +11,10 @@ int	env_size(char **envp)
 	return (i);
 }
 
-
 char	**get_env(char **envp)
 {
-	int	i;
-	char **new_env;
+	int		i;
+	char	**new_env;
 
 	new_env = ft_calloc(env_size(envp) + 1, sizeof(char *));
 	if (!new_env)
