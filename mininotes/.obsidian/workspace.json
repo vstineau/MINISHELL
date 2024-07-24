@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "exec.md",
+                "file": "export.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "exec.md",
+                "file": "export.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "exec.md",
+                "file": "export.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "exec.md"
+                "file": "export.md"
               }
             }
           }
@@ -148,10 +148,11 @@
   },
   "active": "7ff8a7382f8d2a04",
   "lastOpenFiles": [
+    "FUNCTION ALLOWED.md",
     "EXECUTION.md",
+    "exec.md",
     "BUILTINS.md",
     "export.md",
-    "exec.md",
     "echo.md",
     "Sans titre.canvas",
     "chain_list.md",
@@ -160,7 +161,6 @@
     "2024-06-21.md",
     "Untitled.canvas",
     "Redirections.md",
-    "FUNCTION ALLOWED.md",
     "LEAK CHECK.md",
     "Untitled.md",
     "Untitled",

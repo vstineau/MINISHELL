@@ -11,3 +11,13 @@ if no arg
 	-> print each line sort in ASCII order
 	-> print "declare -x " before each line
 gerer plusieurs arg aussi
+
+
+
+
+
+
+
+
+
+

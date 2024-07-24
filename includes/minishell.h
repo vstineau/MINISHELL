@@ -77,7 +77,6 @@ char	**get_env(char **envp);
 void	ft_sort_strings(int num, char **s);
 int		ft_strncmp( const char *first, const char *second, size_t length);
 int		env_size(char **envp);
-void	ft_bzero(void *s, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	ft_close(int pip[2], int infile);
 char	*ft_strchr(const char *s, int c);

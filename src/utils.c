@@ -1,6 +1,25 @@
 
 #include "../includes/minishell.h"
 
+void    *ft_memcpy(void *dest, const void *src, size_t n)
+{
+    size_t        i;
+    char        *dest1;
+    const char    *src1;
+
+    if (!dest && !src)
+        return (dest);
+    i = 0;
+    dest1 = dest;
+    src1 = src;
+    while (i < n)
+    {
+        dest1[i] = src1[i];
+        i++;
+    }
+    return (dest1);
+}
+
 int	ft_strncmp( const char *first, const char *second, size_t length)
 {
 	unsigned int	i;
@@ -89,25 +108,6 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-void    *ft_memcpy(void *dest, const void *src, size_t n)
-{
-    size_t        i;
-    char        *dest1;
-    const char    *src1;
-
-    if (!dest && !src)
-        return (dest);
-    i = 0;
-    dest1 = dest;
-    src1 = src;
-    while (i < n)
-    {
-        dest1[i] = src1[i];
-        i++;
-    }
-    return (dest1);
-}
-
 void    *ft_realloc(void *old, size_t old_length, size_t new_length)
 {
     void    *new_ptr;
@@ -138,18 +138,6 @@ char    *ft_strdup(char *s)
     }
     dst[i] = '\0';
     return (dst);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned char	*p;
-
-	p = s;
-	while (n > 0)
-	{
-		*(p++) = 0;
-		n--;
-	}
 }
 
 int	check_infile(char *file)
@@ -258,22 +246,22 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
-void ft_sort_strings(int num, char **s)
+void	ft_sort_strings(int num, char **s)
 {
-    int		i;
+	int		i;
 	int		j;
 	char	*temp;
 
 	i = 1;
 	j = 0;
-    while (i < num)
-    {
+	while (i < num)
+	{
 		j = i;
-        while (j > 0 && ft_strcmp(s[j-1], s[j]) > 0)
-        {
-            temp = s[j-1];
-            s[j-1] = s[j];
-            s[j] = temp;
+		while (j > 0 && ft_strcmp(s[j - 1], s[j]) > 0)
+		{
+			temp = s[j - 1];
+			s[j - 1] = s[j];
+			s[j] = temp;
 			j--;
 		}
 		i++;
