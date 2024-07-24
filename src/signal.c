@@ -13,7 +13,8 @@ static void	handle_sigint(int signum, siginfo_t *info, void *context)
 	unlink("heredoc");
 }
 
-/*extern int rl_done = Flag to indicate that readline has finished with the current input
+/*extern int rl_done = Flag to indicate that readline
+ * has finished with the current input
    line and should return it. */
 static void	test(void)
 {

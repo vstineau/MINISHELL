@@ -15,6 +15,7 @@ SRC_NAME = main.c \
 					 tilde.c \
 					 redirection.c \
 					 heredoc.c \
+					 heredoc_utils.c \
 					 env_variables.c \
 					 prompt.c \
 					 cd.c \

@@ -33,7 +33,7 @@ int	check_char(char c, char *s)
 	int	i;
 
 	i = 0;
-	while(s[i])
+	while (s[i])
 	{
 		if (s[i] == c)
 			return (1);
@@ -147,4 +147,3 @@ int	ft_strlen(char *s)
 		i++;
 	return (i);
 }
-

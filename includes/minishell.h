@@ -64,8 +64,6 @@ typedef struct s_cmd
 	t_redirect	redirect;
 	struct s_cmd	*next;
 }						t_cmd;
-
-//------------UTILS----------------------//
 char	**ft_split(char const *s, char c);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_realloc(void *old, size_t old_length, size_t new_length);
@@ -82,6 +80,7 @@ char	*ft_strjoin_free(char *s1, char *s2);
 char	*get_prompt(char *prompt, t_minishell *info, t_cmd *c);
 int	check_char(char c, char *s);
 int	is_uppercase(char c);
+int	perror_and_return_i(char *s, int i);
 //----------EXPAND----------------------//
 char	*expand(char *s, t_minishell *info);
 int	tilde(char *s, char **line, t_minishell *info, t_iterator *a);
@@ -95,6 +94,7 @@ t_cmd	*parse(char *line, t_minishell *info);
 int	infile(char *s, t_cmd *c, t_minishell *info);
 int	outfile(char *s, t_cmd *c, t_minishell *info);
 int	heredoc(char *s, t_cmd *c, t_minishell *info);
+char	*fill_heredoc(char *line, t_cmd *c, int fd, t_minishell *info);
 int	no_heredoc(char *s, t_cmd *c, t_minishell *info);
 int	single_quotes(char *s, t_cmd *c, int i, int k);
 int	double_quotes(char *s, t_cmd *c,char **envp, int *i);
