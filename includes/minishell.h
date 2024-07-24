@@ -62,7 +62,9 @@ typedef struct s_cmd
 	char	*outfile;
 	char	*path;
 	char	**arg;
+	int		fd;
 	t_token	pipe;
+	int		previous_pipe;
 	t_redirect	redirect;
 	struct s_cmd	*next;
 }						t_cmd;
@@ -81,13 +83,12 @@ char	**get_env(char **envp);
 void	ft_sort_strings(int num, char **s);
 int		ft_strncmp( const char *first, const char *second, size_t length);
 int		env_size(char **envp);
-void	ft_bzero(void *s, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	ft_close(int pip[2], int infile);
 char	*ft_strchr(const char *s, int c);
 int		check_infile(char *file);
 int		exit_close(int pip[2]);
-int	count_arg(char *s);
+int		count_arg(char *s);
 char	*ft_strjoin_free(char *s1, char *s2);
 char	*get_prompt(char *prompt, t_minishell *info, t_cmd *c);
 int	check_char(char c, char *s);
@@ -100,6 +101,7 @@ int	expand_env_v(char *s, char **line, t_minishell *info, t_iterator *a);
 void	no_expand_heredoc(char *s, char *line, t_iterator *a);
 int	expand_doubles_quotes(t_iterator *a, char *line);
 int	expand_single_quotes(t_iterator *a, char *line);
+void	ft_putstr_fd(char *s, int fd);
 //----------PARSING----------------------//
 char	**get_env(char **envp);
 t_cmd	*parse(char *line, t_minishell *info);
@@ -125,20 +127,23 @@ void	free_alls(char *path, char **cmd);
 //----------EXECUTION--------------------//
 char	*find_path(char **env, char *av);
 char	**find_cmd(char *av);
-void	exec(t_cmd *c, char **envp);
 char	*return_path(char **cmd, char *endfile, char *path);
-void	apply_exec_first_bns(char *av, char **env, char *file, int pip[2]);
-void	apply_exec_middle_bonus(int fd, int pip[2], char **env, char *av);
-void	apply_exec_last_bns(char *av, char **env, int outfile, int fd);
-int		is_builtin(char **cmd);
+void	apply_exec_first_bns(char *av, char **env, int pip[2], t_cmd *c);
+void	apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c);
+void	apply_exec_last_bns(char *av, char **env, int outfile, int fd, t_cmd *c);
+void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2]);
+void	exec(t_minishell *info, t_cmd *c);
+int		is_builtin(t_cmd *c);
+char	*get_first_av(char *av);
+
 //----------BUILTINS---------------------//
-void	pwd(void);
-void	echo(char **av, int fd);
-void	our_env(char **env);
-//void    our_exit(t_cmd *c, t_minishell *info);
-char	**our_export(char **av, char **env);
-char	**unset(char *av, char **env);
 void	cd(char *path, char **envp, t_minishell *info);
+void	pwd(int	fd);
+void	echo(char **av, int fd);
+void	our_env(char **env, int fd);
+void    our_exit(t_cmd *c, t_minishell *info);
+char	**our_export(char **av, char **env, int fd);
+char	**unset(char **av, char **env);
 
 #endif
 

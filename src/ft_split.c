@@ -48,11 +48,11 @@ int	count_arg(char *s)
 
 	count = 0;
 	i = 0;
-	while(s[i])
+	while (s[i])
 	{
 		while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 			i++;
-		if (s[i] &&  (s[i] != ' ' || s[i] != '\t'))
+		if (s[i] && (s[i] != ' ' || s[i] != '\t'))
 			count++;
 		while (s[i] && (s[i] != ' ' && s[i] != '\t'))
 			i++;
@@ -97,4 +97,3 @@ char	**ft_split(char const *s, char c)
 	}
 	return (split);
 }
-

@@ -22,18 +22,10 @@ int	check_echo_args(char *av, int pos)
 	return (pos);
 }
 
-void	ft_putstr_fd(char *s, int fd)
+void	close_fd(int fd)
 {
-	int	i;
-
-	if (s == NULL)
-		return ;
-	i = 0;
-	while (s[i] != '\0')
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
+	if (fd != 1)
+		close (fd);
 }
 
 void	echo(char **av, int fd)
@@ -42,28 +34,25 @@ void	echo(char **av, int fd)
 	int	j;
 
 	j = 0;
-	i = 1;
-	while (av[j])
+	i = 0;
+	if (av)
 	{
-		i = check_echo_args(av[i], i);
-		if (j == i)
-			break ;
-		j++;
+		while (av[j])
+		{
+			i = check_echo_args(av[i], i);
+			if (j == i)
+				break ;
+			j++;
+		}
+		while (av[i] != NULL)
+		{
+			ft_putstr_fd(av[i], fd);
+			if (av[i + 1] != NULL)
+				ft_putstr_fd(" ", fd);
+			i++;
+		}
 	}
-	while (av[i] != NULL)
-	{
-		ft_putstr_fd(av[i], fd);
-		if (av[i + 1] != NULL)
-			ft_putstr_fd(" ", fd);
-		i++;
-
-	}
-	if (check_echo_args(av[0], 0) == 0)
+	if (av[0] == NULL || check_echo_args(av[0], 0) == 0)
 		ft_putstr_fd("\n", fd);
+	close_fd(fd);
 }
-
-/*int	main(int ac, char **av)
-{
-	echo(av, 1);
-	(void) ac;
-}*/

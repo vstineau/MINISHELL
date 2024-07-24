@@ -83,6 +83,8 @@ t_cmd	*parse(char *s, t_minishell *info)
 			s += get_pipe(s, &i_arg, &current, info);
 		else
 			s += get_cmd(s, current, &i_arg, info);
+		while (*s == ' ' || *s == '\t')
+			s++;
 	}
 	return (c);
 }

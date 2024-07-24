@@ -14,6 +14,7 @@
               "type": "markdown",
               "state": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "file": "BUILTINS.md",
                 "mode": "source",
                 "source": false
@@ -30,13 +31,15 @@
 =======
                 "file": "PARSING.md",
 >>>>>>> origin/parsing
+=======
+                "file": "export.md",
+>>>>>>> origin/exec
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -103,10 +106,14 @@
               "type": "backlink",
               "state": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "file": "exec.md",
 =======
                 "file": "PARSING.md",
 >>>>>>> origin/parsing
+=======
+                "file": "export.md",
+>>>>>>> origin/exec
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -124,10 +131,14 @@
               "type": "outgoing-link",
               "state": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "file": "exec.md",
 =======
                 "file": "PARSING.md",
 >>>>>>> origin/parsing
+=======
+                "file": "export.md",
+>>>>>>> origin/exec
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -151,10 +162,14 @@
               "type": "outline",
               "state": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "file": "exec.md"
 =======
                 "file": "PARSING.md"
 >>>>>>> origin/parsing
+=======
+                "file": "export.md"
+>>>>>>> origin/exec
               }
             }
           }
@@ -175,22 +190,25 @@
       "command-palette:Ouvrir la palette de commandes": false
     }
   },
-  "active": "2a53600bf7268ab9",
+  "active": "7ff8a7382f8d2a04",
   "lastOpenFiles": [
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    "FUNCTION ALLOWED.md",
+    "EXECUTION.md",
+>>>>>>> origin/exec
     "exec.md",
     "BUILTINS.md",
-    "echo.md",
     "export.md",
+    "echo.md",
     "Sans titre.canvas",
-    "EXECUTION.md",
     "chain_list.md",
     "cd.md",
     "PARSING.md",
     "2024-06-21.md",
     "Untitled.canvas",
     "Redirections.md",
-    "FUNCTION ALLOWED.md",
     "LEAK CHECK.md",
 =======
     "FUNCTION ALLOWED.md",

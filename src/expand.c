@@ -32,5 +32,6 @@ char	*expand(char *s, t_minishell *info)
 			BG_RED"memory allocation failed during parsing"RESET);
 	while (s[a.i])
 		expand_util(s, info, &a, line);
+	free(s);
 	return (line);
 }

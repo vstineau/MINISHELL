@@ -1,6 +1,25 @@
 
 #include "../includes/minishell.h"
 
+void    *ft_memcpy(void *dest, const void *src, size_t n)
+{
+    size_t        i;
+    char        *dest1;
+    const char    *src1;
+
+    if (!dest && !src)
+        return (dest);
+    i = 0;
+    dest1 = dest;
+    src1 = src;
+    while (i < n)
+    {
+        dest1[i] = src1[i];
+        i++;
+    }
+    return (dest1);
+}
+
 int	ft_strncmp( const char *first, const char *second, size_t length)
 {
 	unsigned int	i;
@@ -125,25 +144,6 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-void    *ft_memcpy(void *dest, const void *src, size_t n)
-{
-    size_t        i;
-    char        *dest1;
-    const char    *src1;
-
-    if (!dest && !src)
-        return (dest);
-    i = 0;
-    dest1 = dest;
-    src1 = src;
-    while (i < n)
-    {
-        dest1[i] = src1[i];
-        i++;
-    }
-    return (dest1);
-}
-
 char    *ft_strdup(char *s)
 {
     size_t    i;
@@ -252,4 +252,40 @@ char	*ft_strjoin(char const *s1, char const *s2)
 			ptr[i++] = s2[j++];
 	}
 	return (ptr);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	if (s == NULL)
+		return ;
+	i = 0;
+	while (s[i] != '\0')
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+}
+
+void	ft_sort_strings(int num, char **s)
+{
+	int		i;
+	int		j;
+	char	*temp;
+
+	i = 1;
+	j = 0;
+	while (i < num)
+	{
+		j = i;
+		while (j > 0 && ft_strcmp(s[j - 1], s[j]) > 0)
+		{
+			temp = s[j - 1];
+			s[j - 1] = s[j];
+			s[j] = temp;
+			j--;
+		}
+		i++;
+	}
 }

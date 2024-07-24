@@ -1,7 +1,6 @@
 
 #include "../includes/minishell.h"
 #include <stdio.h>
-//#include <inttypes.h>
 
 int	ft_isdigit(int c)
 {
@@ -39,57 +38,58 @@ __int128	ato__i128(const char *str)
 	return (resultat * signe);
 }
 
-/*void print_uint128(__int128 value) {
-    if (value < 0) {
-        putchar('-');
-        value = -value;
-    }
-    
-    uint64_t high = value >> 64;
-    uint64_t low = value & 0xFFFFFFFFFFFFFFFF;
+static int	free_cmd2(t_cmd *cmd, bool env, t_minishell *info)
+{
+	t_cmd	*temp;
 
-    if (high == 0) {
-        printf("%" PRIu64, low);
-    } else {
-        printf("%" PRIu64 "%018" PRIu64, high, low);
-    }
-}*/
+	if (env)
+		free_split(info->env);
+	while (cmd)
+	{
+		temp = cmd;
+		if (cmd->cmd)
+		{
+			printf("cmd = %s\n", cmd->cmd);
+			free(cmd->cmd);
+		}
+		if (cmd->infile && cmd->redirect == NO_HEREDOC)
+			free(cmd->infile);
+		if (cmd->outfile)
+			free(cmd->outfile);
+		free_split(cmd->arg);
+		cmd = cmd->next;
+		free(temp);
+	}
+	unlink("heredoc");
+	cmd = NULL;
+	return (0);
+}
 
-//void    our_exit(t_cmd *c, t_minishell *info, char *error_code)
-void	our_exit(char **env, char *error_code)
+void	our_exit(t_cmd *c, t_minishell *info)
 {
 	int			i;
 	__int128	atoi_crack;
 	int			value;
 
 	value = 0;
-	atoi_crack = ato__i128(error_code);
-	//__int128 num = (__int128)atoi_crack;
-    //print_uint128(num);
+	i = 0;
+	if (c->arg[0] == NULL)
+		exit(free_cmd2(c, ENV, info));
+	atoi_crack = ato__i128(c->arg[0]);
 	printf("\n");
-	free_cmd(c, ENV, info);
-	if (error_code[0] == '-')
+	if (c->arg[0][0] == '-')
 		i = 1;
-	else
-		i = 0;
-	while (i < ft_strlen(error_code))
+	while (i < ft_strlen(c->arg[0]))
 	{
-		if (ft_isdigit(error_code[i]) == 1)
+		if (ft_isdigit(c->arg[0][i]) == 1)
 			i++;
 		else
 			exit (2);
 	}
-	if ((atoi_crack > LLONG_MAX || atoi_crack < LLONG_MIN) 
-		&& (ft_strlen(error_code) > 20))
-		exit (2);
+	if ((atoi_crack > LLONG_MAX || atoi_crack < LLONG_MIN)
+		&& (ft_strlen(c->arg[0]) > 20))
+		exit(2);
 	value = (atoi_crack % 256);
-	//printf("%i\n", value);
+	free_cmd(c, ENV, info);
 	exit (value);
-}
-
-int	main(int ac, char **av, char **env)
-{
-	(void) ac;
-	(void) av;
-	our_exit(env, "9223372036854775807");
 }
