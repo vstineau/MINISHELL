@@ -48,10 +48,7 @@ static int	free_cmd2(t_cmd *cmd, bool env, t_minishell *info)
 	{
 		temp = cmd;
 		if (cmd->cmd)
-		{
-			printf("cmd = %s\n", cmd->cmd);
 			free(cmd->cmd);
-		}
 		if (cmd->infile && cmd->redirect == NO_HEREDOC)
 			free(cmd->infile);
 		if (cmd->outfile)

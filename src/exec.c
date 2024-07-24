@@ -62,6 +62,6 @@ void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2])
 		if (c->outfile != NULL)
 			close (c->fd);
 		if (path == NULL)
-			return ;
+			free_cmd(c, ENV, info);
 	}
 }
