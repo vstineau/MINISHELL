@@ -3,7 +3,7 @@
 
 void	free_cmd(t_cmd *cmd, bool env, t_minishell *info)
 {
-	t_cmd *temp;
+	t_cmd	*temp;
 
 	if (env)
 		free_split(info->env);
