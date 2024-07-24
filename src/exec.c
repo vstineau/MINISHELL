@@ -22,7 +22,12 @@ void	apply_exec_builtin(t_cmd *c, t_minishell *info)
 	if (ft_strcmp(c->cmd, "echo") == 0)
 		echo(c->arg, c->fd);
 	if (ft_strcmp(c->cmd, "cd") == 0)
-		cd(c->arg[0], info->env, info);
+	{
+		if (c->arg[1] != NULL)
+			ft_putstr_fd("cd: too many arguments", 2);
+		else
+			cd(c->arg[0], info->env, info);
+	}
 	if (ft_strcmp(c->cmd, "pwd") == 0)
 		pwd(c->fd);
 	if (ft_strcmp(c->cmd, "export") == 0)
