@@ -49,14 +49,33 @@ char	**ft_print_export(char **env, int fd)
 	return (env2);
 }
 
+char	*get_first_av2(char *av)
+{
+	char	*av1;
+	int		i;
+	int		len;
+	
+	i = 0;
+	len = ft_strlen(av);
+	while (av[i] != '+' && i < len)
+		i++;
+	av1 = malloc(sizeof(char) * len + 1);
+	ft_strncpy(av1, av, i);
+	return (av1);
+}
+
 char	*get_first_av(char *av)
 {
 	char	*av1;
 	int		i;
 	int		len;
+	char	*test;
 
 	i = 0;
 	len = ft_strlen(av);
+	test = ft_strchr(av, '+');
+	if (test != NULL && test[1] == '=')
+		return (av1 = get_first_av2(av));
 	if (ft_strchr(av, '=') == NULL)
 	{
 		av1 = malloc(sizeof(char) * len + 1);
@@ -76,7 +95,8 @@ char	**export_each(char **env, char *av1, int len, char *av)
 	char	**env2;
 	int		i;
 	int		j;
-
+	char	*test;
+	
 	j = 0;
 	i = 0;
 	env2 = NULL;
@@ -84,6 +104,7 @@ char	**export_each(char **env, char *av1, int len, char *av)
 	{
 		if (ft_strncmp(env[i], av1, len) == 0)
 		{
+
 			env2 = calloc(sizeof(char *), env_size(env) + 1);
 			j = 0;
 			while (env[j])
@@ -92,7 +113,16 @@ char	**export_each(char **env, char *av1, int len, char *av)
 					env2[j] = ft_strdup(env[j]);
 				j++;
 			}
-			env2[i] = ft_strdup(av);
+			test = ft_strchr(av, '+');
+			if (test != NULL && test[1] == '=')
+			{
+				test = ft_strchr(test, test[2]);
+				test = ft_strjoin(env[i], test);
+				env2[i] = ft_strdup(test);
+			}
+			else
+				env2[i] = ft_strdup(av);
+			free(test);
 			free(av1);
 			free_split(env);
 			return (env2);
@@ -110,7 +140,16 @@ char	**export_each(char **env, char *av1, int len, char *av)
 			env2[i] = ft_strdup(env[i]);
 			i++;
 		}
-		env2[i] = ft_strdup(av);
+		test = ft_strchr(av, '+');
+		if (test != NULL && test[1] == '=')
+		{
+			test = ft_strchr(test, '=');
+			test = ft_strjoin(av1, test);
+			env2[i] = ft_strdup(test);
+		}
+		else
+			env2[i] = ft_strdup(av);
+		free(test);
 		free(av1);
 		free_split(env);
 		return (env2);
@@ -123,14 +162,11 @@ char	**export_each(char **env, char *av1, int len, char *av)
 char	**our_export(char **av, char **env, int fd)
 {
 	char	*av1;
-	int		i;
 	int		len;
-	int		j;
 	char	**env2;
-	int		k = 0;
+	int		k;
 
-	j = 0;
-	i = 0;
+	k = 0;
 	len = 0;
 	env2 = get_env(env);
 	if (av[0] == NULL)
