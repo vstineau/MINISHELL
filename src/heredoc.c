@@ -1,6 +1,13 @@
 
 #include "../includes/minishell.h"
 
+static void	close_heredoc(char *line, int *fd)
+{
+	close(*fd);
+	*fd = -1;
+	free(line);
+}
+
 void	no_expand_heredoc(char *s, char *line, t_iterator *a)
 {
 	int	i;
@@ -46,13 +53,12 @@ static int	no_heredoc2(char *s, t_cmd *c, t_minishell *info)
 	return (i);
 }
 
-int	heredoc(char *s, t_cmd *c, t_minishell *info)
+int	heredoc(char *s, t_cmd *c, t_minishell *info, char *s1)
 {
 	char	key[4096];
 	char	*line;
 	int		i;
 	int		j;
-	int		fd;
 
 	ft_memset(key, 0, 4096);
 	i = 0;
@@ -66,11 +72,10 @@ int	heredoc(char *s, t_cmd *c, t_minishell *info)
 	line = readline(BHI_BLACK"> "RESET);
 	if (!line)
 		exit_free_perror(c, ENV, info, NULL);
-	open("heredoc", O_CREAT, S_IRWXU);
-	fd = open("heredoc", O_WRONLY);
+	c->fd_h = open("heredoc", O_CREAT, S_IRWXU, O_WRONLY);
 	while (ft_strcmp(key, line) && g_signal_received != SIGINT)
-		line = fill_heredoc(line, c, fd, info);
-	free(line);
+		line = fill_heredoc2(line, c, s1, info);
+	close_heredoc(line, &c->fd_h);
 	c->infile = "heredoc";
 	return (i);
 }

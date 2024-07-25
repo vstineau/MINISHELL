@@ -33,7 +33,7 @@ int	infile(char *s, t_cmd *c, t_minishell *info)
 	{
 		i += 2;
 		c->redirect = HEREDOC;
-		i += heredoc(s + i, c, info);
+		i += heredoc(s + i, c, info, s);
 	}
 	else
 	{

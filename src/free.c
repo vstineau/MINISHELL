@@ -10,13 +10,16 @@ void	free_cmd(t_cmd *cmd, bool env, t_minishell *info)
 	while (cmd)
 	{
 		temp = cmd;
+		if(cmd->fd_h != -1 && cmd->fd_h != 0)
+			close(cmd->fd_h);
 		if (cmd->cmd)
 			free(cmd->cmd);
 		if (cmd->infile && cmd->redirect == NO_HEREDOC)
 			free(cmd->infile);
 		if (cmd->outfile)
 			free(cmd->outfile);
-		free_split(cmd->arg);
+		if (cmd->arg)
+			free_split(cmd->arg);
 		cmd = cmd->next;
 		free(temp);
 	}

@@ -57,7 +57,7 @@ int main(int argc, char *argv[], char *envp[])
 		}
 		else
 		{
-			free_split(info.env);
+			free_cmd(c, ENV, &info);
 			return (1);
 		}
 	}
