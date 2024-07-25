@@ -48,10 +48,11 @@ int main(int argc, char *argv[], char *envp[])
 		{
 			add_history(line);
 			line = expand(line, &info);
+			g_signal_received = 0;
 			c = parse(line, &info);
 			free(line);
 			exec(&info, c);
-			//printlist(c);
+	//		printlist(c);
 			free_cmd(c, NO_ENV, &info);
 		}
 		else

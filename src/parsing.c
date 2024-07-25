@@ -1,7 +1,7 @@
 
 #include "../includes/minishell.h"
 
-t_cmd	*ft_lstnew(char *s, t_cmd *c, t_minishell *info)
+static t_cmd	*ft_lstnew(char *s, t_cmd *c, t_minishell *info)
 {
 	t_cmd	*new_cmd;
 
@@ -26,7 +26,7 @@ t_cmd	*ft_lstnew(char *s, t_cmd *c, t_minishell *info)
 	return (new_cmd);
 }
 
-void	ft_lstadd_back(t_cmd **cmd, t_cmd *new)
+static void	ft_lstadd_back(t_cmd **cmd, t_cmd *new)
 {
 	t_cmd	*current;
 	t_cmd	*previous;
@@ -47,7 +47,7 @@ void	ft_lstadd_back(t_cmd **cmd, t_cmd *new)
 	previous->next = new;
 }
 
-int	get_pipe(char *s, int *i, t_cmd **current, t_minishell *info)
+static int	get_pipe(char *s, int *i, t_cmd **current, t_minishell *info)
 {
 	*i = 0;
 	ft_lstadd_back(current, ft_lstnew(s, *current, info));
@@ -58,13 +58,22 @@ int	get_pipe(char *s, int *i, t_cmd **current, t_minishell *info)
 	return (1);
 }
 
+static int	skip_space(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] == ' ' || s[i] == '\t')
+		i++;
+	return (i);
+}
+
 t_cmd	*parse(char *s, t_minishell *info)
 {
 	t_cmd	*c;
 	t_cmd	*current;
 	int		i_arg;
 
-	g_signal_received = 0;
 	if (!s)
 		return (NULL);
 	i_arg = 0;
@@ -73,8 +82,7 @@ t_cmd	*parse(char *s, t_minishell *info)
 	current = c;
 	while (*s != '\0')
 	{
-		while (*s == ' ' || *s == '\t')
-			s++;
+		s += skip_space(s);
 		if (*s == '<')
 			s += infile(s, current, info);
 		else if (*s == '>')
@@ -83,8 +91,7 @@ t_cmd	*parse(char *s, t_minishell *info)
 			s += get_pipe(s, &i_arg, &current, info);
 		else
 			s += get_cmd(s, current, &i_arg, info);
-		while (*s == ' ' || *s == '\t')
-			s++;
+		s += skip_space(s);
 	}
 	return (c);
 }

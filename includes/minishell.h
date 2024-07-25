@@ -68,6 +68,7 @@ typedef struct s_cmd
 	t_redirect	redirect;
 	struct s_cmd	*next;
 }						t_cmd;
+//----------UTILS----------------------//
 char	**ft_split(char const *s, char c);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_realloc(void *old, size_t old_length, size_t new_length);
