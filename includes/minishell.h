@@ -136,7 +136,11 @@ void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2]);
 void	exec(t_minishell *info, t_cmd *c);
 int		is_builtin(t_cmd *c);
 char	*get_first_av(char *av);
-
+char	**ft_print_export(char **env, int fd);
+int		ft_isalpha(int c);
+int		ft_isalnum(int c);
+void	*wrong_identifier(char *av);
+int		arg_ok_for_export(char *av);
 //----------BUILTINS---------------------//
 void	cd(char *path, char **envp, t_minishell *info);
 void	pwd(int	fd);

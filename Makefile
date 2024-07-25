@@ -29,7 +29,9 @@ SRC_NAME = main.c \
 					 exit.c \
 					 exec_bonus.c \
 					 apply_exec_bonus.c \
-					 find_cmd.c 
+					 find_cmd.c \
+					 print_export.c \
+					 export_utils.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

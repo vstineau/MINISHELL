@@ -22,7 +22,12 @@ void	apply_exec_builtin(t_cmd *c, t_minishell *info)
 	if (ft_strcmp(c->cmd, "echo") == 0)
 		echo(c->arg, c->fd);
 	if (ft_strcmp(c->cmd, "cd") == 0)
-		cd(c->arg[0], info->env, info);
+	{
+		if (c->arg[1] != NULL)
+			ft_putstr_fd("cd: too many arguments", 2);
+		else
+			cd(c->arg[0], info->env, info);
+	}
 	if (ft_strcmp(c->cmd, "pwd") == 0)
 		pwd(c->fd);
 	if (ft_strcmp(c->cmd, "export") == 0)
@@ -35,10 +40,21 @@ void	apply_exec_builtin(t_cmd *c, t_minishell *info)
 		our_exit(c, info);
 }
 
-void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2])
+void	apply_exec_path(t_cmd *c, t_minishell *info, int fd, int pip[2])
 {
 	char	*path;
 
+	path = find_path(info->env, c->cmd);
+	if (path != NULL)
+		apply_exec_middle_bonus(fd, pip, info->env, c);
+	if (c->outfile != NULL)
+		close (c->fd);
+	if (path == NULL)
+		free_cmd(c, ENV, info);
+}
+
+void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2])
+{
 	c->fd = 1;
 	if (c->outfile != NULL)
 		c->fd = open(c->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
@@ -55,13 +71,5 @@ void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2])
 	if (is_builtin(c) == 1)
 		apply_exec_builtin(c, info);
 	if (is_builtin(c) == 0)
-	{
-		path = find_path(info->env, c->cmd);
-		if (path != NULL)
-			apply_exec_middle_bonus(fd, pip, info->env, c);
-		if (c->outfile != NULL)
-			close (c->fd);
-		if (path == NULL)
-			free_cmd(c, ENV, info);
-	}
+		apply_exec_path(c, info, fd, pip);
 }
