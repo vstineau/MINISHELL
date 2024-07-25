@@ -58,11 +58,14 @@ char	**unset(char **av, char **env)
 		if (av[k] == NULL)
 		{
 			free_split(env);
-			return (env2);
+			k++;
 		}
-		len = 0;
-		env2 = unset_each(av[k], env2, len, j);
-		k++;
+		else
+		{
+			len = 0;
+			env2 = unset_each(av[k], env2, len, j);
+			k++;
+		}
 	}
 	free_split(env);
 	return (env2);
