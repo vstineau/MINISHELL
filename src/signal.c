@@ -22,15 +22,17 @@ static void	test(void)
 }
 
 //CTRL + '\'
-//static void	handle_sigquit(int signum, siginfo_t *info, void *context)
-//{
-//	(void)info;
-//	(void)context;
-//	(void)signum;
-//	write(2, "Quit (core dumped)\n", 20);
-//	g_signal_received = SIGQUIT;
-//}
-//
+void	handle_sigquit(int signum, siginfo_t *info, void *context)
+{
+	(void)info;
+	(void)context;
+	(void)signum;
+	write(2, "Quit (core dumped)\n", 20);
+	g_signal_received = SIGQUIT;
+	rl_done = true;
+	unlink("heredoc");
+}
+
 //int	init_sigint(t_minishell *info)
 //{
 //	info->sa_sigaction = handle_sigquit;

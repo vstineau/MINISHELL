@@ -121,6 +121,7 @@ int			get_cmd(char *s, t_cmd *c, int *i_arg, t_minishell *info);
 //----------SIGNALS----------------------//
 int			init_signals(t_minishell *info);
 void		check_signal(t_minishell *info);
+void		handle_sigquit(int signum, siginfo_t *info, void *context);
 //-------------FREE----------------------//
 void		exit_free_perror(t_cmd *c, bool env,
 				t_minishell *info, char *error);

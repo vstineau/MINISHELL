@@ -29,6 +29,15 @@ int	exec_midle(t_minishell *info, int fd, t_cmd *c)
 	return (pip[0]);
 }
 
+int	init_sigquit(t_minishell *info)
+{
+	sigemptyset(&info->sig.sa_mask);
+	info->sig.sa_sigaction = handle_sigquit;
+	if (sigaction(SIGQUIT, &info->sig, NULL) == -1)
+		return (0);
+	return (1);
+}
+
 void	exec(t_minishell *info, t_cmd *c)
 {
 	int	i;
@@ -36,6 +45,8 @@ void	exec(t_minishell *info, t_cmd *c)
 
 	i = 0;
 	pipout = 42;
+	if (init_sigquit(info) == 0)
+		exit_free_perror(c, ENV, info,"");
 	while (c)
 	{
 		if (c->cmd)
