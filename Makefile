@@ -9,6 +9,10 @@ SRC_NAME = main.c \
 					 get_env.c \
 					 signal.c \
 					 utils.c \
+					 utils2.c \
+					 utils3.c \
+					 utils4.c \
+					 utils5.c \
 					 ft_split.c \
 					 free.c \
 					 cmd.c \
