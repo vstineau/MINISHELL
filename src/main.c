@@ -16,6 +16,7 @@ void	printlist(t_cmd *cmd)
 		printf(BHI_GREEN"infile nb %d = %s\n"RESET, i, current->infile);
 		printf(BHI_MAGENTA"outfile nb %d = %s\n"RESET, i, current->outfile);
 		printf(BHI_RED"pipe %d\n"RESET, current->pipe);
+		printf(BHI_YELLOW"previous pipe %i\n"RESET, current->previous_pipe);
 		while (current->arg[j] && current->arg[j][0] != '\0')
 		{
 			printf(BHI_YELLOW"arg[%d] = %s\n"RESET, j, current->arg[j]);
@@ -52,7 +53,7 @@ int main(int argc, char *argv[], char *envp[])
 			c = parse(line, &info);
 			free(line);
 			exec(&info, c);
-	//		printlist(c);
+			//printlist(c);
 			free_cmd(c, NO_ENV, &info);
 		}
 		else
