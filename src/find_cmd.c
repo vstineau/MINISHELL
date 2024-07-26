@@ -74,18 +74,16 @@ char	*find_path(char **env, char *av)
 		folders = get_folders_from_path(env);
 		if (folders == NULL)
 		{
-			write(2, "command not found : ", 21);
-			write(2, av, ft_strlen(av));
-			write(2, "\n", 1);
+			ft_putstr_fd(av,2);
+			ft_putstr_fd(": command not found\n",2);
 			return (NULL);
 		}
 		path = find_path_in_folders(folders, av);
 		free_split(folders);
 		if (path == NULL)
 		{
-			write(2, "command not found : ", 21);
-			write(2, av, ft_strlen(av));
-			write(2, "\n", 1);
+			ft_putstr_fd(av,2);
+			ft_putstr_fd(": command not found\n",2);
 			return (NULL);
 		}
 		return (path);
