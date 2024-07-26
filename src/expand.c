@@ -1,11 +1,38 @@
 
 #include "../includes/../includes/minishell.h"
 
+static int	is_num(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
+
+static int	expand_$number(char *s, char **line, t_iterator *a)
+{
+	int		j;
+	int		len_line;
+
+	len_line = ft_strlen(*line);
+	if (len_line < ft_strlen(s))
+		len_line = ft_strlen(s);
+	j = 1 + a->i;
+	while (s[j] && !check_char(s[j], " \t"))
+		j++;
+	a->i += j - a->i;
+	return (0);
+}
+
 static void	expand_util(char *s, t_minishell *info, t_iterator *a, char **line)
 {
 	if (s[a->i] == '~' && (check_char(s[a->i - 1], " \t")
 			|| s[a->i - 1] == '\0') && !a->single_quotes && !a->doubles_quotes)
 		a->j += tilde(s, line, info, a);
+	else if (s[a->i] == '$' && is_num(s[a->i + 1]) && !a->single_quotes)
+		a->j += expand_$number(s, line, a);
+	//else if (s[a->i] == '$' && s[a->i + 1] == '?' && !a->single_quotes)
+	//	a->j += expand_env_v(s, line, info, a);//????????????????
 	else if (s[a->i] == '$' && !a->single_quotes)
 		a->j += expand_env_v(s, line, info, a);
 	else if (s[a->i] == '<' && s[a->i + 1] == '<'
@@ -34,3 +61,31 @@ char	*expand(char *s, t_minishell *info)
 		expand_util(s, info, &a, &line);
 	return (line);
 }
+
+//int	expand_$number(char *s, char **line, t_minishell *info, t_iterator *a)
+//{
+//	int		j;
+//	char	key[4096];
+//	char	*var;
+//	int		len_line;
+//
+//	len_line = ft_strlen(*line);
+//	if (len_line < ft_strlen(s))
+//		len_line = ft_strlen(s);
+//	j = 1 + a->i;
+//	var = NULL;
+//	ft_memset(key, 0, 4096);
+//	fill_key(key, s, &j, a);
+//	var = get_env_variable(key, info->env, NULL, info);
+//	if (!var)
+//		return (utils_env1(s, a, j));
+//	else
+//	{
+//		*line = ft_realloc(*line, len_line, len_line + ft_strlen(var) + 1);
+//		if (*line == NULL)
+//			exit_free_perror(NULL, ENV, info,
+//				BG_RED"memory allocation failed during parsing"RESET);
+//		ft_memcpy(*line + a->j, var, ft_strlen(var));
+//	}
+//	return (utils_env2(var, ft_strlen(var), a, j));
+//}

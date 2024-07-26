@@ -65,8 +65,10 @@ typedef struct s_cmd
 	int					fd;
 	int					fd_h;
 	t_token				pipe;
+	int					error;
 	int					previous_pipe;
 	t_redirect			redirect;
+	t_minishell			*i;
 	struct s_cmd		*next;
 }						t_cmd;
 //----------UTILS----------------------//

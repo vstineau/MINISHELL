@@ -3,6 +3,22 @@
 
 int g_signal_received;
 
+static	int	is_blank(char *s)
+{
+	int	i;
+	
+	if (!s)
+		return (1);
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] != ' ' && s[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	printlist(t_cmd *cmd)
 {
 	t_cmd *current;
@@ -51,13 +67,16 @@ int main(int argc, char *argv[], char *envp[])
 			g_signal_received = 0;
 			c = parse(line, &info);
 			free(line);
-			exec(&info, c);
+			if (c->error != 0)
+				perror(BG_RED"unclose quote"RESET);
+			if (!is_blank(c->cmd) && c->error == 0)
+				exec(&info, c);
 	//		printlist(c);
 			free_cmd(c, NO_ENV, &info);
 		}
 		else
 		{
-			free_cmd(c, ENV, &info);
+			free_split(info.env);
 			return (1);
 		}
 	}

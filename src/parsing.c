@@ -14,6 +14,7 @@ static t_cmd	*ft_lstnew(char *s, t_cmd *c, t_minishell *info)
 		exit(1);
 	}
 	new_cmd->arg = NULL;
+	new_cmd->i = info;
 	new_cmd->arg = ft_calloc((count_arg(s) + 1), sizeof(char *));
 	if (!new_cmd->arg)
 	{

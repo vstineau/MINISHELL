@@ -46,7 +46,7 @@ void	exec(t_minishell *info, t_cmd *c)
 	i = 0;
 	pipout = 42;
 	if (init_sigquit(info) == 0)
-		exit_free_perror(c, ENV, info,"");
+		exit_free_perror(c, ENV, info, "");
 	while (c)
 	{
 		if (c->cmd)

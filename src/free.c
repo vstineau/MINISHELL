@@ -10,7 +10,7 @@ void	free_cmd(t_cmd *cmd, bool env, t_minishell *info)
 	while (cmd)
 	{
 		temp = cmd;
-		if(cmd->fd_h != -1 && cmd->fd_h != 0)
+		if (cmd->fd_h != -1 && cmd->fd_h != 0)
 			close(cmd->fd_h);
 		if (cmd->cmd)
 			free(cmd->cmd);

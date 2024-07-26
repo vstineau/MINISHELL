@@ -13,6 +13,11 @@ static int	cmd_get_quote(char *s, t_cmd *c, int j)
 		quote = '"';
 	while (s[i] && s[i] != quote)
 		c->cmd[j++] = s[i++];
+	if (s[i] != quote)
+	{
+		printf(BHI_GREEN"s[i] = %c\n"RESET, s[i]);
+		c->error = 3;
+	}
 	return (i);
 }
 
@@ -28,6 +33,11 @@ static int	arg_get_quote(char *s, t_cmd *c, int iarg, int j)
 		quote = '"';
 	while (s[i] && s[i] != quote)
 		c->arg[iarg][j++] = s[i++];
+	if (s[i] != quote)
+	{
+		printf(BHI_GREEN"s[i] = %c\n"RESET, s[i]);
+		c->error = 3;
+	}
 	return (i);
 }
 

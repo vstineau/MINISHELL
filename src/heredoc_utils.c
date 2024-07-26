@@ -24,7 +24,7 @@ char	*fill_heredoc(char *line, int fd)
 	return (line);
 }
 
-char *fill_heredoc2(char *line, t_cmd *c, char *s1, t_minishell *info)
+char	*fill_heredoc2(char *line, t_cmd *c, char *s1, t_minishell *info)
 {
 	line = fill_heredoc(line, c->fd_h);
 	if (!line)
