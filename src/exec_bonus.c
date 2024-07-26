@@ -38,7 +38,7 @@ int	init_sigquit(t_minishell *info)
 	return (1);
 }
 
-void	check_dobble_pipe(t_cmd *test, int pipout)
+int	check_dobble_pipe(t_cmd *test, int pipout)
 {
 	while (test)
 	{
@@ -48,10 +48,11 @@ void	check_dobble_pipe(t_cmd *test, int pipout)
 			&& !test->cmd && !test->infile && !test->outfile)
 		{
 			close (pipout);
-			return (ft_putstr_fd("syntax error near unexpected token `|'\n", 2));
+			return (1);
 		}
 		test = test->next;
 	}
+	return (0);
 }
 
 void	exec(t_minishell *info, t_cmd *c)
@@ -65,7 +66,8 @@ void	exec(t_minishell *info, t_cmd *c)
 	pipout = 42;
 	if (init_sigquit(info) == 0)
 		exit_free_perror(c, ENV, info, "");
-	check_dobble_pipe(test, pipout);
+	if (check_dobble_pipe(test, pipout) == 1)
+		return (ft_putstr_fd("syntax error near unexpected token `|'\n", 2));
 	{
 		while (c)
 		{

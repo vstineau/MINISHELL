@@ -53,7 +53,7 @@ int main(int argc, char *argv[], char *envp[])
 			c = parse(line, &info);
 			free(line);
 			exec(&info, c);
-			//printlist(c);
+			printlist(c);
 			free_cmd(c, NO_ENV, &info);
 		}
 		else
