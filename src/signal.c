@@ -42,7 +42,7 @@ void	handle_sigquit(int signum, siginfo_t *info, void *context)
 //}
 void	check_signal(t_minishell *info)
 {
-	if (g_signal_received == SIGINT || g_signal_received == SIGQUIT)
+	if (g_signal_received == SIGINT)
 		info->code_error = 130;
 	else if (g_signal_received == SIGQUIT)
 		info->code_error = 131;
