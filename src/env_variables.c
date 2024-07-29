@@ -23,7 +23,7 @@ static void	fill_key(char key[4096], char *s, int *j, t_iterator *a)
 		*j += 1;
 	}
 	if (s[*j])
-		key[*j - a->i - 2] = 4; 
+		key[*j - a->i - 2] = 4;
 	key[*j - a->i - 1] = '=';
 }
 

@@ -9,7 +9,7 @@ static int	is_num(char c)
 		return (0);
 }
 
-static int	expand_$number(char *s, char **line, t_iterator *a)
+static int	expand_dols_number(char *s, char **line, t_iterator *a)
 {
 	int		j;
 	int		len_line;
@@ -30,9 +30,9 @@ static void	expand_util(char *s, t_minishell *info, t_iterator *a, char **line)
 			|| s[a->i - 1] == '\0') && !a->single_quotes && !a->doubles_quotes)
 		a->j += tilde(s, line, info, a);
 	else if (s[a->i] == '$' && is_num(s[a->i + 1]) && !a->single_quotes)
-		a->j += expand_$number(s, line, a);
-	//else if (s[a->i] == '$' && s[a->i + 1] == '?' && !a->single_quotes)
-	//	a->j += expand_env_v(s, line, info, a);//????????????????
+		a->j += expand_dols_number(s, line, a);
+	else if (s[a->i] == '$' && s[a->i + 1] == '?' && !a->single_quotes)
+			a->j += expand_dols_qmark(s, line, info, a);
 	else if (s[a->i] == '$' && !a->single_quotes)
 		a->j += expand_env_v(s, line, info, a);
 	else if (s[a->i] == '<' && s[a->i + 1] == '<'
@@ -62,30 +62,29 @@ char	*expand(char *s, t_minishell *info)
 	return (line);
 }
 
-//int	expand_$number(char *s, char **line, t_minishell *info, t_iterator *a)
-//{
-//	int		j;
-//	char	key[4096];
-//	char	*var;
-//	int		len_line;
-//
-//	len_line = ft_strlen(*line);
-//	if (len_line < ft_strlen(s))
-//		len_line = ft_strlen(s);
-//	j = 1 + a->i;
-//	var = NULL;
-//	ft_memset(key, 0, 4096);
-//	fill_key(key, s, &j, a);
-//	var = get_env_variable(key, info->env, NULL, info);
-//	if (!var)
-//		return (utils_env1(s, a, j));
-//	else
-//	{
-//		*line = ft_realloc(*line, len_line, len_line + ft_strlen(var) + 1);
-//		if (*line == NULL)
-//			exit_free_perror(NULL, ENV, info,
-//				BG_RED"memory allocation failed during parsing"RESET);
-//		ft_memcpy(*line + a->j, var, ft_strlen(var));
-//	}
-//	return (utils_env2(var, ft_strlen(var), a, j));
-//}
+int	expand_dols_qmark(char *s, char **line, t_minishell *info, t_iterator *a)
+{
+	int		j;
+	char	*code_error;
+	int		len_line;
+	int		len_code_error;
+
+	len_line = ft_strlen(*line);
+	if (len_line < ft_strlen(s))
+		len_line = ft_strlen(s);
+	j = 2 + a->i;
+	code_error = NULL;
+	code_error = ft_itoa(info->code_error);
+	if (!code_error)
+		exit_free_perror(NULL, ENV, info,
+			BG_RED"memory allocation failed during parsing"RESET);
+	len_code_error = ft_strlen(code_error);
+	*line = ft_realloc(*line, len_line, len_line + 5 + 1);
+	if (*line == NULL)
+		exit_free_perror(NULL, ENV, info,
+			BG_RED"memory allocation failed during parsing"RESET);
+	ft_memcpy(*line + a->j, code_error, ft_strlen(code_error));
+	a->i += j - a->i;
+	free(code_error);
+	return (len_code_error);
+}

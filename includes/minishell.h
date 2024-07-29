@@ -72,6 +72,7 @@ typedef struct s_cmd
 	struct s_cmd		*next;
 }						t_cmd;
 //----------UTILS----------------------//
+char		*ft_itoa(int n);
 char		**ft_split(char const *s, char c);
 void		*ft_calloc(size_t nmemb, size_t size);
 void		*ft_realloc(void *old, size_t old_length, size_t new_length);
@@ -106,6 +107,7 @@ int			expand_env_v(char *s, char **line,
 void		no_expand_heredoc(char *s, char *line, t_iterator *a);
 int			expand_doubles_quotes(t_iterator *a, char *line);
 int			expand_single_quotes(t_iterator *a, char *line);
+int			expand_dols_qmark(char *s, char **line, t_minishell *info, t_iterator *a);
 void		ft_putstr_fd(char *s, int fd);
 //----------PARSING----------------------//
 char		**get_env(char **envp);

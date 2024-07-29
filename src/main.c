@@ -68,7 +68,7 @@ int main(int argc, char *argv[], char *envp[])
 			c = parse(line, &info);
 			free(line);
 			if (c->error != 0)
-				perror(BG_RED"unclose quote"RESET);
+				perror(BG_RED"parsing error"RESET);
 			if (!is_blank(c->cmd) && c->error == 0)
 				exec(&info, c);
 	//		printlist(c);
