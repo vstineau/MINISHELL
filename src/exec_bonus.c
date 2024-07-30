@@ -38,24 +38,47 @@ int	init_sigquit(t_minishell *info)
 	return (1);
 }
 
+int	check_dobble_pipe(t_cmd *test, int pipout)
+{
+	while (test)
+	{
+		if (test->pipe == PIPE)
+			test->next->previous_pipe = 1;
+		if (test->previous_pipe == 1 && test->pipe == 0
+			&& !test->cmd && !test->infile && !test->outfile)
+		{
+			close (pipout);
+			return (1);
+		}
+		test = test->next;
+	}
+	return (0);
+}
+
 void	exec(t_minishell *info, t_cmd *c)
 {
-	int	i;
-	int	pipout;
+	int		i;
+	int		pipout;
+	t_cmd	*test;
 
+	test = c;
 	i = 0;
 	pipout = 42;
 	if (init_sigquit(info) == 0)
 		exit_free_perror(c, ENV, info, "");
-	while (c)
+	if (check_dobble_pipe(test, pipout) == 1)
+		return (ft_putstr_fd("syntax error near unexpected token `|'\n", 2));
 	{
-		if (c->cmd)
-			pipout = exec_midle(info, pipout, c);
-		if (c->pipe == PIPE)
-			c->next->previous_pipe = 1;
-		c = c->next;
+		while (c)
+		{
+			if (c->cmd)
+				pipout = exec_midle(info, pipout, c);
+			if (c->pipe == PIPE)
+				c->next->previous_pipe = 1;
+			c = c->next;
+		}
+		while (wait(NULL) > 0)
+			;
+		close (pipout);
 	}
-	while (wait(NULL) > 0)
-		;
-	close (pipout);
 }
