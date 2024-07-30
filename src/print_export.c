@@ -42,7 +42,7 @@ char	**ft_print_export(char **env, int fd)
 	j = 0;
 	len = env_size(env);
 	i = 0;
-	env2 = get_env(env);
+	env2 = get_env(env, NULL, 0);
 	ft_sort_strings(len, env);
 	while (env[i])
 	{

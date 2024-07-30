@@ -26,14 +26,20 @@ int	infile(char *s, t_cmd *c, t_minishell *info)
 	int	i;
 
 	i = 0;
-	if (*s && *s + 1 == '\0')
-		exit_free_perror(c, ENV, info,
-			BG_RED"syntax error"RESET);
+	if (*s && *(s + 1) == '\0')
+	{
+		info->code_error = 2;
+		c->error = 1;
+		return (1);
+	}
 	if (*s && *(s + 1) == '<')
 	{
 		i += 2;
 		c->redirect = HEREDOC;
-		i += heredoc(s + i, c, info, s);
+		if (*(s + 2) && *(s + 2) == '<')
+			c->error = 1;
+		if (!c->error)
+			i += heredoc(s + i, c, info, s);
 	}
 	else
 	{

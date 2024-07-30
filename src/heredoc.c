@@ -93,7 +93,7 @@ int	no_heredoc(char *s, t_cmd *c, t_minishell *info)
 			BG_RED"memory allocation failed during parsing"RESET);
 	i = 0;
 	j = 0;
-	while (!check_char(s[i], "  \t"))
+	while (s[i] && !check_char(s[i], "  \t"))
 		i++;
 	while (s[i] && !check_char(s[i], "  \t|><$"))
 		c->infile[j++] = s[i++];

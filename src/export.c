@@ -98,7 +98,7 @@ char	**our_export(char **av, char **env, int fd)
 
 	k = 0;
 	len = 0;
-	env2 = get_env(env);
+	env2 = get_env(env, NULL, 0);
 	if (av[0] == NULL)
 		return (free_split(env), ft_print_export(env2, fd));
 	while (av[k])

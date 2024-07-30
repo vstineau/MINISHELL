@@ -33,13 +33,6 @@ void	handle_sigquit(int signum, siginfo_t *info, void *context)
 	unlink("heredoc");
 }
 
-//int	init_sigint(t_minishell *info)
-//{
-//	info->sa_sigaction = handle_sigquit;
-//	if (sigaction(SIGQUIT, &info->sig, NULL) == -1)
-//		return (0);
-//	return (1);
-//}
 void	check_signal(t_minishell *info)
 {
 	if (g_signal_received == SIGINT)

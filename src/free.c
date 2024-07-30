@@ -37,6 +37,17 @@ void	free_split(char **split)
 	free(split);
 }
 
+void	free_split_exit(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+		free(split[i++]);
+	free(split);
+	exit(1);
+}
+
 void	exit_free_perror(t_cmd *c, bool env, t_minishell *info, char *error)
 {
 	if (error)

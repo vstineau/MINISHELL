@@ -4,7 +4,7 @@
 char	**free_split_get_env(char **env2, char **env)
 {
 	free_split(env2);
-	env2 = get_env(env);
+	env2 = get_env(env, NULL, 0);
 	free_split(env);
 	return (env2);
 }
@@ -52,7 +52,7 @@ char	**unset(char **av, char **env)
 
 	j = 0;
 	k = 0;
-	env2 = get_env(env);
+	env2 = get_env(env, NULL, 0);
 	while (av[k])
 	{
 		if (av[k] == NULL)

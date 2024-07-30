@@ -63,8 +63,10 @@ static int	skip_space(char *s)
 {
 	int	i;
 
+	if (!s)
+		return (0);
 	i = 0;
-	while (s[i] == ' ' || s[i] == '\t')
+	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
 		i++;
 	return (i);
 }
@@ -75,6 +77,7 @@ t_cmd	*parse(char *s, t_minishell *info)
 	t_cmd	*current;
 	int		i_arg;
 
+	g_signal_received = 0;
 	if (!s)
 		return (NULL);
 	i_arg = 0;

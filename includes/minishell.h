@@ -84,7 +84,6 @@ char		*ft_strcpy(char *dest, char *src);
 char		*ft_strncpy(char *dest, char *src, int n);
 size_t		count_words(char const *s, char c);
 char		*ft_strdup(char *s);
-char		**get_env(char **envp);
 void		ft_sort_strings(int num, char **s);
 int			ft_strncmp( const char *first, const char *second, size_t length);
 int			env_size(char **envp);
@@ -107,10 +106,11 @@ int			expand_env_v(char *s, char **line,
 void		no_expand_heredoc(char *s, char *line, t_iterator *a);
 int			expand_doubles_quotes(t_iterator *a, char *line);
 int			expand_single_quotes(t_iterator *a, char *line);
-int			expand_dols_qmark(char *s, char **line, t_minishell *info, t_iterator *a);
+int			expand_dols_qmark(char *s, char **line,
+				t_minishell *info, t_iterator *a);
 void		ft_putstr_fd(char *s, int fd);
 //----------PARSING----------------------//
-char		**get_env(char **envp);
+char		**get_env(char **envp, char **argv, int argc);
 t_cmd		*parse(char *line, t_minishell *info);
 int			infile(char *s, t_cmd *c, t_minishell *info);
 int			outfile(char *s, t_cmd *c, t_minishell *info);
@@ -133,6 +133,7 @@ void		exit_free_perror(t_cmd *c, bool env,
 				t_minishell *info, char *error);
 void		free_cmd(t_cmd *cmd, bool env, t_minishell *info);
 void		free_split(char **split);
+void		free_split_exit(char **split);
 char		*free_return(char **cmd, char *endfile);
 void		free_alls(char *path, char **cmd);
 //----------EXECUTION--------------------//
