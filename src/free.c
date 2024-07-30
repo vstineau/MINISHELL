@@ -14,7 +14,7 @@ void	free_cmd(t_cmd *cmd, bool env, t_minishell *info)
 			close(cmd->fd_h);
 		if (cmd->cmd)
 			free(cmd->cmd);
-		if (cmd->infile && cmd->redirect == NO_HEREDOC)
+		if (cmd->infile && cmd->redirect != HEREDOC)
 			free(cmd->infile);
 		if (cmd->outfile)
 			free(cmd->outfile);

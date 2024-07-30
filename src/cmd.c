@@ -55,7 +55,7 @@ static int	if_cmd(char *s, t_cmd *c, int *i_arg, t_minishell *info)
 			BG_RED"memory allocation failed during parsing\n"RESET);
 	i = 0;
 	j = 0;
-	while (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != '|')
+	while (!c->error && s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != '|')
 	{
 		if (s[i] == '\'' || s[i] == '"')
 		{
@@ -83,7 +83,7 @@ int	get_cmd(char *s, t_cmd *c, int *i_arg, t_minishell *info)
 				info, BG_RED"memory allocation failed during parsing\n"RESET);
 		i = 0;
 		j = 0;
-		while (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != '|')
+		while (!c->error && s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != '|')
 		{
 			if (s[i] == '\'' || s[i] == '"')
 			{

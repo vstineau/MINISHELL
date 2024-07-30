@@ -77,25 +77,25 @@ t_cmd	*parse(char *s, t_minishell *info)
 	t_cmd	*current;
 	int		i_arg;
 
-	g_signal_received = 0;
 	if (!s)
 		return (NULL);
 	i_arg = 0;
 	c = NULL;
 	c = ft_lstnew(s, c, info);
 	current = c;
-	while (*s != '\0')
+	while (!c->error && *s)
 	{
 		s += skip_space(s);
-		if (*s == '<')
+		if (*s == '<' && !c->error)
 			s += infile(s, current, info);
-		else if (*s == '>')
+		else if (*s == '>' && !c->error)
 			s += outfile(s, current, info);
-		else if (*s == '|')
+		else if (*s == '|' && !c->error)
 			s += get_pipe(s, &i_arg, &current, info);
 		else
 			s += get_cmd(s, current, &i_arg, info);
-		s += skip_space(s);
+		if (!c->error)
+			s += skip_space(s);
 	}
 	return (c);
 }

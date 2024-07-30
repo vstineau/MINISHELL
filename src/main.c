@@ -43,6 +43,18 @@ static int	is_blank(char *s)
 //	}
 //}
 //
+static void	unwanted_argc(int argc)
+{
+	if (argc > 1)
+		exit(1);
+}
+
+static void	signals_stuff(t_minishell *info)
+{
+	check_signal(info);
+	init_signals(info);
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_minishell	info;
@@ -50,15 +62,13 @@ int	main(int argc, char *argv[], char *envp[])
 	char		*line;
 	char		prompt[4097];
 
-	if (argc > 1)
-		return (1);
+	unwanted_argc(argc);
 	c = (t_cmd *){0};
 	info = (t_minishell){0};
 	info.env = get_env(envp, argv, argc);
 	while (1)
 	{
-		init_signals(&info);
-		check_signal(&info);
+		signals_stuff(&info);
 		line = readline(get_prompt(prompt, &info, c));
 		if (!line)
 			free_split_exit(info.env);
