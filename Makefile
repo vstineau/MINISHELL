@@ -41,16 +41,49 @@ OBJ_NAME = $(SRC_NAME:.c=.o)
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 
+.DEFAULT_GOAL := all
+
+display_ascii_art :
+	@echo "                                            ██████████"
+	@echo "                                          ██░░░░░░░░░░██"
+	@echo "                                        ██░░░░░░░░░░░░░░██"
+	@echo "                                        ██░░░░░░░░████░░██████████"
+	@echo "                            ██          ██░░░░░░░░████░░██▒▒▒▒▒▒██"
+	@echo "                          ██░░██        ██░░░░░░░░░░░░░░██▒▒▒▒▒▒██"
+	@echo "                          ██░░░░██      ██░░░░░░░░░░░░░░██████████"
+	@echo "                        ██░░░░░░░░██      ██░░░░░░░░░░░░██"
+	@echo "                        ██░░░░░░░░████████████░░░░░░░░██"
+	@echo "                        ██░░░░░░░░██░░░░░░░░░░░░░░░░░░░░██"
+	@echo "                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██"
+	@echo "                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██"
+	@echo "                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██"
+	@echo "                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██"
+	@echo "                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██"
+	@echo "                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██"
+	@echo "                          ██░░░░░░░░░░░░░░░░░░░░░░░░░░██"
+	@echo "                            ██████░░░░░░░░░░░░░░░░████"
+	@echo "                                  ████████████████"
+	@echo ""
+	@echo "              ███    ███ ██ ███    ██ ██ ███████ ██   ██ ███████ ██      ██      "
+	@echo "              ████  ████ ██ ████   ██ ██ ██      ██   ██ ██      ██      ██      "
+	@echo "              ██ ████ ██ ██ ██ ██  ██ ██ ███████ ███████ █████   ██      ██      "
+	@echo "              ██  ██  ██ ██ ██  ██ ██ ██      ██ ██   ██ ██      ██      ██      "
+	@echo "              ██      ██ ██ ██   ████ ██ ███████ ██   ██ ███████ ███████ ███████ "
+
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -lreadline -o $(NAME) $(OBJ)
+	$(eval DO_ART := 1)
+	@$(CC) $(CFLAGS) -lreadline -o $(NAME) $(OBJ)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	mkdir -p $(@D)
-	$(CC) $(CFLAGS) -o $@ -c $<
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -o $@ -c $<
 
 -include $(OBJ:%.o=%.d)
 
-all: $(NAME)
+all:  $(NAME)
+	@if [ ! -z $(DO_ART) ]; then \
+		$(MAKE) -s display_ascii_art;\
+	fi
 
 clean:
 	rm -rf ../obj
@@ -58,6 +91,7 @@ clean:
 fclean: clean
 	rm -rf $(NAME)
 
-re: fclean all
+re:
+	@$(MAKE) -s fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re display_ascii_art
