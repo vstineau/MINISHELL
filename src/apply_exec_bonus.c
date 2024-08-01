@@ -20,9 +20,10 @@ void	apply_exec(t_cmd *c, char **env, int pip[2])
 	}
 	if (execve(path, cmd, env) == -1)
 	{
+		perror(path);
 		close (pip[0]);
-		free (path);
-		free_split(cmd);
+		free(cmd);
+		free_cmd(c, ENV, c->i);
 		exit(-1);
 	}
 	free_split(cmd);

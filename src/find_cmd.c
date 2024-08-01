@@ -49,18 +49,13 @@ char	*find_path_in_folders(char **folders, char *av)
 
 char	*path_ok(char *av)
 {
-	char	**cmd;
 	char	*path;
 
-	cmd = find_cmd(av);
-	if (cmd == NULL)
-		return (NULL);
-	path = *cmd;
+	path = av;
 	if (access(path, F_OK | X_OK) == 0)
 	{
 		return (path);
 	}
-	free_split(cmd);
 	return (NULL);
 }
 
