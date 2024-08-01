@@ -18,11 +18,14 @@ void	apply_exec(t_cmd *c, char **env, int pip[2])
 		ft_memcpy(cmd[i], c->arg[i - 1], ft_strlen(c->arg[i - 1]));
 		i++;
 	}
+	if (c->outfile != NULL)
+		close (c->fd);
 	if (execve(path, cmd, env) == -1)
 	{
+		perror(path);
 		close (pip[0]);
-		free (path);
-		free_split(cmd);
+		free(cmd);
+		free_cmd(c, ENV, c->i);
 		exit(-1);
 	}
 	free_split(cmd);
@@ -31,8 +34,6 @@ void	apply_exec(t_cmd *c, char **env, int pip[2])
 void	close_before(int fd, int pip[2], t_cmd *c)
 {
 	(void) c;
-	if (c->outfile != NULL)
-		close (c->fd);
 	close (fd);
 	close(pip[1]);
 }
@@ -55,11 +56,8 @@ void	apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c)
 		if (dup2(fd, STDIN_FILENO) == -1)
 			perror("");
 	}
-	if (c->next && c->next->pipe == PIPE)
-	{
-		if (dup2(pip[1], STDOUT_FILENO) == -1)
-			perror("");
-	}
+	if (dup2(c->fd, STDOUT_FILENO) == -1)
+		perror("");
 	close_before(fd, pip, c);
 	apply_exec(c, env, pip);
 }
