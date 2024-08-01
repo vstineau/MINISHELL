@@ -42,7 +42,7 @@ static int	is_blank(char *s)
 //		current = current->next;
 //	}
 //}
-
+//
 static void	unwanted_argc(int argc)
 {
 	if (argc > 1)
@@ -78,7 +78,7 @@ int	main(int argc, char *argv[], char *envp[])
 		free(line);
 		if (c->error != 0)
 			perror(BG_RED"parsing error"RESET);
-		if ((!is_blank(c->cmd) && c->error == 0) || c->outfile)
+		if ((!is_blank(c->cmd) && c->error == 0) || !is_blank(c->outfile))
 			exec(&info, c);
 		free_cmd(c, NO_ENV, &info);
 	}

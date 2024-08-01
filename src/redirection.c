@@ -1,6 +1,28 @@
 
 #include "../includes/minishell.h"
 
+static int	is_blank(char *s)
+{
+	int	i;
+
+	if (!s)
+		return (1);
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] != ' ' && s[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static void	error_file(t_cmd *c, t_minishell *info)
+{
+	c->error = 1;
+	info->code_error = 2;
+}
+
 static int	get_outfile(char *s, t_cmd *c, t_minishell *info)
 {
 	int	i;
@@ -14,17 +36,16 @@ static int	get_outfile(char *s, t_cmd *c, t_minishell *info)
 			BG_RED"memory allocation failed during parsing"RESET);
 	i = 0;
 	j = 0;
-	while (s[i] && s[i] == ' ')
+	while (s[i] && check_char(s[i], "<>  \t"))
+	{
+		printf(BLUE"s[i]  = %c\n"RESET, s[i]);
 		i++;
-	while (s[i] && s[i] != ' ')
+	}
+	while (s[i] && !check_char(s[i], "<>  \t"))
 		c->outfile[j++] = s[i++];
+	if (is_blank(c->outfile))
+		error_file(c, info);
 	return (i);
-}
-
-static void	error_file(t_cmd *c, t_minishell *info)
-{
-	c->error = 1;
-	info->code_error = 2;
 }
 
 int	infile(char *s, t_cmd *c, t_minishell *info)

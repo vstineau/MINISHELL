@@ -3,7 +3,8 @@
 
 static void	close_heredoc(t_cmd *c, char *line, int *fd)
 {
-	close(*fd);
+	if (*fd != -1)
+		close(*fd);
 	*fd = -1;
 	free(line);
 	c->infile = "heredoc";
