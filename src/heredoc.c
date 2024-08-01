@@ -29,31 +29,6 @@ void	no_expand_heredoc(char *s, char *line, t_iterator *a)
 	a->j += i - 1;
 }
 
-static int	no_heredoc2(char *s, t_cmd *c, t_minishell *info)
-{
-	char	key[4096];
-	int		i;
-
-	i = 1;
-	ft_memset(key, 0, 4096);
-	if (*s == '$')
-	{
-		while (s[i] && check_char(s[i], " \t"))
-		{
-			key[i - 1] = s[i];
-			i++;
-		}
-		key[i - 1] = '=';
-		c->infile = ft_strjoin_free(c->infile,
-				get_env_variable(key, info->env, NULL, info));
-	}
-	else if (*s == '<')
-		i += infile(s, c, info);
-	else if (*s == '>')
-		i += outfile(s, c, info);
-	return (i);
-}
-
 int	heredoc(char *s, t_cmd *c, t_minishell *info, char *s1)
 {
 	char	key[4096];
@@ -67,7 +42,7 @@ int	heredoc(char *s, t_cmd *c, t_minishell *info, char *s1)
 	while (check_char(s[i], "~ \t|><$"))
 		i++;
 	if (!s[i])
-		return (perror_and_return_i(BG_RED"syntax error"RESET, i));
+		return (perror_and_return_i(info, BG_RED"syntax error"RESET, i));
 	while (s[i] && s[i] != ' ' && s[i] != '\t')
 		key[j++] = s[i++];
 	line = readline(BHI_BLACK"> "RESET);
@@ -96,9 +71,9 @@ int	no_heredoc(char *s, t_cmd *c, t_minishell *info)
 			BG_RED"memory allocation failed during parsing"RESET);
 	i = 0;
 	j = 0;
-	while (s[i] && !check_char(s[i], "  \t"))
+	while (s[i] && check_char(s[i], "  \t"))
 		i++;
 	while (s[i] && !check_char(s[i], "  \t|><$"))
 		c->infile[j++] = s[i++];
-	return (i + no_heredoc2(s, c, info));
+	return (i);
 }

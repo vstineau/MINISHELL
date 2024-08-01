@@ -39,8 +39,7 @@ void	check_signal(t_minishell *info)
 		info->code_error = 130;
 	else if (g_signal_received == SIGQUIT)
 		info->code_error = 131;
-	else
-		return ;
+	g_signal_received = 0;
 }
 
 int	init_signals(t_minishell *info)

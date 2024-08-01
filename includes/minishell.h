@@ -97,7 +97,7 @@ char		*ft_strjoin_free(char *s1, char *s2);
 char		*get_prompt(char *prompt, t_minishell *info, t_cmd *c);
 int			check_char(char c, char *s);
 int			is_uppercase(char c);
-int			perror_and_return_i(char *s, int i);
+int			perror_and_return_i(t_minishell *info, char *s, int i);
 //----------EXPAND----------------------//
 char		*expand(char *s, t_minishell *info);
 int			tilde(char *s, char **line, t_minishell *info, t_iterator *a);

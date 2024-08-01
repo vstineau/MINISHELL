@@ -21,6 +21,12 @@ static int	get_outfile(char *s, t_cmd *c, t_minishell *info)
 	return (i);
 }
 
+static void	error_file(t_cmd *c, t_minishell *info)
+{
+	c->error = 1;
+	info->code_error = 2;
+}
+
 int	infile(char *s, t_cmd *c, t_minishell *info)
 {
 	int	i;
@@ -37,7 +43,7 @@ int	infile(char *s, t_cmd *c, t_minishell *info)
 		i += 2;
 		c->redirect = HEREDOC;
 		if (*(s + 2) && *(s + 2) == '<')
-			c->error = 1;
+			error_file(c, info);
 		if (!c->error)
 			i += heredoc(s + i, c, info, s);
 	}
@@ -63,8 +69,10 @@ int	outfile(char *s, t_cmd *c, t_minishell *info)
 	}
 	if (*s && *(s + 1) == '>')
 	{
+		if (*(s + 2) == '\0')
+			error_file(c, info);
 		if (*(s + 2) && *(s + 2) == '>')
-			c->error = 1;
+			error_file(c, info);
 		i += 2;
 		c->redirect = APPEND;
 	}

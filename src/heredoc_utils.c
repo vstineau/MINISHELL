@@ -1,8 +1,9 @@
 
 #include "../includes/minishell.h"
 
-int	perror_and_return_i(char *s, int i)
+int	perror_and_return_i(t_minishell *info, char *s, int i)
 {
+	info->code_error = 2;
 	perror(s);
 	return (i);
 }
