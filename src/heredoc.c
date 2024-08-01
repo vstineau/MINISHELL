@@ -1,11 +1,12 @@
 
 #include "../includes/minishell.h"
 
-static void	close_heredoc(char *line, int *fd)
+static void	close_heredoc(t_cmd *c, char *line, int *fd)
 {
 	close(*fd);
 	*fd = -1;
 	free(line);
+	c->infile = "heredoc";
 }
 
 void	no_expand_heredoc(char *s, char *line, t_iterator *a)
@@ -66,17 +67,19 @@ int	heredoc(char *s, t_cmd *c, t_minishell *info, char *s1)
 	while (check_char(s[i], "~ \t|><$"))
 		i++;
 	if (!s[i])
-		perror_and_return_i(BG_RED"syntax error"RESET, i);
+		return (perror_and_return_i(BG_RED"syntax error"RESET, i));
 	while (s[i] && s[i] != ' ' && s[i] != '\t')
 		key[j++] = s[i++];
 	line = readline(BHI_BLACK"> "RESET);
 	if (!line)
+	{
+		free(s1);
 		exit_free_perror(c, ENV, info, NULL);
+	}
 	c->fd_h = open("heredoc", O_CREAT, S_IRWXU, O_WRONLY);
 	while (ft_strcmp(key, line) && g_signal_received != SIGINT)
 		line = fill_heredoc2(line, c, s1, info);
-	close_heredoc(line, &c->fd_h);
-	c->infile = "heredoc";
+	close_heredoc(c, line, &c->fd_h);
 	return (i);
 }
 
