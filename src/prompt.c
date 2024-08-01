@@ -61,6 +61,7 @@ char	*get_prompt(char *prompt, t_minishell *info, t_cmd *c)
 	int		j;
 	char	p[4096];
 	char	*s;
+	
 
 	s = ft_itoa(info->code_error);
 	if (!s)

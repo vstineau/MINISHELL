@@ -42,16 +42,14 @@ void	apply_exec_builtin(t_cmd *c, t_minishell *info)
 
 void	apply_exec_path(t_cmd *c, t_minishell *info, int fd, int pip[2])
 {
-	char	*path;
 
-	path = find_path(info->env, c->cmd);
-	if (path != NULL)
+	if (c->path != NULL)
 	{
 		apply_exec_middle_bonus(fd, pip, info->env, c);
 	}
 	if (c->outfile != NULL)
 		close (c->fd);
-	if (path == NULL)
+	if (c->path == NULL)
 		free_cmd(c, ENV, info);
 }
 

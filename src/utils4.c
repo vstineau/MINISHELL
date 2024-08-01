@@ -3,7 +3,7 @@
 
 char	*return_path(char **cmd, char *endfile, char *path)
 {
-	free_split(cmd);
+	(void) cmd;
 	free(endfile);
 	return (path);
 }
@@ -23,7 +23,7 @@ void	free_alls(char *path, char **cmd)
 
 char	*free_return(char **cmd, char *endfile)
 {	
-	free_split(cmd);
+	free (cmd);
 	free(endfile);
 	return (NULL);
 }

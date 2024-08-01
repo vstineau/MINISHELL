@@ -98,6 +98,7 @@ char		*get_prompt(char *prompt, t_minishell *info, t_cmd *c);
 int			check_char(char c, char *s);
 int			is_uppercase(char c);
 int			perror_and_return_i(t_minishell *info, char *s, int i);
+void		close_before(int fd, int pip[2], t_cmd *c);
 //----------EXPAND----------------------//
 char		*expand(char *s, t_minishell *info);
 int			tilde(char *s, char **line, t_minishell *info, t_iterator *a);
@@ -137,7 +138,7 @@ void		free_split_exit(char **split);
 char		*free_return(char **cmd, char *endfile);
 void		free_alls(char *path, char **cmd);
 //----------EXECUTION--------------------//
-char		*find_path(char **env, char *av);
+char		*find_path(char **env, char *av, t_minishell *info);
 char		**find_cmd(char *av);
 char		*return_path(char **cmd, char *endfile, char *path);
 void		apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c);

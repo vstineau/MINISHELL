@@ -59,7 +59,7 @@ char	*path_ok(char *av)
 	return (NULL);
 }
 
-char	*find_path(char **env, char *av)
+char	*find_path(char **env, char *av, t_minishell *info)
 {
 	char	**folders;
 	char	*path;

@@ -1,6 +1,7 @@
 
 #include "../includes/minishell.h"
 #include <unistd.h>
+#include <errno.h>
 
 void	apply_exec(t_cmd *c, char **env, int pip[2])
 {
@@ -9,7 +10,7 @@ void	apply_exec(t_cmd *c, char **env, int pip[2])
 	int		i;
 
 	i = 1;
-	path = find_path(env, c->cmd);
+	path = find_path(env, c->cmd, c->i);
 	cmd = ft_calloc(sizeof(char **), env_size(c->arg) + 2);
 	cmd[0] = c->cmd;
 	while (c->arg[i - 1])
@@ -22,11 +23,12 @@ void	apply_exec(t_cmd *c, char **env, int pip[2])
 		close (c->fd);
 	if (execve(path, cmd, env) == -1)
 	{
+		errno = EISDIR;
 		perror(path);
 		close (pip[0]);
 		free(cmd);
 		free_cmd(c, ENV, c->i);
-		exit(-1);
+		exit(126);
 	}
 	free_split(cmd);
 }
