@@ -69,10 +69,7 @@ static void	check_unwanted_char(char *line, char *s, t_cmd *c)
 	if (!c->cmd && !c->outfile && !c->infile)
 	{
 		if (c->next && c->next->pipe == PIPE)
-		{
-			c->i->code_error = 2;
-			c->error = 1;
-		}
+			set_error_code(c, 2);
 	}
 	if (!s)
 		return ;
@@ -82,8 +79,7 @@ static void	check_unwanted_char(char *line, char *s, t_cmd *c)
 			return ;
 		i++;
 	}
-	c->error = 1;
-	c->i->code_error = 2;
+	set_error_code(c, 2);
 }
 
 int	main(int argc, char *argv[], char *envp[])

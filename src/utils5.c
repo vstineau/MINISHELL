@@ -36,3 +36,9 @@ void	ft_sort_strings(int num, char **s)
 		i++;
 	}
 }
+
+void	set_error_code(t_cmd *c, int code)
+{
+	c->i->code_error = code;
+	c->error = 1;
+}
