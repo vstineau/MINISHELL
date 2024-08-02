@@ -22,5 +22,29 @@
     ...
 		obj:*/usr/bin/grep*
 }
+{
+    ignore_readline_leaks
+    Memcheck:Leak
+    ...
+		obj:*/usr/bin/clear*
+}
+{
+    ignore_readline_leaks
+    Memcheck:Leak
+    ...
+		obj:*/usr/bin/mkdir*
+}
+{
+    ignore_readline_leaks
+    Memcheck:Leak
+    ...
+		obj:*/usr/bin/touch*
+}
+{
+    ignore_readline_leaks
+    Memcheck:Leak
+    ...
+		obj:*/usr/bin/rm*
+}
 
 
