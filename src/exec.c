@@ -42,7 +42,6 @@ void	apply_exec_builtin(t_cmd *c, t_minishell *info)
 
 void	apply_exec_path(t_cmd *c, t_minishell *info, int fd, int pip[2])
 {
-
 	if (c->path != NULL)
 	{
 		apply_exec_middle_bonus(fd, pip, info->env, c);
@@ -69,7 +68,10 @@ void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2])
 			perror("");
 	}
 	if (is_builtin(c) == 1)
+	{
+		info->code_error = 0;
 		apply_exec_builtin(c, info);
+	}
 	if (is_builtin(c) == 0)
 		apply_exec_path(c, info, fd, pip);
 }

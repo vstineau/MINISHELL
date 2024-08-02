@@ -22,7 +22,6 @@ void	free_cmd(t_cmd *cmd, bool env, t_minishell *info)
 			free(cmd->outfile);
 		if (cmd->arg)
 			free_split(cmd->arg);
-
 		cmd = cmd->next;
 		free(temp);
 	}

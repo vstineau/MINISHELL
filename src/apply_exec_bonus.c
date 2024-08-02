@@ -38,18 +38,23 @@ void	close_before(int fd, int pip[2], t_cmd *c)
 	close(pip[1]);
 }
 
-void	apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c)
+void	dup_infile(t_cmd *c)
 {
 	int		infile;
 
+	infile = open(c->infile, O_RDONLY);
+	if (infile == -1)
+		perror("");
+	if (dup2(infile, STDIN_FILENO) == -1)
+		perror("");
+	close (infile);
+}
+
+void	apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c)
+{
 	if (c->infile)
 	{
-		infile = open(c->infile, O_RDONLY);
-		if (infile == -1)
-			perror("");
-		if (dup2(infile, STDIN_FILENO) == -1)
-			perror("");
-		close (infile);
+		dup_infile(c);
 	}
 	if (c->previous_pipe == 1)
 	{
