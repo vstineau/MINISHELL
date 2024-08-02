@@ -12,6 +12,8 @@ void	free_cmd(t_cmd *cmd, bool env, t_minishell *info)
 		temp = cmd;
 		if (cmd->fd_h != -1 && cmd->fd_h != 0)
 			close(cmd->fd_h);
+		if (cmd->path && (ft_strcmp(cmd->path, cmd->cmd)) != 0)
+			free(cmd->path);
 		if (cmd->cmd)
 			free(cmd->cmd);
 		if (cmd->infile && cmd->redirect != HEREDOC)

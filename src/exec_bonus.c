@@ -11,6 +11,8 @@ int	exec_midle(t_minishell *info, int fd, t_cmd *c)
 		exec_builtin(c, info, fd, pip);
 		return (fd);
 	}
+	if (is_builtin(c) == 0)
+		c->path = find_path(info->env, c->cmd, info);
 	if (pipe(pip) == -1)
 		exit(EXIT_FAILURE);
 	id = fork();
@@ -20,12 +22,11 @@ int	exec_midle(t_minishell *info, int fd, t_cmd *c)
 	{
 		close(pip[0]);
 		exec_builtin(c, info, fd, pip);
-		close (fd);
-		close (pip[1]);
-		exit (-1);
+		close_before(fd, pip, c);
+		exit (info->code_error);
 	}
-	close(pip[1]);
-	close(fd);
+	info->code_error = 0;
+	close_before(fd, pip, c);
 	return (pip[0]);
 }
 
@@ -51,6 +52,7 @@ int	check_dobble_pipe(t_cmd *c, int pipout)
 			&& !test->cmd && !test->infile && !test->outfile)
 		{
 			close (pipout);
+			c->i->code_error = 2;
 			return (1);
 		}
 		test = test->next;
@@ -58,17 +60,24 @@ int	check_dobble_pipe(t_cmd *c, int pipout)
 	return (0);
 }
 
-void	exec(t_minishell *info, t_cmd *c)
+void	check_exec(t_minishell *info, t_cmd *c, int pipout)
 {
-	int		i;
-	int		pipout;
-
-	i = 0;
-	pipout = 42;
 	if (init_sigquit(info) == 0)
 		exit_free_perror(c, ENV, info, "");
 	if (check_dobble_pipe(c, pipout) == 1)
 		return (ft_putstr_fd("syntax error near unexpected token `|'\n", 2));
+}
+
+void	exec(t_minishell *info, t_cmd *c)
+{
+	int		i;
+	int		pipout;
+	int		status;
+
+	status = 0;
+	i = 0;
+	pipout = 42;
+	check_exec(info, c, pipout);
 	while (c)
 	{
 		if (c->outfile != NULL && c->cmd == NULL)
@@ -82,7 +91,7 @@ void	exec(t_minishell *info, t_cmd *c)
 			c->next->previous_pipe = 1;
 		c = c->next;
 	}
-	while (wait(NULL) > 0)
-		;
+	while (wait(&status) > 0)
+		info->code_error = (WEXITSTATUS(status));
 	close (pipout);
 }

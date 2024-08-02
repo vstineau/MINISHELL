@@ -37,10 +37,7 @@ static int	get_outfile(char *s, t_cmd *c, t_minishell *info)
 	i = 0;
 	j = 0;
 	while (s[i] && check_char(s[i], "<>  \t"))
-	{
-		printf(BLUE"s[i]  = %c\n"RESET, s[i]);
 		i++;
-	}
 	while (s[i] && !check_char(s[i], "<>  \t"))
 		c->outfile[j++] = s[i++];
 	if (is_blank(c->outfile))

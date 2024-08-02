@@ -24,27 +24,25 @@ char	*find_path_in_folders(char **folders, char *av)
 {
 	char	*path;
 	char	*endfile;
-	char	**cmd;
 	int		j;
 
 	path = NULL;
 	endfile = NULL;
-	cmd = find_cmd(av);
 	j = 0;
-	if (cmd == NULL)
+	if (av == NULL)
 		return (NULL);
-	endfile = ft_strjoin("/", *cmd);
+	endfile = ft_strjoin("/", av);
 	while (folders[j])
 	{
 		path = ft_strjoin(folders[j], endfile);
 		if (path == NULL)
-			return (free_return(cmd, endfile));
+			return (free_return(endfile));
 		if (access(path, F_OK | X_OK) == 0)
-			return (return_path (cmd, endfile, path));
+			return (return_path (endfile, path));
 		free(path);
 		j++;
 	}
-	return (free_return(cmd, endfile));
+	return (free_return(endfile));
 }
 
 char	*path_ok(char *av)
@@ -59,7 +57,7 @@ char	*path_ok(char *av)
 	return (NULL);
 }
 
-char	*find_path(char **env, char *av)
+char	*find_path(char **env, char *av, t_minishell *info)
 {
 	char	**folders;
 	char	*path;
@@ -69,6 +67,7 @@ char	*find_path(char **env, char *av)
 		folders = get_folders_from_path(env);
 		if (folders == NULL)
 		{
+			info->code_error = 127;
 			ft_putstr_fd(av, 2);
 			ft_putstr_fd(": command not found\n", 2);
 			return (NULL);
@@ -77,6 +76,7 @@ char	*find_path(char **env, char *av)
 		free_split(folders);
 		if (path == NULL)
 		{
+			info->code_error = 127;
 			ft_putstr_fd(av, 2);
 			ft_putstr_fd(": command not found\n", 2);
 			return (NULL);
