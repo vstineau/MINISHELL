@@ -10,6 +10,27 @@ static void	close_heredoc(t_cmd *c, char *line, int *fd)
 	c->infile = "heredoc";
 }
 
+static int	fill_key_heredoc(char key[4096], char *s, int *i, t_cmd *c)
+{
+	int	j;
+
+	j = 0;
+	while (s[*i] && !check_char(s[*i], " \t"))
+	{
+		key[j] = s[*i];
+		if (check_char(key[j], "<>"))
+		{
+			c->error = 1;
+			c->i->code_error = 2;
+		}
+		*i += 1;
+		j++;
+	}
+	if (c->error)
+		return (0);
+	return (1);
+}
+
 void	no_expand_heredoc(char *s, char *line, t_iterator *a)
 {
 	int	i;
@@ -35,17 +56,15 @@ int	heredoc(char *s, t_cmd *c, t_minishell *info, char *s1)
 	char	key[4096];
 	char	*line;
 	int		i;
-	int		j;
 
 	ft_memset(key, 0, 4096);
 	i = 0;
-	j = 0;
 	while (check_char(s[i], "~ \t|><$"))
 		i++;
 	if (!s[i])
 		return (perror_and_return_i(info, BG_RED"syntax error"RESET, i));
-	while (s[i] && s[i] != ' ' && s[i] != '\t')
-		key[j++] = s[i++];
+	if (!fill_key_heredoc(key, s, &i, c))
+		return (i);
 	line = readline(BHI_BLACK"> "RESET);
 	if (!line)
 	{

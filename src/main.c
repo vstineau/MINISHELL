@@ -32,6 +32,9 @@ static int	is_blank(char *s)
 //		printf(BHI_GREEN"infile nb %d = %s\n"RESET, i, current->infile);
 //		printf(BHI_MAGENTA"outfile nb %d = %s\n"RESET, i, current->outfile);
 //		printf(BHI_RED"pipe %d\n"RESET, current->pipe);
+//		printf(B_GREEN"fd %d\n"RESET, current->fd);
+//		printf(B_BLUE"fd_h %d\n"RESET, current->fd_h);
+//		printf(B_RED"error %d\n"RESET, current->error);
 //		while (current->arg[j] && current->arg[j][0] != '\0')
 //		{
 //			printf(BHI_YELLOW"arg[%d] = %s\n"RESET, j, current->arg[j]);
@@ -55,6 +58,34 @@ static void	signals_stuff(t_minishell *info)
 	init_signals(info);
 }
 
+static void	check_unwanted_char(char *line, char *s, t_cmd *c)
+{
+	int	i;
+
+	if (!line)
+		return ;
+	free(line);
+	i = 0;
+	if (!c->cmd && !c->outfile && !c->infile)
+	{
+		if (c->next && c->next->pipe == PIPE)
+		{
+			c->i->code_error = 2;
+			c->error = 1;
+		}
+	}
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		if (!check_char(s[i], "&;()"))
+			return ;
+		i++;
+	}
+	c->error = 1;
+	c->i->code_error = 2;
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_minishell	info;
@@ -75,7 +106,7 @@ int	main(int argc, char *argv[], char *envp[])
 		add_history(line);
 		line = expand(line, &info);
 		c = parse(line, &info);
-		free(line);
+		check_unwanted_char(line, c->cmd, c);
 		if (c->error != 0)
 			perror(BG_RED"parsing error"RESET);
 		if ((!is_blank(c->cmd) && c->error == 0) || !is_blank(c->outfile))
