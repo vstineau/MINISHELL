@@ -1,9 +1,8 @@
 
 #include "../includes/minishell.h"
 
-char	*return_path(char **cmd, char *endfile, char *path)
+char	*return_path(char *endfile, char *path)
 {
-	(void) cmd;
 	free(endfile);
 	return (path);
 }
@@ -21,14 +20,13 @@ void	free_alls(char *path, char **cmd)
 	free(path);
 }
 
-char	*free_return(char **cmd, char *endfile)
+char	*free_return(char *endfile)
 {	
-	free (cmd);
 	free(endfile);
 	return (NULL);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		t1;
 	int		t2;

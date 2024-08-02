@@ -87,7 +87,7 @@ char		*ft_strdup(char *s);
 void		ft_sort_strings(int num, char **s);
 int			ft_strncmp( const char *first, const char *second, size_t length);
 int			env_size(char **envp);
-char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_strjoin(char *s1, char *s2);
 void		ft_close(int pip[2], int infile);
 char		*ft_strchr(const char *s, int c);
 int			check_infile(char *file);
@@ -135,12 +135,12 @@ void		exit_free_perror(t_cmd *c, bool env,
 void		free_cmd(t_cmd *cmd, bool env, t_minishell *info);
 void		free_split(char **split);
 void		free_split_exit(char **split);
-char		*free_return(char **cmd, char *endfile);
+char		*free_return(char *endfile);
 void		free_alls(char *path, char **cmd);
 //----------EXECUTION--------------------//
 char		*find_path(char **env, char *av, t_minishell *info);
 char		**find_cmd(char *av);
-char		*return_path(char **cmd, char *endfile, char *path);
+char		*return_path(char *endfile, char *path);
 void		apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c);
 void		exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2]);
 void		exec(t_minishell *info, t_cmd *c);

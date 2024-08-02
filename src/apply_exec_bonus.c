@@ -6,11 +6,9 @@
 void	apply_exec(t_cmd *c, char **env, int pip[2])
 {
 	char	**cmd;
-	char	*path;
 	int		i;
 
 	i = 1;
-	path = find_path(env, c->cmd, c->i);
 	cmd = ft_calloc(sizeof(char **), env_size(c->arg) + 2);
 	cmd[0] = c->cmd;
 	while (c->arg[i - 1])
@@ -21,10 +19,10 @@ void	apply_exec(t_cmd *c, char **env, int pip[2])
 	}
 	if (c->outfile != NULL)
 		close (c->fd);
-	if (execve(path, cmd, env) == -1)
+	if (execve(c->path, cmd, env) == -1)
 	{
 		errno = EISDIR;
-		perror(path);
+		perror(c->path);
 		close (pip[0]);
 		free(cmd);
 		free_cmd(c, ENV, c->i);
@@ -58,8 +56,16 @@ void	apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c)
 		if (dup2(fd, STDIN_FILENO) == -1)
 			perror("");
 	}
-	if (dup2(c->fd, STDOUT_FILENO) == -1)
-		perror("");
+	if (c->next && c->next->pipe == PIPE)
+	{
+		if (dup2(pip[1], STDOUT_FILENO) == -1)
+			perror("");
+	}
+	if (c->outfile)
+	{
+		if (dup2(c->fd, STDOUT_FILENO) == -1)
+			perror("");
+	}
 	close_before(fd, pip, c);
 	apply_exec(c, env, pip);
 }
