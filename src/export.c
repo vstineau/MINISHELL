@@ -1,11 +1,12 @@
 
 #include "../includes/minishell.h"
 
-void	*wrong_identifier(char *av)
+void	*wrong_identifier(char *av, t_cmd *c)
 {
 	ft_putstr_fd("export: `", 2);
 	ft_putstr_fd(av, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
+	c->i->code_error = 1;
 	return (NULL);
 }
 
@@ -89,7 +90,7 @@ char	**export_each(char **env, char *av1, int len, char *av)
 	return (env);
 }
 
-char	**our_export(char **av, char **env, int fd)
+char	**our_export(char **av, char **env, int fd, t_cmd *c)
 {
 	char	*av1;
 	int		len;
@@ -103,7 +104,7 @@ char	**our_export(char **av, char **env, int fd)
 		return (free_split(env), ft_print_export(env2, fd));
 	while (av[k])
 	{
-		av1 = get_first_av(av[k]);
+		av1 = get_first_av(av[k], c);
 		if (av1 == NULL)
 			k++;
 		else

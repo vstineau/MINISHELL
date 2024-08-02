@@ -60,12 +60,10 @@ int	check_dobble_pipe(t_cmd *c, int pipout)
 	return (0);
 }
 
-void	check_exec(t_minishell *info, t_cmd *c, int pipout)
+void	check_outfile(t_cmd *c)
 {
-	if (init_sigquit(info) == 0)
-		exit_free_perror(c, ENV, info, "");
-	if (check_dobble_pipe(c, pipout) == 1)
-		return (ft_putstr_fd("syntax error near unexpected token `|'\n", 2));
+	c->fd = open(c->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	close (c->fd);
 }
 
 void	exec(t_minishell *info, t_cmd *c)
@@ -77,14 +75,15 @@ void	exec(t_minishell *info, t_cmd *c)
 	status = 0;
 	i = 0;
 	pipout = 42;
-	check_exec(info, c, pipout);
+	if (init_sigquit(info) == 0)
+		exit_free_perror(c, ENV, info, "");
+	if (check_dobble_pipe(c, pipout) == 1)
+		return (ft_putstr_fd
+			(BG_RED "syntax error near unexpected token `|'\n" RESET, 2));
 	while (c)
 	{
 		if (c->outfile != NULL && c->cmd == NULL)
-		{
-			c->fd = open(c->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			close (c->fd);
-		}
+			check_outfile(c);
 		if (c->cmd)
 			pipout = exec_midle(info, pipout, c);
 		if (c->pipe == PIPE)

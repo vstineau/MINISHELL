@@ -10,15 +10,37 @@ int	is_builtin(t_cmd *c)
 			|| (ft_strcmp(c->cmd, "export") == 0)
 			|| (ft_strcmp(c->cmd, "unset") == 0)
 			|| (ft_strcmp(c->cmd, "env") == 0)
-			|| (ft_strcmp(c->cmd, "exit") == 0))
+			|| (ft_strcmp(c->cmd, "exit") == 0)
+			|| (ft_strcmp(c->cmd, ":") == 0)
+			|| (ft_strcmp(c->cmd, "!") == 0)
+			|| (ft_strcmp(c->cmd, ".") == 0)
+			|| (ft_strcmp(c->cmd, "#") == 0))
 			return (1);
 		return (0);
 	}
 	exit (130);
 }
 
+void	exit_code_weird(t_cmd *c)
+{
+	if (ft_strcmp(c->cmd, ":") == 0)
+		c->i->code_error = 0;
+	if (ft_strcmp(c->cmd, "!") == 0)
+		c->i->code_error = 1;
+	if (ft_strcmp(c->cmd, "#") == 0)
+		c->i->code_error = 0;
+	if	(ft_strcmp(c->cmd, ".") == 0)
+	{
+		ft_putstr_fd(".: filename argument required", 2);
+		c->i->code_error = 2;
+	}
+}
+
 void	apply_exec_builtin(t_cmd *c, t_minishell *info)
 {
+	if ((ft_strcmp(c->cmd, ":") == 0) || (ft_strcmp(c->cmd, "!") == 0)
+		|| (ft_strcmp(c->cmd, "#") == 0) || (ft_strcmp(c->cmd, ".") == 0))
+		exit_code_weird(c);
 	if (ft_strcmp(c->cmd, "echo") == 0)
 		echo(c->arg, c->fd);
 	if (ft_strcmp(c->cmd, "cd") == 0)
@@ -31,11 +53,11 @@ void	apply_exec_builtin(t_cmd *c, t_minishell *info)
 	if (ft_strcmp(c->cmd, "pwd") == 0)
 		pwd(c->fd);
 	if (ft_strcmp(c->cmd, "export") == 0)
-		info->env = our_export(c->arg, info->env, c->fd);
+		info->env = our_export(c->arg, info->env, c->fd, c);
 	if (ft_strcmp(c->cmd, "unset") == 0)
 		info->env = unset(c->arg, info->env);
 	if (ft_strcmp(c->cmd, "env") == 0)
-		our_env(info->env, c->fd);
+		our_env(info->env, c->fd, c);
 	if (ft_strcmp(c->cmd, "exit") == 0)
 		our_exit(c, info);
 }

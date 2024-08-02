@@ -56,7 +56,7 @@ char	*get_first_av2(char *av)
 	return (av1);
 }
 
-char	*get_first_av(char *av)
+char	*get_first_av(char *av, t_cmd *c)
 {
 	char	*av1;
 	int		i;
@@ -65,7 +65,7 @@ char	*get_first_av(char *av)
 
 	i = 0;
 	if ((ft_isalpha(av[0]) == 0 && av[0] != '_') || arg_ok_for_export(av) == 0)
-		return (wrong_identifier(av));
+		return (wrong_identifier(av, c));
 	len = ft_strlen(av);
 	test = ft_strchr(av, '+');
 	if (test != NULL && test[1] == '=')

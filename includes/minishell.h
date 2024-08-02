@@ -145,19 +145,19 @@ void		apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c);
 void		exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2]);
 void		exec(t_minishell *info, t_cmd *c);
 int			is_builtin(t_cmd *c);
-char		*get_first_av(char *av);
+char		*get_first_av(char *av, t_cmd *c);
 char		**ft_print_export(char **env, int fd);
 int			ft_isalpha(int c);
 int			ft_isalnum(int c);
-void		*wrong_identifier(char *av);
+void		*wrong_identifier(char *av, t_cmd *c);
 int			arg_ok_for_export(char *av);
 //----------BUILTINS---------------------//
 void		cd(char *path, char **envp, t_minishell *info);
 void		pwd(int fd);
 void		echo(char **av, int fd);
-void		our_env(char **env, int fd);
+void		our_env(char **env, int fd, t_cmd *c);
 void		our_exit(t_cmd *c, t_minishell *info);
-char		**our_export(char **av, char **env, int fd);
+char		**our_export(char **av, char **env, int fd, t_cmd *c);
 char		**unset(char **av, char **env);
 
 #endif
