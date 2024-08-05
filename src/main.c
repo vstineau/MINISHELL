@@ -60,12 +60,9 @@ static void	signals_stuff(t_minishell *info)
 
 static void	check_unwanted_char(char *line, char *s, t_cmd *c)
 {
-	int	i;
-
 	if (!line)
 		return ;
 	free(line);
-	i = 0;
 	if (!c->cmd && !c->outfile && !c->infile)
 	{
 		if (c->next && c->next->pipe == PIPE)
@@ -73,13 +70,7 @@ static void	check_unwanted_char(char *line, char *s, t_cmd *c)
 	}
 	if (!s)
 		return ;
-	while (s[i])
-	{
-		if (!check_char(s[i], "&;()"))
-			return ;
-		i++;
-	}
-	set_error_code(c, 2);
+	check_unwanted_char_cmd(c);
 }
 
 int	main(int argc, char *argv[], char *envp[])

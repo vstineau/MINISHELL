@@ -17,9 +17,7 @@ static int	expand_dols_number(char *s, char **line, t_iterator *a)
 	len_line = ft_strlen(*line);
 	if (len_line < ft_strlen(s))
 		len_line = ft_strlen(s);
-	j = 1 + a->i;
-	while (s[j] && !check_char(s[j], " \t"))
-		j++;
+	j = 2 + a->i;
 	a->i += j - a->i;
 	return (0);
 }

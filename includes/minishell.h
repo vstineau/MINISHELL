@@ -72,6 +72,7 @@ typedef struct s_cmd
 	struct s_cmd		*next;
 }						t_cmd;
 //----------UTILS----------------------//
+void		check_unwanted_char_cmd(t_cmd *c);
 void		set_error_code(t_cmd *c, int code);
 char		*ft_itoa(int n);
 char		**ft_split(char const *s, char c);
