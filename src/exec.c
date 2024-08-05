@@ -1,5 +1,6 @@
 
 #include "../includes/minishell.h"
+#include <unistd.h>
 
 int	is_builtin(t_cmd *c)
 {
@@ -29,9 +30,9 @@ void	exit_code_weird(t_cmd *c)
 		c->i->code_error = 1;
 	if (ft_strcmp(c->cmd, "#") == 0)
 		c->i->code_error = 0;
-	if	(ft_strcmp(c->cmd, ".") == 0)
+	if (ft_strcmp(c->cmd, ".") == 0)
 	{
-		ft_putstr_fd(".: filename argument required", 2);
+		ft_putstr_fd(".: filename argument required\n", 2);
 		c->i->code_error = 2;
 	}
 }
@@ -46,7 +47,7 @@ void	apply_exec_builtin(t_cmd *c, t_minishell *info)
 	if (ft_strcmp(c->cmd, "cd") == 0)
 	{
 		if (c->arg[1] != NULL)
-			ft_putstr_fd("cd: too many arguments", 2);
+			ft_putstr_fd("cd: too many arguments\n", 2);
 		else
 			cd(c->arg[0], info->env, info);
 	}
@@ -71,7 +72,11 @@ void	apply_exec_path(t_cmd *c, t_minishell *info, int fd, int pip[2])
 	if (c->outfile != NULL)
 		close (c->fd);
 	if (c->path == NULL)
+	{
+		close_before(fd, pip, c);
 		free_cmd(c, ENV, info);
+		exit (info->code_error);
+	}
 }
 
 void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2])

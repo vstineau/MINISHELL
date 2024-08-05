@@ -22,10 +22,12 @@ int	exec_midle(t_minishell *info, int fd, t_cmd *c)
 	{
 		close(pip[0]);
 		exec_builtin(c, info, fd, pip);
+		free_cmd(c, ENV, info);
 		close_before(fd, pip, c);
 		exit (info->code_error);
 	}
-	info->code_error = 0;
+	else
+		info->code_error = 0;
 	close_before(fd, pip, c);
 	return (pip[0]);
 }
@@ -68,12 +70,10 @@ void	check_outfile(t_cmd *c)
 
 void	exec(t_minishell *info, t_cmd *c)
 {
-	int		i;
 	int		pipout;
 	int		status;
 
 	status = 0;
-	i = 0;
 	pipout = 42;
 	if (init_sigquit(info) == 0)
 		exit_free_perror(c, ENV, info, "");
