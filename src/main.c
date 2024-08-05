@@ -96,7 +96,7 @@ int	main(int argc, char *argv[], char *envp[])
 		check_unwanted_char(line, c->cmd, c);
 		if (c->error != 0)
 			perror(BG_RED"parsing error"RESET);
-		if ((!is_blank(c->cmd) && c->error == 0) || !is_blank(c->outfile))
+		if ((!is_blank(c->cmd) && !check_error(c)) || !is_blank(c->outfile))
 			exec(&info, c);
 		free_cmd(c, NO_ENV, &info);
 	}
