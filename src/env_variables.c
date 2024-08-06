@@ -70,7 +70,6 @@ int	expand_env_v(char *s, char **line, t_minishell *info, t_iterator *a)
 	var = NULL;
 	ft_memset(key, 0, 4096);
 	fill_key(key, s, &j, a);
-	printf("key = %s\n", key);
 	var = get_env_variable(key, info->env, NULL, info);
 	if (!var)
 		return (utils_env1(s, a, j));

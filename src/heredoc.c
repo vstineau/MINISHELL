@@ -63,7 +63,7 @@ int	heredoc(char *s, t_cmd *c, t_minishell *info, char *s1)
 
 	ft_memset(key, 0, 4096);
 	i = 0;
-	while (check_char(s[i], "~ \t|><$"))
+	while (check_char(s[i], " \t"))
 		i++;
 	if (!s[i])
 		return (perror_and_return_i(info, BG_RED"syntax error"RESET, i));
