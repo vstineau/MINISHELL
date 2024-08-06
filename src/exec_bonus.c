@@ -1,14 +1,15 @@
 
 #include "../includes/minishell.h"
 
-int	exec_midle(t_minishell *info, int fd, t_cmd *c)
+int	exec_midle(t_minishell *info, int fd, t_cmd *c, t_cmd *c_first)
 {
 	int		id;
 	int		pip[2];
 
 	if (c->next == NULL && c->previous_pipe != 1 && (is_builtin(c) == 1))
 	{
-		exec_builtin(c, info, fd, pip);
+		printf("TEST BIZZARE\n");
+		exec_builtin(c, c_first, fd, pip);
 		return (fd);
 	}
 	if (is_builtin(c) == 0)
@@ -21,8 +22,9 @@ int	exec_midle(t_minishell *info, int fd, t_cmd *c)
 	if (id == 0)
 	{
 		close(pip[0]);
-		exec_builtin(c, info, fd, pip);
-		free_cmd(c, ENV, info);
+		exec_builtin(c, c_first, fd, pip);
+		ft_putstr_fd("TEST BUILTIN\n", 2);
+		free_cmd(c_first, ENV, info);
 		close_before(fd, pip, c);
 		exit (info->code_error);
 	}
@@ -72,23 +74,25 @@ void	exec(t_minishell *info, t_cmd *c)
 {
 	int		pipout;
 	int		status;
+	t_cmd	*temp;
 
+	temp = c;
 	status = 0;
 	pipout = 42;
 	if (init_sigquit(info) == 0)
-		exit_free_perror(c, ENV, info, "");
-	if (check_dobble_pipe(c, pipout) == 1)
+		exit_free_perror(temp, ENV, info, "");
+	if (check_dobble_pipe(temp, pipout) == 1)
 		return (ft_putstr_fd
 			(BG_RED "syntax error near unexpected token `|'\n" RESET, 2));
-	while (c)
+	while (temp)
 	{
-		if (c->outfile != NULL && c->cmd == NULL)
-			check_outfile(c);
-		if (c->cmd)
-			pipout = exec_midle(info, pipout, c);
-		if (c->pipe == PIPE)
-			c->next->previous_pipe = 1;
-		c = c->next;
+		if (temp->outfile != NULL && temp->cmd == NULL)
+			check_outfile(temp);
+		if (temp->cmd)
+			pipout = exec_midle(info, pipout, temp, c);
+		if (temp->pipe == PIPE)
+			temp->next->previous_pipe = 1;
+		temp = temp->next;
 	}
 	while (wait(&status) > 0)
 		info->code_error = (WEXITSTATUS(status));

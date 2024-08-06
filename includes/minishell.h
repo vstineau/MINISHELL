@@ -142,7 +142,7 @@ char		*find_path(char **env, char *av, t_minishell *info);
 char		**find_cmd(char *av);
 char		*return_path(char *endfile, char *path);
 void		apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c);
-void		exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2]);
+void		exec_builtin(t_cmd *c, t_cmd *c_first, int fd, int pip[2]);
 void		exec(t_minishell *info, t_cmd *c);
 int			is_builtin(t_cmd *c);
 char		*get_first_av(char *av, t_cmd *c);

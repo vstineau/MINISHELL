@@ -63,23 +63,23 @@ void	apply_exec_builtin(t_cmd *c, t_minishell *info)
 		our_exit(c, info);
 }
 
-void	apply_exec_path(t_cmd *c, t_minishell *info, int fd, int pip[2])
+void	apply_exec_path(t_cmd *c, t_cmd *c_first, int fd, int pip[2])
 {
 	if (c->path != NULL)
 	{
-		apply_exec_middle_bonus(fd, pip, info->env, c);
+		apply_exec_middle_bonus(fd, pip, c->i->env, c_first);
 	}
 	if (c->outfile != NULL)
 		close (c->fd);
 	if (c->path == NULL)
 	{
 		close_before(fd, pip, c);
-		free_cmd(c, ENV, info);
-		exit (info->code_error);
+		free_cmd(c_first, ENV, c->i);
+		exit (c->i->code_error);
 	}
 }
 
-void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2])
+void	exec_builtin(t_cmd *c, t_cmd *c_first, int fd, int pip[2])
 {
 	c->fd = 1;
 	if (c->outfile != NULL)
@@ -96,9 +96,9 @@ void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2])
 	}
 	if (is_builtin(c) == 1)
 	{
-		info->code_error = 0;
-		apply_exec_builtin(c, info);
+		c->i->code_error = 0;
+		apply_exec_builtin(c, c->i);
 	}
 	if (is_builtin(c) == 0)
-		apply_exec_path(c, info, fd, pip);
+		apply_exec_path(c, c_first, fd, pip);
 }
