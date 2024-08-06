@@ -3,7 +3,7 @@
 
 int	check_error(t_cmd *c)
 {
-	t_cmd *current;
+	t_cmd	*current;
 
 	current = c;
 	while (current)

@@ -15,7 +15,9 @@ static int	fill_key_heredoc(char key[4096], char *s, int *i, t_cmd *c)
 	int	j;
 
 	j = 0;
-	while (s[*i] && !check_char(s[*i], " \t"))
+	while (s[*i] && check_char(s[*i], "'\" \t"))
+		*i += 1;
+	while (s[*i] && !check_char(s[*i], "'\" \t"))
 	{
 		key[j] = s[*i];
 		if (check_char(key[j], "<>"))
@@ -26,6 +28,8 @@ static int	fill_key_heredoc(char key[4096], char *s, int *i, t_cmd *c)
 		*i += 1;
 		j++;
 	}
+	if (s[*i] == '"' || s[*i] == '\'')
+		*i += 1;
 	if (c->error)
 		return (0);
 	return (1);
@@ -38,9 +42,9 @@ void	no_expand_heredoc(char *s, char *line, t_iterator *a)
 
 	line[a->j++] = s[a->i];
 	line[a->j++] = s[a->i++];
-	i = 0;
+	i = 1;
 	j = 0;
-	while (s[i + j] && check_char(s[i + j], " \t"))
+	while (s[a->i + i + j] && check_char(s[a->i + i + j], " \t"))
 		j++;
 	while (s[a->i + i + j] && !check_char(s[a->i + i + j], " \t"))
 	{
@@ -95,5 +99,7 @@ int	no_heredoc(char *s, t_cmd *c, t_minishell *info)
 		i++;
 	while (s[i] && !check_char(s[i], "  \t|><$"))
 		c->infile[j++] = s[i++];
+	if (s[i] && check_char(s[i], "<>"))
+		set_error_code(c, 2);
 	return (i);
 }
