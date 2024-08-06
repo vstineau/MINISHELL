@@ -94,7 +94,7 @@ int	main(int argc, char *argv[], char *envp[])
 		line = expand(line, &info);
 		c = parse(line, &info);
 		check_unwanted_char(line, c->cmd, c);
-		if (check_error(c))
+		if (check_error(c) == 1)
 			perror(BG_RED"parsing error"RESET);
 		if ((!is_blank(c->cmd) && !check_error(c)) || !is_blank(c->outfile))
 			exec(&info, c);

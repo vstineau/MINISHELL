@@ -8,8 +8,10 @@ int	check_error(t_cmd *c)
 	current = c;
 	while (current)
 	{
-		if (current->error)
+		if (current->error == 1)
 			return (1);
+		if (current->error == 2)
+			return (2);
 		current = current->next;
 	}
 	return (0);

@@ -79,6 +79,8 @@ int	heredoc(char *s, t_cmd *c, t_minishell *info, char *s1)
 	while (ft_strcmp(key, line) && g_signal_received != SIGINT)
 		line = fill_heredoc2(line, c, s1, info);
 	close_heredoc(c, line, &c->fd_h);
+	if (g_signal_received == SIGINT)
+		c->error = 2;
 	return (i);
 }
 
