@@ -72,7 +72,9 @@ typedef struct s_cmd
 	struct s_cmd		*next;
 }						t_cmd;
 //----------UTILS----------------------//
+int			is_blank(char *s);
 int			check_error(t_cmd *c);
+int			check_before_exec(char *cmd, t_cmd *c);
 void		check_unwanted_char_cmd(t_cmd *c);
 void		set_error_code(t_cmd *c, int code);
 char		*ft_itoa(int n);

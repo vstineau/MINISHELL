@@ -1,22 +1,6 @@
 
 #include "../includes/minishell.h"
 
-static int	is_blank(char *s)
-{
-	int	i;
-
-	if (!s)
-		return (1);
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] != ' ' && s[i] != '\t')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 static void	error_file(t_cmd *c, t_minishell *info)
 {
 	c->error = 1;

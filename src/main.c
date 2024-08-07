@@ -3,22 +3,6 @@
 
 int	g_signal_received;
 
-static int	is_blank(char *s)
-{
-	int	i;
-
-	if (!s)
-		return (1);
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] != ' ' && s[i] != '\t')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 //void	printlist(t_cmd *cmd)
 //{
 //	t_cmd	*current;
@@ -94,9 +78,9 @@ int	main(int argc, char *argv[], char *envp[])
 		line = expand(line, &info);
 		c = parse(line, &info);
 		check_unwanted_char(line, c->cmd, c);
-		if (check_error(c) == 1)
+		if (check_error(c) == 1 && !is_blank(c->cmd))
 			perror(BG_RED"parsing error"RESET);
-		if ((!is_blank(c->cmd) && !check_error(c)) || !is_blank(c->outfile))
+		if (check_before_exec(c->cmd, c))
 			exec(&info, c);
 		free_cmd(c, NO_ENV, &info);
 	}
