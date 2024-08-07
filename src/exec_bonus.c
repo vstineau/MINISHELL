@@ -7,11 +7,7 @@ int	exec_midle(t_minishell *info, int fd, t_cmd *c, t_cmd *c_first)
 	int		pip[2];
 
 	if (c->next == NULL && c->previous_pipe != 1 && (is_builtin(c) == 1))
-	{
-		printf("TEST BIZZARE\n");
-		exec_builtin(c, c_first, fd, pip);
-		return (fd);
-	}
+		return (exec_first_case(c_first, c, fd, pip));
 	if (is_builtin(c) == 0)
 		c->path = find_path(info->env, c->cmd, info);
 	if (pipe(pip) == -1)
@@ -22,15 +18,13 @@ int	exec_midle(t_minishell *info, int fd, t_cmd *c, t_cmd *c_first)
 	if (id == 0)
 	{
 		close(pip[0]);
-		exec_builtin(c, c_first, fd, pip);
-		ft_putstr_fd("TEST BUILTIN\n", 2);
-		free_cmd(c_first, ENV, info);
-		close_before(fd, pip, c);
-		exit (info->code_error);
+		c_first->close = 0;
+		before_exec(c, c_first, fd, pip);
+		free_and_close(fd, pip, c_first, info->code_error);
 	}
 	else
 		info->code_error = 0;
-	close_before(fd, pip, c);
+	close_before(fd, pip, c_first);
 	return (pip[0]);
 }
 

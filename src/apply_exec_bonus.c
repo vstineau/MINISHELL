@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <errno.h>
 
-void	apply_exec(t_cmd *c, char **env, int pip[2])
+void	apply_exec(t_cmd *c, char **env, int pip[2], t_cmd *c_first)
 {
 	char	**cmd;
 	int		i;
@@ -25,7 +25,7 @@ void	apply_exec(t_cmd *c, char **env, int pip[2])
 		perror(c->path);
 		close (pip[0]);
 		free(cmd);
-		free_cmd(c, ENV, c->i);
+		free_cmd(c_first, ENV, c->i);
 		exit(126);
 	}
 	free_split(cmd);
@@ -33,9 +33,11 @@ void	apply_exec(t_cmd *c, char **env, int pip[2])
 
 void	close_before(int fd, int pip[2], t_cmd *c)
 {
-	(void) c;
-	close (fd);
-	close(pip[1]);
+	if (c->close == 0)
+	{
+		close (fd);
+		close(pip[1]);
+	}
 }
 
 void	dup_infile(t_cmd *c)
@@ -50,7 +52,7 @@ void	dup_infile(t_cmd *c)
 	close (infile);
 }
 
-void	apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c)
+void	apply_exec_middle(int fd, int pip[2], t_cmd *c_first, t_cmd *c)
 {
 	if (c->infile)
 	{
@@ -71,6 +73,6 @@ void	apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c)
 		if (dup2(c->fd, STDOUT_FILENO) == -1)
 			perror("");
 	}
-	close_before(fd, pip, c);
-	apply_exec(c, env, pip);
+	close_before(fd, pip, c_first);
+	apply_exec(c, c->i->env, pip, c_first);
 }

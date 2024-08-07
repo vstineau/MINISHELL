@@ -36,3 +36,17 @@ void	ft_sort_strings(int num, char **s)
 		i++;
 	}
 }
+
+void	free_and_close(int fd, int pip[2], t_cmd *c_first, int value)
+{
+	close_before(fd, pip, c_first);
+	free_cmd(c_first, ENV, c_first->i);
+	exit (value);
+}
+
+int	exec_first_case(t_cmd *c_first, t_cmd *c, int fd, int pip[2])
+{
+	c_first->close = 1;
+	before_exec(c, c_first, fd, pip);
+	return (fd);
+}
