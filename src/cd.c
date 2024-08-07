@@ -1,6 +1,12 @@
 
 #include "../includes/minishell.h"
 
+static void	cd_util(t_minishell *info)
+{
+	info->code_error = 1;
+	ft_putstr_fd("no such file or directory\n", 2);
+}
+
 char	*ft_strjoin_free(char *s1, char *s2)
 {
 	int		len1;
@@ -47,7 +53,8 @@ void	cd(char *path, char **envp, t_minishell *info)
 
 	if (path == NULL)
 	{
-		chdir(get_home(envp, "HOME="));
+		if (chdir(get_home(envp, "HOME=")) == -1)
+			cd_util(info);
 		return ;
 	}
 	if (*path == '~')
@@ -58,9 +65,6 @@ void	cd(char *path, char **envp, t_minishell *info)
 		free(pwd);
 		return ;
 	}
-	pwd = getcwd(NULL, 0);
-	pwd = ft_strjoin_free(pwd, "/");
-	pwd = ft_strjoin_free(pwd, path);
-	chdir(pwd);
-	free(pwd);
+	if (chdir(path) == -1)
+		cd_util(info);
 }

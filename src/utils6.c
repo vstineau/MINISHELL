@@ -33,6 +33,7 @@ int	check_error(t_cmd *c)
 	return (0);
 }
 
+//check if an error occured during the parsing
 int	check_before_exec(char *cmd, t_cmd *c)
 {
 	if ((!is_blank(cmd) && !check_error(c)

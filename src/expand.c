@@ -9,6 +9,7 @@ static int	is_num(char c)
 		return (0);
 }
 
+// a $42EXAMPLE line should be extand as 2EXAMPLE
 static int	expand_dols_number(char *s, char **line, t_iterator *a)
 {
 	int		j;
@@ -44,6 +45,7 @@ static void	expand_util(char *s, t_minishell *info, t_iterator *a, char **line)
 		(*line)[a->j++] = s[a->i++];
 }
 
+//expand all of the '~' and the $*** variables depending on the "" '' and <<
 char	*expand(char *s, t_minishell *info)
 {
 	char		*line;
@@ -60,6 +62,7 @@ char	*expand(char *s, t_minishell *info)
 	return (line);
 }
 
+// change $? to a itoa of lasr error code
 int	expand_dols_qmark(char *s, char **line, t_minishell *info, t_iterator *a)
 {
 	int		j;

@@ -67,6 +67,8 @@ static int	if_cmd(char *s, t_cmd *c, int *i_arg, t_minishell *info)
 	return (i);
 }
 
+/*catch the command and put it in t_cmd *c->cmd 
+if cmd exist fill the t_cmd arg[i]*/
 int	get_cmd(char *s, t_cmd *c, int *i_arg, t_minishell *info)
 {
 	int	i;

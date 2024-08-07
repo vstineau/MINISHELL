@@ -2,7 +2,7 @@
 #include "../includes/minishell.h"
 #include <readline/readline.h>
 
-//CTRL + 'C'
+//catch the CTRL + 'C', interrupt exec and/or display new prompt
 static void	handle_sigint(int signum, siginfo_t *info, void *context)
 {
 	(void)info;
@@ -21,7 +21,7 @@ static void	test(void)
 	return ;
 }
 
-//CTRL + '\'
+//catch the CTRL + '\', interrupt exec and/or display new prompt
 void	handle_sigquit(int signum, siginfo_t *info, void *context)
 {
 	(void)info;
@@ -33,6 +33,7 @@ void	handle_sigquit(int signum, siginfo_t *info, void *context)
 	unlink("heredoc");
 }
 
+//check if the command ended with a ctrl C or ctrl \ to set the error code
 void	check_signal(t_minishell *info)
 {
 	if (g_signal_received == SIGINT)
@@ -42,6 +43,7 @@ void	check_signal(t_minishell *info)
 	g_signal_received = 0;
 }
 
+//set up the signals to catch the ctrl c and ignore the ctrl'\'
 int	init_signals(t_minishell *info)
 {
 	sigemptyset(&info->sig.sa_mask);

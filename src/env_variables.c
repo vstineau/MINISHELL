@@ -17,12 +17,12 @@ static int	utils_env2(char *var, int len_var, t_iterator *a, int j)
 
 static void	fill_key(char key[4096], char *s, int *j, t_iterator *a)
 {
-	while (s[*j] && !check_char(s[*j], " \t") && is_uppercase(s[*j]))
+	while (s[*j] && !check_char(s[*j], " \t/") && is_uppercase(s[*j]))
 	{
 		key[*j - a->i - 1] = s[*j];
 		*j += 1;
 	}
-	if (s[*j] && !check_char(s[*j], "\" \t"))
+	if (s[*j] && !check_char(s[*j], "\" \t/"))
 		key[*j - a->i - 2] = 4;
 	key[*j - a->i - 1] = '=';
 }

@@ -73,6 +73,6 @@ char	*get_prompt(char *prompt, t_minishell *info, t_cmd *c)
 	ft_strcpy(prompt + j, p);
 	ft_memcpy(prompt, s, j);
 	free(s);
-	ft_strcpy(prompt + i + j - 1, "\001\033[1;92m\002-> \001\033[0m\002");
+	ft_strcpy(prompt + i + j, "\001\033[1;92m\002-> \001\033[0m\002");
 	return (prompt);
 }

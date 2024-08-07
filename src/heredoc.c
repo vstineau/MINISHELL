@@ -10,6 +10,7 @@ static void	close_heredoc(t_cmd *c, char *line, int *fd)
 	c->infile = "heredoc";
 }
 
+//put the heredoc key in the key[4096]
 static int	fill_key_heredoc(char key[4096], char *s, int *i, t_cmd *c)
 {
 	int	j;
@@ -35,6 +36,7 @@ static int	fill_key_heredoc(char key[4096], char *s, int *i, t_cmd *c)
 	return (1);
 }
 
+//no $ENV_VAR should be expand in heredoc key
 void	no_expand_heredoc(char *s, char *line, t_iterator *a)
 {
 	int	i;
@@ -55,6 +57,8 @@ void	no_expand_heredoc(char *s, char *line, t_iterator *a)
 	a->j += i - 1;
 }
 
+/*get the heredoc key then use readline to write in a temporary file until
+the key is printed or a ctrl c / ctrl d hapenned */
 int	heredoc(char *s, t_cmd *c, t_minishell *info, char *s1)
 {
 	char	key[4096];
@@ -84,6 +88,7 @@ int	heredoc(char *s, t_cmd *c, t_minishell *info, char *s1)
 	return (i);
 }
 
+//just get the infile name and keep it in t_cmd *c
 int	no_heredoc(char *s, t_cmd *c, t_minishell *info)
 {
 	int	i;
