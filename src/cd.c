@@ -53,7 +53,9 @@ void	cd(char *path, char **envp, t_minishell *info)
 
 	if (path == NULL)
 	{
-		if (chdir(get_home(envp, "HOME=")) == -1)
+		if (!get_home(envp, "HOME="))
+			cd_util(info);
+		else if (chdir(get_home(envp, "HOME=")) == -1)
 			cd_util(info);
 		return ;
 	}
