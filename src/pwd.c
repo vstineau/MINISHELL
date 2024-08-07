@@ -26,16 +26,13 @@ void	check_arg_pwd(t_cmd *c)
 			c->i->code_error = 2;
 			return ;
 		}
-
 	}
 }
-
-
 
 void	pwd(int fd, t_cmd *c)
 {
 	char	*pwd;
-	
+
 	if (c->arg[0] != NULL)
 		check_arg_pwd(c);
 	if (c->i->code_error == 2)
