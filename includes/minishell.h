@@ -31,6 +31,7 @@ typedef struct s_iterator
 	int		j;
 	bool	single_quotes;
 	bool	doubles_quotes;
+	bool	dols_end;
 }		t_iterator;
 
 typedef enum s_token
@@ -74,7 +75,8 @@ typedef struct s_cmd
 //----------UTILS----------------------//
 int			is_blank(char *s);
 int			check_error(t_cmd *c);
-int			check_before_exec(char *cmd, t_cmd *c);
+int			check_error_again(t_cmd *c);
+int			check_before_exec(t_cmd *c, char *line);
 void		check_unwanted_char_cmd(t_cmd *c);
 void		set_error_code(t_cmd *c, int code);
 char		*ft_itoa(int n);
@@ -114,6 +116,7 @@ int			expand_doubles_quotes(t_iterator *a, char *line);
 int			expand_single_quotes(t_iterator *a, char *line);
 int			expand_dols_qmark(char *s, char **line,
 				t_minishell *info, t_iterator *a);
+int			get_dols(char **line, t_iterator *a, t_minishell *info);
 void		ft_putstr_fd(char *s, int fd);
 //----------PARSING----------------------//
 char		**get_env(char **envp, char **argv, int argc);

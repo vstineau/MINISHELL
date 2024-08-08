@@ -33,7 +33,11 @@ static void	expand_util(char *s, t_minishell *info, t_iterator *a, char **line)
 	else if (s[a->i] == '$' && s[a->i + 1] == '?' && !a->single_quotes)
 			a->j += expand_dols_qmark(s, line, info, a);
 	else if (s[a->i] == '$' && !a->single_quotes)
+	{
 		a->j += expand_env_v(s, line, info, a);
+		if (a->dols_end)
+			a->j += get_dols(line, a, info);
+	}
 	else if (s[a->i] == '<' && s[a->i + 1] == '<'
 		&& !a->single_quotes && !a->doubles_quotes)
 		no_expand_heredoc(s, *line, a);
@@ -41,7 +45,7 @@ static void	expand_util(char *s, t_minishell *info, t_iterator *a, char **line)
 		a->j += expand_doubles_quotes(a, *line);
 	else if (s[a->i] == '\'' && !a->doubles_quotes)
 		a->j += expand_single_quotes(a, *line);
-	else
+	else if (s[a->i])
 		(*line)[a->j++] = s[a->i++];
 }
 

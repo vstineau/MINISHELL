@@ -42,11 +42,12 @@ static void	signals_stuff(t_minishell *info)
 	init_signals(info);
 }
 
-static void	check_unwanted_char(char *line, char *s, t_cmd *c)
+static void	check_unwanted_char(char **line, char *s, t_cmd *c)
 {
-	if (!line)
+	if (!*line || !c)
 		return ;
-	free(line);
+	free(*line);
+	*line = NULL;
 	if (!c->cmd && !c->outfile && !c->infile)
 	{
 		if (c->next && c->next->pipe == PIPE)
@@ -77,10 +78,10 @@ int	main(int argc, char *argv[], char *envp[])
 		add_history(line);
 		line = expand(line, &info);
 		c = parse(line, &info);
-		check_unwanted_char(line, c->cmd, c);
-		if (check_error(c) == 1 && !is_blank(c->cmd))
+		check_unwanted_char(&line, c->cmd, c);
+		if (check_error(c) == 1 && check_error_again(c))
 			perror(BG_RED"parsing error"RESET);
-		if (check_before_exec(c->cmd, c))
+		if (check_before_exec(c, line))
 			exec(&info, c);
 		free_cmd(c, NO_ENV, &info);
 	}

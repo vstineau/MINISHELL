@@ -33,12 +33,40 @@ int	check_error(t_cmd *c)
 	return (0);
 }
 
-//check if an error occured during the parsing
-int	check_before_exec(char *cmd, t_cmd *c)
+int	check_error_again(t_cmd *c)
 {
-	if ((!is_blank(cmd) && !check_error(c)
-			&& g_signal_received != SIGINT) || !is_blank(c->outfile))
+	if (!is_blank(c->cmd) || !c->infile || c->outfile || c->infile)
 		return (1);
 	else
 		return (0);
+}
+
+//check if an error occured during the parsing
+int	check_before_exec(t_cmd *c, char *line)
+{
+	if (line)
+		free(line);
+	if (!c)
+		return (0);
+	if ((!is_blank(c->cmd) && !check_error(c)
+			&& g_signal_received != SIGINT)
+		|| (!is_blank(c->outfile) && !check_error(c)))
+		return (1);
+	else
+		return (0);
+}
+
+int	get_dols(char **line, t_iterator *a, t_minishell *info)
+{
+	int	len_line;
+
+	len_line = ft_strlen(*line);
+	*line = ft_realloc(*line, len_line, len_line + 100);
+	if (*line == NULL)
+		exit_free_perror(NULL, ENV, info,
+			BG_RED"memory allocation failed during parsing"RESET);
+	ft_memcpy(*line + len_line, "$", 1);
+	a->dols_end = false;
+	a->i++;
+	return (1);
 }

@@ -77,7 +77,7 @@ t_cmd	*parse(char *s, t_minishell *info)
 	t_cmd	*current;
 	int		i_arg;
 
-	if (!s)
+	if (!s || (s && is_blank(s)))
 		return (NULL);
 	i_arg = 0;
 	c = NULL;
