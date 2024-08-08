@@ -66,9 +66,7 @@ void	exec_builtin(t_cmd *c, t_cmd *c_first, int pip[2], int fd)
 void	apply_exec_path(t_cmd *c, t_cmd *c_first, int fd, int pip[2])
 {
 	if (c->path != NULL)
-	{
 		apply_exec_middle(fd, pip, c_first, c);
-	}
 	if (c->outfile != NULL)
 		close (c->fd);
 }

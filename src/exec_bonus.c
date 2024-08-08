@@ -76,8 +76,7 @@ void	exec(t_minishell *info, t_cmd *c)
 	if (init_sigquit(info) == 0)
 		exit_free_perror(temp, ENV, info, "");
 	if (check_dobble_pipe(temp, pipout) == 1)
-		return (ft_putstr_fd
-			(BG_RED "syntax error near unexpected token `|'\n" RESET, 2));
+		return (ft_putstr_fd ("syntax error near unexpected token `|'\n", 2));
 	while (temp)
 	{
 		if (temp->outfile != NULL && temp->cmd == NULL)
@@ -89,6 +88,6 @@ void	exec(t_minishell *info, t_cmd *c)
 		temp = temp->next;
 	}
 	while (wait(&status) > 0)
-		info->code_error = (WEXITSTATUS(status));
-	close (pipout);
+		wait_status(info, status);
+	close(pipout);
 }
