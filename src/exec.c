@@ -19,7 +19,7 @@ int	is_builtin(t_cmd *c)
 			return (1);
 		return (0);
 	}
-	exit (130);
+	return (0);
 }
 
 void	exit_code_weird(t_cmd *c)
@@ -47,7 +47,10 @@ void	exec_builtin(t_cmd *c, t_cmd *c_first, int pip[2], int fd)
 	if (ft_strcmp(c->cmd, "cd") == 0)
 	{
 		if (c->arg[1] != NULL)
+		{
+			c->i->code_error = 1;
 			ft_putstr_fd("cd: too many arguments\n", 2);
+		}
 		else
 			cd(c->arg[0], c_first->i->env, c->i);
 	}

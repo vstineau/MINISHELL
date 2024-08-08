@@ -11,8 +11,9 @@ int	exec_midle(t_minishell *info, int fd, t_cmd *c, t_cmd *c_first)
 	if (is_builtin(c) == 0)
 		c->path = find_path(info->env, c->cmd, info);
 	if (pipe(pip) == -1)
-		exit(EXIT_FAILURE);
+		free_and_close (fd, pip, c_first, EXIT_FAILURE);
 	id = fork();
+	info->last_pid = id;
 	if (id == -1)
 		perror("");
 	if (id == 0)
@@ -28,34 +29,26 @@ int	exec_midle(t_minishell *info, int fd, t_cmd *c, t_cmd *c_first)
 	return (pip[0]);
 }
 
+void	init_void(int signum, siginfo_t *info, void *context)
+{
+	(void)info;
+	(void)context;
+	(void)signum;
+	g_signal_received = SIGINT;
+	return ;
+}
+
 int	init_sigquit(t_minishell *info)
 {
+	ft_memset(&info->sig, 0, sizeof(sigaction));
 	sigemptyset(&info->sig.sa_mask);
 	info->sig.sa_sigaction = handle_sigquit;
 	if (sigaction(SIGQUIT, &info->sig, NULL) == -1)
 		return (0);
+	info->sig.sa_sigaction = init_void;
+	if (sigaction(SIGINT, &info->sig, NULL) == -1)
+		return (0);
 	return (1);
-}
-
-int	check_dobble_pipe(t_cmd *c, int pipout)
-{
-	t_cmd	*test;
-
-	test = c;
-	while (test)
-	{
-		if (test->pipe == PIPE)
-			test->next->previous_pipe = 1;
-		if (test->previous_pipe == 1 && test->pipe == 0
-			&& !test->cmd && !test->infile && !test->outfile)
-		{
-			close (pipout);
-			c->i->code_error = 2;
-			return (1);
-		}
-		test = test->next;
-	}
-	return (0);
 }
 
 void	check_outfile(t_cmd *c)
@@ -64,12 +57,34 @@ void	check_outfile(t_cmd *c)
 	close (c->fd);
 }
 
+int	taille_node(t_cmd *c)
+{
+	t_cmd	*test;
+	int		taille;
+	
+	test = c;
+	taille = 0;
+	while (test)
+	{
+		if (test->cmd != NULL)
+			taille++;
+		test = test->next;
+	}
+	return (taille);
+}
+
 void	exec(t_minishell *info, t_cmd *c)
 {
 	int		pipout;
 	int		status;
 	t_cmd	*temp;
+	int		taille;
+	int		pid_return;
+	int		i;
 
+	i = 0;
+	pid_return = 0;
+	taille = taille_node(c);
 	temp = c;
 	status = 0;
 	pipout = 42;
@@ -87,7 +102,14 @@ void	exec(t_minishell *info, t_cmd *c)
 			temp->next->previous_pipe = 1;
 		temp = temp->next;
 	}
-	while (wait(&status) > 0)
-		wait_status(info, status);
+	while (i < taille)
+	{
+		pid_return = (wait(&status));
+		if (pid_return < 0)
+			continue ;
+		if (pid_return == c->i->last_pid)
+			wait_status(info, status);
+		i++;
+	}
 	close(pipout);
 }

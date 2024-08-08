@@ -52,6 +52,7 @@ typedef struct s_minishell
 {
 	int					code_error;
 	char				**env;
+	int					last_pid;
 	struct sigaction	sig;
 }				t_minishell;
 
@@ -104,6 +105,7 @@ void		free_and_close(int fd, int pip[2], t_cmd *c_first, int value);
 int			exec_first_case(t_cmd *c_first, t_cmd *c, int fd, int pip[2]);
 void		wait_status(t_minishell *info, int status);
 char		*return_find_path(t_minishell *info, char *av, int error);
+int			check_dobble_pipe(t_cmd *c, int pipout);
 //----------EXPAND----------------------//
 char		*expand(char *s, t_minishell *info);
 int			tilde(char *s, char **line, t_minishell *info, t_iterator *a);
