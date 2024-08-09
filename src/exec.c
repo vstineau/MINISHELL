@@ -6,11 +6,12 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:05 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:18:41 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <fcntl.h>
 #include <unistd.h>
 
 int	is_builtin(t_cmd *c)
@@ -89,12 +90,15 @@ void	before_exec(t_cmd *c, t_cmd *c_first, int fd, int pip[2])
 {
 	c->fd = 1;
 	if (c->outfile != NULL)
-		c->fd = open(c->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (c->previous_pipe == 1)
 	{
+		if (c->redirect == APPEND)
+			c->fd = open(c->outfile, O_APPEND | O_CREAT | O_WRONLY, 0644);
+		else
+			c->fd = open(c->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	}
+	if (c->previous_pipe == 1)
 		if (dup2(fd, STDIN_FILENO) == -1)
 			perror("");
-	}
 	if (c->next && c->next->pipe == PIPE)
 	{
 		if (dup2(pip[1], STDOUT_FILENO) == -1)
