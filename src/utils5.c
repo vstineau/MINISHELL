@@ -1,5 +1,6 @@
 
 #include "../includes/minishell.h"
+#include <errno.h>
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -10,7 +11,8 @@ void	ft_putstr_fd(char *s, int fd)
 	i = 0;
 	while (s[i] != '\0')
 	{
-		write(fd, &s[i], 1);
+		if (write(fd, &s[i], 1) != 1)
+			errno = ENOSPC;
 		i++;
 	}
 }

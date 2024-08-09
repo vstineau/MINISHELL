@@ -59,7 +59,7 @@ void	exec_builtin(t_cmd *c, t_cmd *c_first, int pip[2], int fd)
 	if (ft_strcmp(c->cmd, "export") == 0)
 		c_first->i->env = our_export(c->arg, c_first->i->env, c->fd, c);
 	if (ft_strcmp(c->cmd, "unset") == 0)
-		c_first->i->env = unset(c->arg, c_first->i->env);
+		c_first->i->env = unset(c->arg, c_first->i->env, c);
 	if (ft_strcmp(c->cmd, "env") == 0)
 		our_env(c_first->i->env, c->fd, c);
 	if (ft_strcmp(c->cmd, "exit") == 0)

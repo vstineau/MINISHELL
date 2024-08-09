@@ -166,7 +166,7 @@ char		*get_first_av(char *av, t_cmd *c);
 char		**ft_print_export(char **env, int fd);
 int			ft_isalpha(int c);
 int			ft_isalnum(int c);
-void		*wrong_identifier(char *av, t_cmd *c);
+void		*wrong_identifier(char *av, t_cmd *c, char *cmd);
 int			arg_ok_for_export(char *av);
 //----------BUILTINS---------------------//
 void		cd(char *path, char **envp, t_minishell *info);
@@ -175,6 +175,6 @@ void		echo(char **av, int fd);
 void		our_env(char **env, int fd, t_cmd *c);
 void		our_exit(t_cmd *c, t_cmd *c_first, int pip[2], int fd);
 char		**our_export(char **av, char **env, int fd, t_cmd *c);
-char		**unset(char **av, char **env);
+char		**unset(char **av, char **env, t_cmd *c);
 
 #endif
