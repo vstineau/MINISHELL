@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:55:01 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:34:58 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ void	free_cmd(t_cmd *cmd, bool env, t_minishell *info)
 			free(cmd->outfile);
 		if (cmd->arg)
 			free_split(cmd->arg);
+		if (cmd->redirect == HEREDOC)
+			unlink("heredoc");
 		cmd = cmd->next;
 		free(temp);
 	}
-	unlink("heredoc");
 	cmd = NULL;
 }
 
