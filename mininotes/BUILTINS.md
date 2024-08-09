@@ -1,7 +1,0 @@
-~~echo~~
-~~cd~~
-~~pwd~~
-~~export~~
-~~unset~~
-~~env~~
-~~exit~~ 
