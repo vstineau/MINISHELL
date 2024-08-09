@@ -22,7 +22,7 @@ static void	fill_key(char key[4096], char *s, int *j, t_iterator *a)
 		key[*j - a->i - 1] = s[*j];
 		*j += 1;
 	}
-	if (s[*j] && !check_char(s[*j], "$\" \t/"))
+	if (s[*j] && !check_char(s[*j], "$\"= \t/"))
 		key[*j - a->i - 2] = 4;
 	if (s[*j] && s[*j] == '$' && (!s[*j + 1] || check_char(s[*j + 1], "\" \t")))
 		a->dols_end = true;
