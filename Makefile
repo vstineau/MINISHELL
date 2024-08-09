@@ -14,6 +14,7 @@ SRC_NAME = main.c \
 					 utils4.c \
 					 utils5.c \
 					 utils7.c \
+					 utils8.c \
 					 ft_split.c \
 					 free.c \
 					 cmd.c \

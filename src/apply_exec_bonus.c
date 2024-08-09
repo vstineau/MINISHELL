@@ -21,6 +21,7 @@ void	apply_exec(t_cmd *c, char **env, int pip[2], t_cmd *c_first)
 		close (c->fd);
 	if (execve(c->path, cmd, env) == -1)
 	{
+		printf("command = %s \n", c->path);
 		errno = EISDIR;
 		perror(c->path);
 		close (pip[0]);

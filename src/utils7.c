@@ -9,22 +9,10 @@ void	free_and_close(int fd, int pip[2], t_cmd *c_first, int value)
 
 int	exec_first_case(t_cmd *c_first, t_cmd *c, int fd, int pip[2])
 {
+	c->i->is_builtin = 1;
 	c_first->close = 1;
 	before_exec(c, c_first, fd, pip);
 	return (fd);
-}
-
-void	wait_status(t_minishell *info, int status)
-{
-	int	exit_status;
-
-	exit_status = 0;
-	if (WIFEXITED(status))
-	{
-		exit_status = WEXITSTATUS(status);
-		if (exit_status != 0)
-			info->code_error = exit_status;
-	}
 }
 
 char	*return_find_path(t_minishell *info, char *av, int error)
@@ -45,7 +33,6 @@ char	*return_find_path(t_minishell *info, char *av, int error)
 	}
 	return (NULL);
 }
-
 
 int	check_dobble_pipe(t_cmd *c, int pipout)
 {

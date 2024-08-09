@@ -57,37 +57,14 @@ void	check_outfile(t_cmd *c)
 	close (c->fd);
 }
 
-int	taille_node(t_cmd *c)
-{
-	t_cmd	*test;
-	int		taille;
-	
-	test = c;
-	taille = 0;
-	while (test)
-	{
-		if (test->cmd != NULL)
-			taille++;
-		test = test->next;
-	}
-	return (taille);
-}
-
 void	exec(t_minishell *info, t_cmd *c)
 {
 	int		pipout;
-	int		status;
 	t_cmd	*temp;
-	int		taille;
-	int		pid_return;
-	int		i;
 
-	i = 0;
-	pid_return = 0;
-	taille = taille_node(c);
 	temp = c;
-	status = 0;
 	pipout = 42;
+	c->i->is_builtin = 0;
 	if (init_sigquit(info) == 0)
 		exit_free_perror(temp, ENV, info, "");
 	if (check_dobble_pipe(temp, pipout) == 1)
@@ -102,14 +79,6 @@ void	exec(t_minishell *info, t_cmd *c)
 			temp->next->previous_pipe = 1;
 		temp = temp->next;
 	}
-	while (i < taille)
-	{
-		pid_return = (wait(&status));
-		if (pid_return < 0)
-			continue ;
-		if (pid_return == c->i->last_pid)
-			wait_status(info, status);
-		i++;
-	}
+	apply_wait(c, info);
 	close(pipout);
 }
