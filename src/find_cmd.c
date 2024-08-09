@@ -50,10 +50,10 @@ char	*path_ok(char *av)
 	char	*path;
 
 	path = av;
-	if (access(path, F_OK | X_OK) == 0)
-	{
+	if (access(path, F_OK) != 0)
+		return (NULL);
+	if (access(path, X_OK) == 0)
 		return (path);
-	}
 	return (NULL);
 }
 
@@ -64,24 +64,19 @@ char	*find_path(char **env, char *av, t_minishell *info)
 
 	if (path_ok(av) == NULL)
 	{
-		folders = get_folders_from_path(env);
-		if (folders == NULL)
+		if (access(av, F_OK) != 0)
 		{
-			info->code_error = 127;
-			ft_putstr_fd(av, 2);
-			ft_putstr_fd(": command not found\n", 2);
-			return (NULL);
+			folders = get_folders_from_path(env);
+			if (folders == NULL)
+				return (return_find_path(info, av, 127));
+			path = find_path_in_folders(folders, av);
+			free_split(folders);
+			if (path == NULL)
+				return (return_find_path(info, av, 127));
+			return (path);
 		}
-		path = find_path_in_folders(folders, av);
-		free_split(folders);
-		if (path == NULL)
-		{
-			info->code_error = 127;
-			ft_putstr_fd(av, 2);
-			ft_putstr_fd(": command not found\n", 2);
-			return (NULL);
-		}
-		return (path);
+		else
+			return (return_find_path(info, av, 126));
 	}
 	return (path_ok(av));
 }

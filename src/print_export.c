@@ -11,7 +11,7 @@ void	apply_print_export(char *env, int fd, int j)
 	int	len;
 
 	len = ft_strlen(env);
-	ft_putstr_fd("declare -x ", fd);
+	ft_putstr_fd("export ", fd);
 	while (env[j] != '=' && j < len)
 	{
 		ft_putchar_fd(env[j], fd);

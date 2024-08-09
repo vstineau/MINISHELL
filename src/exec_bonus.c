@@ -1,97 +1,84 @@
 
 #include "../includes/minishell.h"
 
-int	exec_midle(t_minishell *info, int fd, t_cmd *c)
+int	exec_midle(t_minishell *info, int fd, t_cmd *c, t_cmd *c_first)
 {
 	int		id;
 	int		pip[2];
 
 	if (c->next == NULL && c->previous_pipe != 1 && (is_builtin(c) == 1))
-	{
-		exec_builtin(c, info, fd, pip);
-		return (fd);
-	}
+		return (exec_first_case(c_first, c, fd, pip));
 	if (is_builtin(c) == 0)
 		c->path = find_path(info->env, c->cmd, info);
 	if (pipe(pip) == -1)
-		exit(EXIT_FAILURE);
+		free_and_close (fd, pip, c_first, EXIT_FAILURE);
 	id = fork();
+	info->last_pid = id;
 	if (id == -1)
 		perror("");
 	if (id == 0)
 	{
 		close(pip[0]);
-		exec_builtin(c, info, fd, pip);
-		close_before(fd, pip, c);
-		exit (info->code_error);
+		c_first->close = 0;
+		before_exec(c, c_first, fd, pip);
+		free_and_close(fd, pip, c_first, info->code_error);
 	}
-	info->code_error = 0;
-	close_before(fd, pip, c);
+	else
+		info->code_error = 0;
+	close_before(fd, pip, c_first);
 	return (pip[0]);
+}
+
+void	init_void(int signum, siginfo_t *info, void *context)
+{
+	(void)info;
+	(void)context;
+	(void)signum;
+	g_signal_received = SIGINT;
+	return ;
 }
 
 int	init_sigquit(t_minishell *info)
 {
+	ft_memset(&info->sig, 0, sizeof(sigaction));
 	sigemptyset(&info->sig.sa_mask);
 	info->sig.sa_sigaction = handle_sigquit;
 	if (sigaction(SIGQUIT, &info->sig, NULL) == -1)
 		return (0);
+	info->sig.sa_sigaction = init_void;
+	if (sigaction(SIGINT, &info->sig, NULL) == -1)
+		return (0);
 	return (1);
 }
 
-int	check_dobble_pipe(t_cmd *c, int pipout)
+void	check_outfile(t_cmd *c)
 {
-	t_cmd	*test;
-
-	test = c;
-	while (test)
-	{
-		if (test->pipe == PIPE)
-			test->next->previous_pipe = 1;
-		if (test->previous_pipe == 1 && test->pipe == 0
-			&& !test->cmd && !test->infile && !test->outfile)
-		{
-			close (pipout);
-			c->i->code_error = 2;
-			return (1);
-		}
-		test = test->next;
-	}
-	return (0);
-}
-
-void	check_exec(t_minishell *info, t_cmd *c, int pipout)
-{
-	if (init_sigquit(info) == 0)
-		exit_free_perror(c, ENV, info, "");
-	if (check_dobble_pipe(c, pipout) == 1)
-		return (ft_putstr_fd("syntax error near unexpected token `|'\n", 2));
+	c->fd = open(c->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	close (c->fd);
 }
 
 void	exec(t_minishell *info, t_cmd *c)
 {
-	int		i;
 	int		pipout;
-	int		status;
+	t_cmd	*temp;
 
-	status = 0;
-	i = 0;
+	temp = c;
 	pipout = 42;
-	check_exec(info, c, pipout);
-	while (c)
+	c->i->is_builtin = 0;
+	if (init_sigquit(info) == 0)
+		exit_free_perror(temp, ENV, info, "");
+	if (check_dobble_pipe(temp, pipout) == 1)
+		return (ft_putstr_fd ("syntax error near unexpected token `|'\n", 2));
+	while (temp)
 	{
-		if (c->outfile != NULL && c->cmd == NULL)
-		{
-			c->fd = open(c->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			close (c->fd);
-		}
-		if (c->cmd)
-			pipout = exec_midle(info, pipout, c);
-		if (c->pipe == PIPE)
-			c->next->previous_pipe = 1;
-		c = c->next;
+		if (temp->outfile != NULL && temp->cmd == NULL)
+			check_outfile(temp);
+		if (temp->cmd)
+			pipout = exec_midle(info, pipout, temp, c);
+		if (temp->pipe == PIPE)
+			temp->next->previous_pipe = 1;
+		temp = temp->next;
 	}
-	while (wait(&status) > 0)
-		info->code_error = (WEXITSTATUS(status));
-	close (pipout);
+	apply_wait(c, info);
+	close(pipout);
 }

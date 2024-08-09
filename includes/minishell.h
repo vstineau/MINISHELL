@@ -53,6 +53,8 @@ typedef struct s_minishell
 {
 	int					code_error;
 	char				**env;
+	int					last_pid;
+	int					is_builtin;
 	struct sigaction	sig;
 }				t_minishell;
 
@@ -66,6 +68,7 @@ typedef struct s_cmd
 	int					fd;
 	int					fd_h;
 	t_token				pipe;
+	int					close;
 	int					error;
 	int					previous_pipe;
 	t_redirect			redirect;
@@ -106,6 +109,12 @@ int			check_char(char c, char *s);
 int			is_uppercase(char c);
 int			perror_and_return_i(t_minishell *info, char *s, int i);
 void		close_before(int fd, int pip[2], t_cmd *c);
+void		free_and_close(int fd, int pip[2], t_cmd *c_first, int value);
+int			exec_first_case(t_cmd *c_first, t_cmd *c, int fd, int pip[2]);
+void		wait_status(t_minishell *info, int status);
+char		*return_find_path(t_minishell *info, char *av, int error);
+int			check_dobble_pipe(t_cmd *c, int pipout);
+void		apply_wait(t_cmd *c, t_minishell *info);
 //----------EXPAND----------------------//
 char		*expand(char *s, t_minishell *info);
 int			tilde(char *s, char **line, t_minishell *info, t_iterator *a);
@@ -149,23 +158,23 @@ void		free_alls(char *path, char **cmd);
 char		*find_path(char **env, char *av, t_minishell *info);
 char		**find_cmd(char *av);
 char		*return_path(char *endfile, char *path);
-void		apply_exec_middle_bonus(int fd, int pip[2], char **env, t_cmd *c);
-void		exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2]);
+void		apply_exec_middle(int fd, int pip[2], t_cmd *c_first, t_cmd *c);
+void		before_exec(t_cmd *c, t_cmd *c_first, int fd, int pip[2]);
 void		exec(t_minishell *info, t_cmd *c);
 int			is_builtin(t_cmd *c);
-char		*get_first_av(char *av);
+char		*get_first_av(char *av, t_cmd *c);
 char		**ft_print_export(char **env, int fd);
 int			ft_isalpha(int c);
 int			ft_isalnum(int c);
-void		*wrong_identifier(char *av);
+void		*wrong_identifier(char *av, t_cmd *c);
 int			arg_ok_for_export(char *av);
 //----------BUILTINS---------------------//
 void		cd(char *path, char **envp, t_minishell *info);
-void		pwd(int fd);
+void		pwd(int fd, t_cmd *c);
 void		echo(char **av, int fd);
-void		our_env(char **env, int fd);
-void		our_exit(t_cmd *c, t_minishell *info);
-char		**our_export(char **av, char **env, int fd);
+void		our_env(char **env, int fd, t_cmd *c);
+void		our_exit(t_cmd *c, t_cmd *c_first, int pip[2], int fd);
+char		**our_export(char **av, char **env, int fd, t_cmd *c);
 char		**unset(char **av, char **env);
 
 #endif

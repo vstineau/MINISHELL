@@ -1,22 +1,49 @@
 
 #include "../includes/minishell.h"
 
-void	our_env(char **env, int fd)
+int	error_message_env(t_cmd *c)
+{
+	if (c->arg[0] == NULL)
+		return (0);
+	if (c->arg[0][0] >= 97 && c->arg[0][0] <= 122)
+	{
+		return (1);
+	}
+	if (access(c->arg[0], X_OK != 0) && (c->arg[0][0] == '.'))
+	{
+		perror (c->arg[0]);
+		return (126);
+	}
+	else if (c->arg [0][0] < 97 || c->arg[0][0] > 122)
+	{
+		ft_putstr_fd("‘", 2);
+		ft_putstr_fd(c->arg[0], 2);
+		ft_putstr_fd("’: No such file or directory\n", 2);
+		return (127);
+	}
+	return (0);
+}
+
+void	our_env(char **env, int fd, t_cmd *c)
 {
 	int		i;
 	char	*test;
 
 	i = 0;
-	while (env[i])
+	c->i->code_error = error_message_env(c);
+	if (c->i->code_error == 0)
 	{
-		test = ft_strchr(env[i], '=');
-		if (env[i] != NULL && test != NULL)
+		while (env[i])
 		{
-			ft_putstr_fd(env[i], fd);
-			ft_putstr_fd("\n", fd);
+			test = ft_strchr(env[i], '=');
+			if (env[i] != NULL && test != NULL)
+			{
+				ft_putstr_fd(env[i], fd);
+				ft_putstr_fd("\n", fd);
+			}
+			i++;
 		}
-		i++;
+		if (fd != 1)
+			close (fd);
 	}
-	if (fd != 1)
-		close (fd);
 }

@@ -1,5 +1,6 @@
 
 #include "../includes/minishell.h"
+#include <unistd.h>
 
 int	is_builtin(t_cmd *c)
 {
@@ -10,49 +11,70 @@ int	is_builtin(t_cmd *c)
 			|| (ft_strcmp(c->cmd, "export") == 0)
 			|| (ft_strcmp(c->cmd, "unset") == 0)
 			|| (ft_strcmp(c->cmd, "env") == 0)
-			|| (ft_strcmp(c->cmd, "exit") == 0))
+			|| (ft_strcmp(c->cmd, "exit") == 0)
+			|| (ft_strcmp(c->cmd, ":") == 0)
+			|| (ft_strcmp(c->cmd, "!") == 0)
+			|| (ft_strcmp(c->cmd, ".") == 0)
+			|| (ft_strcmp(c->cmd, "#") == 0))
 			return (1);
 		return (0);
 	}
-	exit (130);
+	return (0);
 }
 
-void	apply_exec_builtin(t_cmd *c, t_minishell *info)
+void	exit_code_weird(t_cmd *c)
 {
+	if (ft_strcmp(c->cmd, ":") == 0)
+		c->i->code_error = 0;
+	if (ft_strcmp(c->cmd, "!") == 0)
+		c->i->code_error = 1;
+	if (ft_strcmp(c->cmd, "#") == 0)
+		c->i->code_error = 0;
+	if (ft_strcmp(c->cmd, ".") == 0)
+	{
+		ft_putstr_fd(".: filename argument required\n", 2);
+		c->i->code_error = 2;
+	}
+}
+
+void	exec_builtin(t_cmd *c, t_cmd *c_first, int pip[2], int fd)
+{
+	if ((ft_strcmp(c->cmd, ":") == 0) || (ft_strcmp(c->cmd, "!") == 0)
+		|| (ft_strcmp(c->cmd, "#") == 0) || (ft_strcmp(c->cmd, ".") == 0))
+		exit_code_weird(c);
 	if (ft_strcmp(c->cmd, "echo") == 0)
 		echo(c->arg, c->fd);
 	if (ft_strcmp(c->cmd, "cd") == 0)
 	{
 		if (c->arg[1] != NULL)
-			ft_putstr_fd("cd: too many arguments", 2);
+		{
+			c->i->code_error = 1;
+			ft_putstr_fd("cd: too many arguments\n", 2);
+		}
 		else
-			cd(c->arg[0], info->env, info);
+			cd(c->arg[0], c_first->i->env, c->i);
 	}
 	if (ft_strcmp(c->cmd, "pwd") == 0)
-		pwd(c->fd);
+		pwd(c->fd, c);
 	if (ft_strcmp(c->cmd, "export") == 0)
-		info->env = our_export(c->arg, info->env, c->fd);
+		c_first->i->env = our_export(c->arg, c_first->i->env, c->fd, c);
 	if (ft_strcmp(c->cmd, "unset") == 0)
-		info->env = unset(c->arg, info->env);
+		c_first->i->env = unset(c->arg, c_first->i->env);
 	if (ft_strcmp(c->cmd, "env") == 0)
-		our_env(info->env, c->fd);
+		our_env(c_first->i->env, c->fd, c);
 	if (ft_strcmp(c->cmd, "exit") == 0)
-		our_exit(c, info);
+		our_exit(c, c_first, pip, fd);
 }
 
-void	apply_exec_path(t_cmd *c, t_minishell *info, int fd, int pip[2])
+void	apply_exec_path(t_cmd *c, t_cmd *c_first, int fd, int pip[2])
 {
 	if (c->path != NULL)
-	{
-		apply_exec_middle_bonus(fd, pip, info->env, c);
-	}
+		apply_exec_middle(fd, pip, c_first, c);
 	if (c->outfile != NULL)
 		close (c->fd);
-	if (c->path == NULL)
-		free_cmd(c, ENV, info);
 }
 
-void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2])
+void	before_exec(t_cmd *c, t_cmd *c_first, int fd, int pip[2])
 {
 	c->fd = 1;
 	if (c->outfile != NULL)
@@ -69,9 +91,9 @@ void	exec_builtin(t_cmd *c, t_minishell *info, int fd, int pip[2])
 	}
 	if (is_builtin(c) == 1)
 	{
-		info->code_error = 0;
-		apply_exec_builtin(c, info);
+		c->i->code_error = 0;
+		exec_builtin(c, c_first, pip, fd);
 	}
 	if (is_builtin(c) == 0)
-		apply_exec_path(c, info, fd, pip);
+		apply_exec_path(c, c_first, fd, pip);
 }

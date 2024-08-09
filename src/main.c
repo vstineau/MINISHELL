@@ -29,7 +29,7 @@ int	g_signal_received;
 //		current = current->next;
 //	}
 //}
-//
+
 static void	unwanted_argc(int argc)
 {
 	if (argc > 1)
