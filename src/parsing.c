@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:55:47 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/09 15:59:30 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_cmd	*parse(char *s, t_minishell *info)
 	c = NULL;
 	c = ft_lstnew(s, c, info);
 	current = c;
-	while (!c->error && *s)
+	while (!current->error && *s)
 	{
 		s += skip_space(s);
 		if (*s == '<' && !c->error)
