@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:05 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 16:18:41 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:56:02 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ void	before_exec(t_cmd *c, t_cmd *c_first, int fd, int pip[2])
 	}
 	if (c->previous_pipe == 1)
 		if (dup2(fd, STDIN_FILENO) == -1)
-			perror("");
+			free_and_close (fd, pip, c_first, -1);
 	if (c->next && c->next->pipe == PIPE)
 	{
 		if (dup2(pip[1], STDOUT_FILENO) == -1)
-			perror("");
+			free_and_close (fd, pip, c_first, -1);
 	}
 	if (is_builtin(c) == 1)
 	{

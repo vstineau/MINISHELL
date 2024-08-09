@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:10 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:50:29 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	exec_midle(t_minishell *info, int fd, t_cmd *c, t_cmd *c_first)
 	id = fork();
 	info->last_pid = id;
 	if (id == -1)
-		perror("");
+		free_and_close (fd, pip, c_first, EXIT_FAILURE);
 	if (id == 0)
 	{
 		close(pip[0]);
