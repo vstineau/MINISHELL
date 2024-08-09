@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:49 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/09 18:02:07 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,16 @@ int	arg_ok_for_export(char *av)
 
 	len = 0;
 	i = 1;
-	len = ft_strlen(av);
+	if (ft_strchr(av, '=') != NULL)
+	{
+		while (av[len] != '=')
+			len++;
+	}
+	else
+		len = ft_strlen(av);
 	while (av[i] && i < len)
 	{
-		if (ft_isalnum(av[i]) == 1 || av[i] == '_' || av[i] == '=')
+		if (ft_isalnum(av[i]) == 1 || av[i] == '_')
 			i++;
 		else if (i + 1 == len && av[i] == '+')
 			i++;
@@ -51,7 +57,7 @@ char	*get_first_av2(char *av)
 	char	*av1;
 	int		i;
 	int		len;
-
+		
 	i = 0;
 	len = ft_strlen(av);
 	while (av[i] != '+' && i < len)
@@ -77,8 +83,9 @@ char	*get_first_av(char *av, t_cmd *c)
 		return (av1 = get_first_av2(av));
 	if (ft_strchr(av, '=') == NULL)
 	{
-		av1 = malloc(sizeof(char) * len + 1);
+		av1 = malloc(sizeof(char) * len + 2);
 		ft_strcpy(av1, av);
+		av1 = ft_strjoin (av1, "=");
 		return (av1);
 	}
 	while (av[i] != '=' && i < len)

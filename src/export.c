@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:37 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/09 17:50:40 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char	**export_second_case(char **env, int i, char *av1, char *av)
 	char	**env2;
 	char	*test;
 
+	(void) av;
 	env2 = ft_calloc(sizeof(char *), (i + 2));
 	i = 0;
 	while (env[i])
@@ -63,7 +64,7 @@ char	**export_second_case(char **env, int i, char *av1, char *av)
 		env2[i] = ft_strdup(env[i]);
 		i++;
 	}
-	test = ft_strchr(av, '+');
+	test = ft_strchr(av1, '+');
 	if (test != NULL && test[1] == '=')
 	{
 		test = ft_strchr(test, '=');
@@ -71,7 +72,7 @@ char	**export_second_case(char **env, int i, char *av1, char *av)
 		env2[i] = ft_strdup(test);
 	}
 	else
-		env2[i] = ft_strdup(av);
+		env2[i] = ft_strdup(av1);
 	free(test);
 	free(av1);
 	free_split(env);
