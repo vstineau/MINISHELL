@@ -1,12 +1,13 @@
 
 #include "../includes/minishell.h"
 
-void	*wrong_identifier(char *av, t_cmd *c)
+void	*wrong_identifier(char *av, t_cmd *c, char *cmd)
 {
-	ft_putstr_fd("export: `", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": `", 2);
 	ft_putstr_fd(av, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
-	c->i->code_error = 1;
+	c->i->code_error = 2;
 	return (NULL);
 }
 
@@ -16,7 +17,7 @@ char	**export_first_case(char**env, int i, char *av1, char *av)
 	int		j;
 	char	*test;
 
-	env2 = calloc(sizeof(char *), env_size(env) + 1);
+	env2 = ft_calloc(sizeof(char *), env_size(env) + 1);
 	j = 0;
 	while (env[j])
 	{

@@ -24,13 +24,15 @@ char	**apply_unset_each(int j, int i, char **env, char **env2)
 	return (free_split(env), env2);
 }
 
-char	**unset_each(char *av, char **env, int len, int j)
+char	**unset_each(char *av, char **env, int len)
 {
 	int		i;
 	char	**env2;
+	int		j;
 
+	j = 0;
 	i = 0;
-	env2 = calloc(sizeof(char *), env_size(env));
+	env2 = ft_calloc(sizeof(char *), env_size(env));
 	while (env[i])
 	{
 		while (env[i][len] != '=')
@@ -43,27 +45,44 @@ char	**unset_each(char *av, char **env, int len, int j)
 	return (free_split_get_env(env2, env));
 }
 
-char	**unset(char **av, char **env)
+int	arg_ok_for_unset(char *av)
+{
+	int	i;
+	int	len;
+
+	len = 0;
+	i = 1;
+	len = ft_strlen(av);
+	while (av[i] && i < len)
+	{
+		if (ft_isalnum(av[i]) == 1 || av[i] == '_' || av[i] == '+')
+			i++;
+		else
+			return (0);
+	}
+	return (1);
+}
+
+char	**unset(char **av, char **env, t_cmd *c)
 {
 	char	**env2;
 	int		len;
-	int		j;
 	int		k;
 
-	j = 0;
 	k = 0;
 	env2 = get_env(env, NULL, 0);
 	while (av[k])
 	{
-		if (av[k] == NULL)
+		if (av[k] == NULL || arg_ok_for_unset(av[k]) == 0)
 		{
-			free_split(env);
+			if (arg_ok_for_unset(av[k]) == 0)
+				wrong_identifier(av[k], c, "export");
 			k++;
 		}
 		else
 		{
 			len = 0;
-			env2 = unset_each(av[k], env2, len, j);
+			env2 = unset_each(av[k], env2, len);
 			k++;
 		}
 	}

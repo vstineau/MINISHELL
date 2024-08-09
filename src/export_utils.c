@@ -22,16 +22,10 @@ int	arg_ok_for_export(char *av)
 
 	len = 0;
 	i = 1;
-	if (ft_strchr(av, '=') != NULL)
-	{
-		while (av[len] != '=')
-			len++;
-	}
-	else
-		len = ft_strlen(av);
+	len = ft_strlen(av);
 	while (av[i] && i < len)
 	{
-		if (ft_isalnum(av[i]) == 1 || av[i] == '_')
+		if (ft_isalnum(av[i]) == 1 || av[i] == '_' || av[i] == '=')
 			i++;
 		else if (i + 1 == len && av[i] == '+')
 			i++;
@@ -65,7 +59,7 @@ char	*get_first_av(char *av, t_cmd *c)
 
 	i = 0;
 	if ((ft_isalpha(av[0]) == 0 && av[0] != '_') || arg_ok_for_export(av) == 0)
-		return (wrong_identifier(av, c));
+		return (wrong_identifier(av, c, "export"));
 	len = ft_strlen(av);
 	test = ft_strchr(av, '+');
 	if (test != NULL && test[1] == '=')
