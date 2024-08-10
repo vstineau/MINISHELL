@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc #clang
-CFLAGS = -Wall -Wextra -Werror -MMD -g3 -O2 -fno-builtin
+CFLAGS = -Wall -Wextra -Werror -MMD -g3 -O2 -fno-builtin -gdwarf-4
 SRC_PATH = src/
 OBJ_PATH = ../obj/
 SRC_NAME = main.c \

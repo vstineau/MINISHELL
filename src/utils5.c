@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:57:18 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/10 11:26:07 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	check_unwanted_char_arg(t_cmd *c, t_cmd *cfirst)
 				break ;
 			j++;
 		}
-		if (!c->arg[i][j])
+		if (!c->arg[i][j] && !is_blank(c->arg[i]))
 			set_error_code(cfirst, 2);
 		i++;
 	}
