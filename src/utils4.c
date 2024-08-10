@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:57:08 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/10 12:59:18 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_alls(char *path, char **cmd)
 }
 
 char	*free_return(char *endfile)
-{	
+{
 	free(endfile);
 	return (NULL);
 }

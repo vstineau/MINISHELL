@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:55 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/10 12:59:03 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	**find_cmd(char *av)
 	char	**cmd;
 
 	if (av != NULL)
-	{	
+	{
 		cmd = ft_split(av, ' ');
 		if (cmd)
 			return (cmd);

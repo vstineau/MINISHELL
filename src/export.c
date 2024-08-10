@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:37 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 17:50:40 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/10 13:37:12 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char	**export_second_case(char **env, int i, char *av1, char *av)
 	char	**env2;
 	char	*test;
 
-	(void) av;
 	env2 = ft_calloc(sizeof(char *), (i + 2));
 	i = 0;
 	while (env[i])
@@ -64,7 +63,7 @@ char	**export_second_case(char **env, int i, char *av1, char *av)
 		env2[i] = ft_strdup(env[i]);
 		i++;
 	}
-	test = ft_strchr(av1, '+');
+	test = ft_strchr(av, '+');
 	if (test != NULL && test[1] == '=')
 	{
 		test = ft_strchr(test, '=');
@@ -72,7 +71,9 @@ char	**export_second_case(char **env, int i, char *av1, char *av)
 		env2[i] = ft_strdup(test);
 	}
 	else
-		env2[i] = ft_strdup(av1);
+	{
+		env2[i] = ft_strdup(av);
+	}
 	free(test);
 	free(av1);
 	free_split(env);
@@ -90,14 +91,18 @@ char	**export_each(char **env, char *av1, int len, char *av)
 	env2 = NULL;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], av1, len) == 0)
+		if (ft_strncmp(env[i], av1, len) == 0 && (env[i][len] == '='))
+		{
 			return (env2 = export_first_case(env, i, av1, av));
-		if (ft_strncmp(env[i], av1, len) != 0)
+		}
+		if ((ft_strncmp(env[i], av1, len) != 0) || (env[i][len] != '='))
 			j++;
 		i++;
 	}
 	if (j == i)
+	{
 		return (env2 = export_second_case(env, i, av1, av));
+	}
 	free(av1);
 	free_split(env2);
 	return (env);

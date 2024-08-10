@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:49 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 18:02:07 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/10 12:58:45 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*get_first_av2(char *av)
 	char	*av1;
 	int		i;
 	int		len;
-		
+
 	i = 0;
 	len = ft_strlen(av);
 	while (av[i] != '+' && i < len)
