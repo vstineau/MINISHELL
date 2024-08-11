@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:59 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/11 10:24:09 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	expand_env_v(char *s, char **line, t_minishell *info, t_iterator *a)
 		return (utils_env1(s, a, j));
 	else
 	{
-		*line = ft_realloc(*line, len_line, len_line + ft_strlen(var) + 1);
+		*line = ft_realloc(*line, len_line, len_line + ft_strlen(var) + 100);
 		if (*line == NULL)
 			exit_free_perror(NULL, ENV, info,
 				BG_RED"memory allocation failed during parsing"RESET);
