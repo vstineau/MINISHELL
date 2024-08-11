@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:12 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/11 18:05:58 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_minishell
 {
 	int					code_error;
 	char				**env;
+	char				*s;
 	int					last_pid;
 	int					is_builtin;
 	struct sigaction	sig;
@@ -146,7 +147,7 @@ int			infile(char *s, t_cmd *c, t_minishell *info);
 int			outfile(char *s, t_cmd *c, t_minishell *info);
 int			heredoc(char *s, t_cmd *c, t_minishell *info, char *s1);
 char		*fill_heredoc(char *line, int fd);
-char		*fill_heredoc2(char *line, t_cmd *c, char *s1, t_minishell *info);
+char		*fill_heredoc2(char *line, t_cmd *c, char *s1);
 int			no_heredoc(char *s, t_cmd *c, t_minishell *info);
 int			single_quotes(char *s, t_cmd *c, int i, int k);
 int			double_quotes(char *s, t_cmd *c, char **envp, int *i);

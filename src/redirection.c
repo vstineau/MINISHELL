@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:56:23 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/11 18:33:49 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static int	get_outfile(char *s, t_cmd *c, t_minishell *info)
 			BG_RED"memory allocation failed during parsing"RESET);
 	i = 0;
 	j = 0;
-	while (s[i] && check_char(s[i], "  \t"))
+	while (s[i] && check_char(s[i], " \t"))
 		i++;
-	while (s[i] && !check_char(s[i], "<>  \t"))
+	while (s[i] && !check_char(s[i], "<> |\t"))
 		c->outfile[j++] = s[i++];
 	if (s[i] && check_char(s[i], "<>"))
 		set_error_code(c, 2);

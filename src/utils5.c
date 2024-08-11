@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:57:18 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/11 15:36:14 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/11 18:28:14 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ void	check_unwanted_char_cmd(t_cmd *c)
 	while (current)
 	{
 		i = 0;
-		while (current->cmd[i])
+		while (current->cmd && current->cmd[i])
 		{
 			if (!check_char(current->cmd[i], "&;()"))
 				break ;
 			i++;
 		}
-		if (!current->cmd[i])
+		if (current->cmd && !current->cmd[i])
 			set_error_code(c, 2);
 		check_unwanted_char_arg(current, c);
 		current = current->next;

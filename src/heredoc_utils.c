@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:55:25 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/11 18:39:05 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ char	*fill_heredoc(char *line, int fd)
 	return (line);
 }
 
-char	*fill_heredoc2(char *line, t_cmd *c, char *s1, t_minishell *info)
+char	*fill_heredoc2(char *line, t_cmd *c, char *s1)
 {
+	(void)s1;
 	line = fill_heredoc(line, c->fd_h);
 	if (!line)
 	{
-		free(s1);
-		exit_free_perror(c, ENV, info, NULL);
+		c->error = 3;
 	}
 	return (line);
 }

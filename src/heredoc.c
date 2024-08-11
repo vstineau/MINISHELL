@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:55:18 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/11 18:40:37 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static int	fill_key_heredoc(char key[4096], char *s, int *i, t_cmd *c)
 	while (s[*i] && !check_char(s[*i], "'\" \t"))
 	{
 		key[j] = s[*i];
-		if (check_char(key[j], "<>"))
+		if (check_char(key[j + 1], "<>"))
 		{
 			c->error = 1;
-			c->i->code_error = 2;
+			c->i->code_error = 3;
 		}
 		*i += 1;
 		j++;
@@ -91,8 +91,8 @@ int	heredoc(char *s, t_cmd *c, t_minishell *info, char *s1)
 		exit_free_perror(c, ENV, info, NULL);
 	}
 	c->fd_h = open("heredoc", O_CREAT, S_IRWXU, O_WRONLY);
-	while (ft_strcmp(key, line) && g_signal_received != SIGINT)
-		line = fill_heredoc2(line, c, s1, info);
+	while (!c->error && ft_strcmp(key, line) && g_signal_received != SIGINT)
+		line = fill_heredoc2(line, c, s1);
 	close_heredoc(c, line, &c->fd_h);
 	if (g_signal_received == SIGINT)
 		c->error = 2;
