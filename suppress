@@ -8,43 +8,5 @@
 		ignore_readline_leaks
 		Memcheck:Leak
 		...
-		obj:*/usr/bin/ls*
+		obj:*/usr/bin/*
 }
-{
-    ignore_readline_leaks
-    Memcheck:Leak
-    ...
-		obj:*/usr/bin/cat*
-}
-{
-    ignore_readline_leaks
-    Memcheck:Leak
-    ...
-		obj:*/usr/bin/grep*
-}
-{
-    ignore_readline_leaks
-    Memcheck:Leak
-    ...
-		obj:*/usr/bin/clear*
-}
-{
-    ignore_readline_leaks
-    Memcheck:Leak
-    ...
-		obj:*/usr/bin/mkdir*
-}
-{
-    ignore_readline_leaks
-    Memcheck:Leak
-    ...
-		obj:*/usr/bin/touch*
-}
-{
-    ignore_readline_leaks
-    Memcheck:Leak
-    ...
-		obj:*/usr/bin/rm*
-}
-
-
