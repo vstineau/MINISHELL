@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:49 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/10 11:12:57 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/11 12:15:59 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	cmd_get_quote(char *s, t_cmd *c, int j)
 		c->cmd[j++] = s[i++];
 	if (s[i] != quote)
 	{
-		c->error = 1;
+		set_error_code(c, 2);
 	}
 	return (i);
 }
@@ -45,7 +45,7 @@ static int	arg_get_quote(char *s, t_cmd *c, int iarg, int j)
 		c->arg[iarg][j++] = s[i++];
 	if (s[i] != quote)
 	{
-		c->error = 1;
+		set_error_code(c, 2);
 	}
 	return (i);
 }
