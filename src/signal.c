@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:56:28 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/12 10:51:57 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	handle_sigint(int signum, siginfo_t *info, void *context)
 	(void)signum;
 	g_signal_received = SIGINT;
 	rl_done = true;
-	unlink("heredoc");
+	unlink("/tmp/heredoc");
 }
 
 /*extern int rl_done = Flag to indicate that readline
@@ -41,7 +41,7 @@ void	handle_sigquit(int signum, siginfo_t *info, void *context)
 	write(2, "Quit (core dumped)\n", 20);
 	g_signal_received = SIGQUIT;
 	rl_done = true;
-	unlink("heredoc");
+	unlink("/tmp/heredoc");
 }
 
 //check if the command ended with a ctrl C or ctrl \ to set the error code

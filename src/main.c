@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:55:41 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/11 18:39:33 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/12 10:08:31 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,33 @@
 
 int	g_signal_received;
 
-//void	printlist(t_cmd *cmd)
-//{
-//	t_cmd	*current;
-//	int		i = 0;
-//
-//	current = cmd;
-//	while (current)
-//	{
-//		int j = 0;
-//		printf(BHI_CYAN"cmd nb %d = %s\n"RESET, i, current->cmd);
-//		printf(BHI_GREEN"infile nb %d = %s\n"RESET, i, current->infile);
-//		printf(BHI_MAGENTA"outfile nb %d = %s\n"RESET, i, current->outfile);
-//		printf(BHI_RED"pipe %d\n"RESET, current->pipe);
-//		printf(B_GREEN"fd %d\n"RESET, current->fd);
-//		printf(B_BLUE"fd_h %d\n"RESET, current->fd_h);
-//		printf(B_RED"error %d\n"RESET, current->error);
-//		while (current->arg[j] && current->arg[j][0] != '\0')
-//		{
-//			printf(BHI_YELLOW"arg[%d] = %s\n"RESET, j, current->arg[j]);
-//			j++;
-//		}
-//		printf(BHI_BLUE" ---------------------------- \n"RESET);
-//		i++;
-//		current = current->next;
-//	}
-//}
-//
+void	printlist(t_cmd *cmd)
+{
+	t_cmd	*current;
+	int		i = 0;
+
+	current = cmd;
+	while (current)
+	{
+		int j = 0;
+		printf(BHI_CYAN"cmd nb %d = %s\n"RESET, i, current->cmd);
+		printf(BHI_GREEN"infile nb %d = %s\n"RESET, i, current->infile);
+		printf(BHI_MAGENTA"outfile nb %d = %s\n"RESET, i, current->outfile);
+		printf(BHI_RED"pipe %d\n"RESET, current->pipe);
+		printf(B_GREEN"fd %d\n"RESET, current->fd);
+		printf(B_BLUE"fd_h %d\n"RESET, current->fd_h);
+		printf(B_RED"error %d\n"RESET, current->error);
+		while (current->arg[j] && current->arg[j][0] != '\0')
+		{
+			printf(BHI_YELLOW"arg[%d] = %s\n"RESET, j, current->arg[j]);
+			j++;
+		}
+		printf(BHI_BLUE" ---------------------------- \n"RESET);
+		i++;
+		current = current->next;
+	}
+}
+
 static void	unwanted_argc(int argc)
 {
 	if (argc > 1)
@@ -89,6 +89,7 @@ int	main(int argc, char *argv[], char *envp[])
 		add_history(line);
 		line = expand(line, &info);
 		c = parse(line, &info);
+		printlist(c);
 		check_unwanted_char(&line, c->cmd, c);
 		if (check_error(c) == 1 && check_error_again(c))
 			perror(BG_RED"parsing error"RESET);

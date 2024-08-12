@@ -90,6 +90,8 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 all:  $(NAME)
 	@if [ ! -z $(DO_ART) ]; then \
 		$(MAKE) -s display_ascii_art;\
+	else \
+	  echo "make: Nothing to be done for 'all'."; \
 	fi
 
 clean:

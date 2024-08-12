@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:55:18 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/11 18:40:37 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/12 10:48:22 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	close_heredoc(t_cmd *c, char *line, int *fd)
 		close(*fd);
 	*fd = -1;
 	free(line);
-	c->infile = "heredoc";
+	c->infile = "/tmp/heredoc";
 }
 
 //put the heredoc key in the key[4096]
@@ -90,7 +90,7 @@ int	heredoc(char *s, t_cmd *c, t_minishell *info, char *s1)
 		free(s1);
 		exit_free_perror(c, ENV, info, NULL);
 	}
-	c->fd_h = open("heredoc", O_CREAT, S_IRWXU, O_WRONLY);
+	c->fd_h = open("/tmp/heredoc", O_CREAT, S_IRWXU, O_WRONLY, 0644);
 	while (!c->error && ft_strcmp(key, line) && g_signal_received != SIGINT)
 		line = fill_heredoc2(line, c, s1);
 	close_heredoc(c, line, &c->fd_h);

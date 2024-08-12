@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:59 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/11 18:05:54 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/12 10:11:33 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	fill_key(char key[4096], char *s, int *j, t_iterator *a)
 		key[*j - a->i - 1] = s[*j];
 		*j += 1;
 	}
-	if (s[*j] && !check_char(s[*j], "$\"= \t/"))
+	if (s[*j] && !check_char(s[*j], "$\"=' \t/"))
 		key[*j - a->i - 2] = 4;
 	if (s[*j] && s[*j] == '$' && (!s[*j + 1] || check_char(s[*j + 1], "\" \t")))
 		a->dols_end = true;
