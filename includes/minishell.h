@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:12 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 10:40:04 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/12 14:47:36 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ typedef struct s_cmd
 	struct s_cmd		*next;
 }						t_cmd;
 //----------UTILS----------------------//
+int			expand_dols_number(char *s, char **line, t_iterator *a);
+int			is_num(char c);
 int			is_blank(char *s);
 int			check_error(t_cmd *c);
 int			check_error_again(t_cmd *c);
@@ -141,6 +143,7 @@ int			tilde(char *s, char **line, t_minishell *info, t_iterator *a);
 int			expand_env_v(char *s, char **line,
 				t_minishell *info, t_iterator *a);
 void		no_expand_heredoc(char *s, char *line, t_iterator *a);
+char		*expand_heredoc(char *line, t_minishell *info);
 int			expand_doubles_quotes(t_iterator *a, char *line);
 int			expand_single_quotes(t_iterator *a, char *line);
 int			expand_dols_qmark(char *s, char **line,
@@ -153,7 +156,7 @@ t_cmd		*parse(char *line, t_minishell *info);
 int			infile(char *s, t_cmd *c, t_minishell *info);
 int			outfile(char *s, t_cmd *c, t_minishell *info);
 int			heredoc(char *s, t_cmd *c, t_minishell *info, char *s1);
-char		*fill_heredoc(char *line, int fd);
+char		*fill_heredoc(char *line, int fd, t_cmd *c);
 char		*fill_heredoc2(char *line, t_cmd *c, char *s1);
 int			no_heredoc(char *s, t_cmd *c, t_minishell *info);
 int			single_quotes(char *s, t_cmd *c, int i, int k);

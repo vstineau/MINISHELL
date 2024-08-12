@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:55:18 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 12:58:41 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:19:15 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,10 @@ int	heredoc(char *s, t_cmd *c, t_minishell *info, char *s1)
 	if (!fill_key_heredoc(key, s, &i, c))
 		return (i);
 	line = readline(BHI_BLACK"> "RESET);
+	line = expand_heredoc(line, info);
 	if (!line)
 		c->error = 3;
-	c->fd_h = open("/tmp/heredoc", O_WRONLY | O_CREAT | O_TRUNC);
+	c->fd_h = open("/tmp/heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	while (!c->error && ft_strcmp(key, line) && g_signal_received != SIGINT)
 		line = fill_heredoc2(line, c, s1);
 	close_heredoc(c, line, &c->fd_h);

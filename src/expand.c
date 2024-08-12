@@ -6,13 +6,13 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:29 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 10:03:07 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/12 14:37:04 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/../includes/minishell.h"
 
-static int	is_num(char c)
+int	is_num(char c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
@@ -21,7 +21,7 @@ static int	is_num(char c)
 }
 
 // a $42EXAMPLE line should be extand as 2EXAMPLE
-static int	expand_dols_number(char *s, char **line, t_iterator *a)
+int	expand_dols_number(char *s, char **line, t_iterator *a)
 {
 	int		j;
 	int		len_line;
