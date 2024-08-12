@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:16 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 15:48:51 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/12 13:00:33 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	our_exit(t_cmd *c, t_cmd *c_first, int pip[2], int fd)
 	value = 0;
 	i = 0;
 	if (c->arg[0] == NULL)
-		free_and_close(fd, pip, c_first, 0);
+		free_and_close(fd, pip, c_first, c->i->code_error);
 	if (c->arg[1] != NULL)
 		return (to_many_arg(c));
 	atoi_crack = ato__i128(c->arg[0]);

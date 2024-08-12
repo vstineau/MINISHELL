@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:05 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 09:58:06 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/12 13:02:17 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ void	before_exec(t_cmd *c, t_cmd *c_first, int fd, int pip[2])
 	}
 	if (is_builtin(c) == 1)
 	{
-		c->i->code_error = 0;
 		exec_builtin(c, c_first, pip, fd);
+		c->i->code_error = 0;
 	}
 	if (is_builtin(c) == 0)
 		apply_exec_path(c, c_first, fd, pip);
