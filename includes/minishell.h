@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:12 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 14:47:36 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:05:26 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_cmd
 	int					close;
 	int					error;
 	int					previous_pipe;
+	int					outfile_quote;
 	t_redirect			redirect;
 	t_minishell			*i;
 	t_export			*xp;

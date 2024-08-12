@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:56:23 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 13:34:25 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:05:03 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@ static void	error_file(t_cmd *c, t_minishell *info)
 {
 	c->error = 1;
 	info->code_error = 2;
+}
+
+static int	return_i(char c, int i)
+{
+	if (c == '"' || c == '\'')
+		return (i + 1);
+	return (i);
 }
 
 static int	get_outfile(char *s, t_cmd *c, t_minishell *info)
@@ -31,15 +38,20 @@ static int	get_outfile(char *s, t_cmd *c, t_minishell *info)
 			BG_RED"memory allocation failed during parsing"RESET);
 	i = 0;
 	j = 0;
-	while (s[i] && check_char(s[i], " \t"))
+	while (s[i] && check_char(s[i], " \t'\""))
+	{
+		if (s[i] == '"' || s[i] == '\'')
+			c->outfile_quote ^= (1 << 1);
 		i++;
-	while (s[i] && !check_char(s[i], "<> |\t"))
+	}
+	while (s[i] && (!check_char(s[i], "<> |\t") || c->outfile_quote)
+		&& !check_char(s[i], "'\""))
 		c->outfile[j++] = s[i++];
-	if (s[i] && check_char(s[i], "<|>"))
+	if (s[i] && (check_char(s[i], "<|>") && !c->outfile_quote))
 		set_error_code(c, 2);
 	if (is_blank(c->outfile))
 		error_file(c, info);
-	return (i);
+	return (return_i(s[i], i));
 }
 
 int	infile(char *s, t_cmd *c, t_minishell *info)
