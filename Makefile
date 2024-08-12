@@ -78,8 +78,8 @@ display_ascii_art :
 	@echo " \0033[40m                                                                                   \0033[00m"
 
 $(NAME): $(OBJ)
-	$(eval DO_ART := 1)
 	@$(CC) $(CFLAGS) -lreadline -o $(NAME) $(OBJ)
+	@$(MAKE) -s display_ascii_art
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(@D)
@@ -87,12 +87,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 
 -include $(OBJ:%.o=%.d)
 
-all:  $(NAME)
-	@if [ ! -z $(DO_ART) ]; then \
-		$(MAKE) -s display_ascii_art;\
-	else \
-	  echo "make: Nothing to be done for 'all'."; \
-	fi
+all: $(NAME)
 
 clean:
 	rm -rf ../obj
