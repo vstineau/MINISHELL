@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:20 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 10:50:39 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/12 12:09:17 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ void	dup_infile(t_cmd *c, int fd, int pip[2], t_cmd *c_first)
 void	apply_exec_middle(int fd, int pip[2], t_cmd *c_first, t_cmd *c)
 {
 	if (c->infile)
-	{
 		dup_infile(c, fd, pip, c_first);
-	}
 	if (c->previous_pipe == 1)
 	{
 		if (dup2(fd, STDIN_FILENO) == -1)

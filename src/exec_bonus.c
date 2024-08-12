@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:10 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 10:47:05 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/12 12:10:05 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	exec(t_minishell *info, t_cmd *c)
 {
 	int		pipout;
 	t_cmd	*temp;
+
 	temp = c;
 	pipout = 42;
 	c->i->is_builtin = 0;
