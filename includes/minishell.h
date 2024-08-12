@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:12 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/11 18:05:58 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/12 10:40:04 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@
 # define NO_ENV 0
 
 extern int	g_signal_received;
+
+typedef struct s_export
+{
+	char	*av;
+	char	*av1;
+}		t_export;
 
 typedef struct s_iterator
 {
@@ -86,6 +92,7 @@ typedef struct s_cmd
 	int					previous_pipe;
 	t_redirect			redirect;
 	t_minishell			*i;
+	t_export			*xp;
 	struct s_cmd		*next;
 }						t_cmd;
 //----------UTILS----------------------//

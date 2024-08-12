@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:56:41 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/12 10:51:46 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**apply_unset_each(int j, int i, char **env, char **env2)
 	return (free_split(env), env2);
 }
 
-char	**unset_each(char *av, char **env, int len)
+char	**unset_each(char *av, char **env, int len, t_cmd *c)
 {
 	int		i;
 	char	**env2;
@@ -44,6 +44,8 @@ char	**unset_each(char *av, char **env, int len)
 	j = 0;
 	i = 0;
 	env2 = ft_calloc(sizeof(char *), env_size(env));
+	if (!env2)
+		exit_free_perror(c, ENV, c->i, "");
 	while (env[i])
 	{
 		while (env[i][len] != '=')
@@ -93,7 +95,7 @@ char	**unset(char **av, char **env, t_cmd *c)
 		else
 		{
 			len = 0;
-			env2 = unset_each(av[k], env2, len);
+			env2 = unset_each(av[k], env2, len, c);
 			k++;
 		}
 	}
