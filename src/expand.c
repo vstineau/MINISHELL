@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:29 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 14:37:04 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:41:01 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*expand(char *s, t_minishell *info)
 
 	a = (t_iterator){0};
 	line = NULL;
-	line = ft_calloc(1, ft_strlen(s) + 1);
+	line = ft_calloc(1, ft_strlen(s) + 100);
 	if (line == NULL)
 		exit_free_perror(NULL, ENV, info,
 			BG_RED"memory allocation failed during parsing"RESET);

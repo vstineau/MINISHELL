@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/09 14:53:12 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/13 14:48:21 by aroualid         ###   ########.fr       */
+/*   Created: 2024/08/13 15:00:12 by aroualid          #+#    #+#             */
+/*   Updated: 2024/08/13 15:00:14 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_minishell
 	int					last_pid;
 	int					is_builtin;
 	int					write_error;
+	int					temp;
 	struct sigaction	sig;
 }				t_minishell;
 
