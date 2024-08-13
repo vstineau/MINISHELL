@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:56:23 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 17:05:03 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:46:24 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	get_outfile(char *s, t_cmd *c, t_minishell *info)
 			BG_RED"memory allocation failed during parsing"RESET);
 	i = 0;
 	j = 0;
-	while (s[i] && check_char(s[i], " \t'\""))
+	while (s[i] && check_char(s[i], " \t'\"\n"))
 	{
 		if (s[i] == '"' || s[i] == '\'')
 			c->outfile_quote ^= (1 << 1);

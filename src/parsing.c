@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:55:47 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 13:28:25 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:42:12 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	skip_space(char *s)
 	if (!s)
 		return (0);
 	i = 0;
-	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
+	while (s[i] && (s[i] == ' ' || (s[i] >= '\t' && s[i] <= '\r')))
 		i++;
 	return (i);
 }

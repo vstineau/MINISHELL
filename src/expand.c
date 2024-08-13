@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:29 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/13 15:07:15 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:48:10 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ int	expand_dols_number(char *s, char **line, t_iterator *a)
 
 static void	expand_util(char *s, t_minishell *info, t_iterator *a, char **line)
 {
-	if (s[a->i] == '~' && (!a->i || (a->i && check_char(s[a->i - 1], " \t")))
+	if (s[a->i] == '~' && (!a->i || (a->i && check_char(s[a->i - 1], " \t\n")))
 		&& !a->single_quotes && !a->doubles_quotes
-		&& (!s[a->i + 1] || (s[a->i + 1] && check_char(s[a->i + 1], " \t"))))
+		&& (!s[a->i + 1] || (s[a->i + 1] && check_char(s[a->i + 1], " \t\n"))))
 		a->j += tilde(s, line, info, a);
 	else if (s[a->i] == '$' && is_num(s[a->i + 1]) && !a->single_quotes)
 		a->j += expand_dols_number(s, line, a);
 	else if (s[a->i] == '$' && s[a->i + 1] == '?' && !a->single_quotes)
 		a->j += expand_dols_qmark(s, line, info, a);
 	else if (s[a->i] == '$'
-		&& (s[a->i + 1] && !check_char(s[a->i + 1], " \t\""))
+		&& (s[a->i + 1] && !check_char(s[a->i + 1], " \t\"\n"))
 		&& !a->single_quotes)
 	{
 		a->j += expand_env_v(s, line, info, a);
