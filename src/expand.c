@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:29 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/13 15:48:10 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:02:43 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	expand_util(char *s, t_minishell *info, t_iterator *a, char **line)
 	else if (s[a->i] == '$' && s[a->i + 1] == '?' && !a->single_quotes)
 		a->j += expand_dols_qmark(s, line, info, a);
 	else if (s[a->i] == '$'
-		&& (s[a->i + 1] && !check_char(s[a->i + 1], " \t\"\n"))
+		&& (s[a->i + 1] && !check_char(s[a->i + 1], "<> \t\"\n"))
 		&& !a->single_quotes)
 	{
 		a->j += expand_env_v(s, line, info, a);
