@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:31 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:36:51 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	cd_util(t_minishell *info)
 {
 	info->code_error = 1;
-	ft_putstr_fd("no such file or directory\n", 2);
+	ft_putstr_fd("no such file or directory\n", 2, info);
 }
 
 char	*ft_strjoin_free(char *s1, char *s2)

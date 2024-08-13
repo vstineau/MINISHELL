@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:37 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 10:51:32 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:44:37 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	*wrong_identifier(char *av, t_cmd *c, char *cmd)
 {
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": `", 2);
-	ft_putstr_fd(av, 2);
-	ft_putstr_fd("': not a valid identifier\n", 2);
+	ft_putstr_fd(cmd, 2, c->i);
+	ft_putstr_fd(": `", 2, c->i);
+	ft_putstr_fd(av, 2, c->i);
+	ft_putstr_fd("': not a valid identifier\n", 2, c->i);
 	c->i->code_error = 2;
 	return (NULL);
 }
@@ -117,7 +117,7 @@ char	**our_export(char **av, char **env, int fd, t_cmd *c)
 	k = 0;
 	env2 = get_env(env, NULL, 0);
 	if (av[0] == NULL)
-		return (free_split(env), ft_print_export(env2, fd));
+		return (free_split(env), ft_print_export(env2, fd, c));
 	while (av[k])
 	{
 		c->xp->av1 = get_first_av(av[k], c);

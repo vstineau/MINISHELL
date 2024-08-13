@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:54 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:42:37 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	error_message_env(t_cmd *c)
 	}
 	else if (c->arg [0][0] < 97 || c->arg[0][0] > 122)
 	{
-		ft_putstr_fd("‘", 2);
-		ft_putstr_fd(c->arg[0], 2);
-		ft_putstr_fd("’: No such file or directory\n", 2);
+		ft_putstr_fd("‘", 2, c->i);
+		ft_putstr_fd(c->arg[0], 2, c->i);
+		ft_putstr_fd("’: No such file or directory\n", 2, c->i);
 		return (127);
 	}
 	return (0);
@@ -49,8 +49,8 @@ void	our_env(char **env, int fd, t_cmd *c)
 			test = ft_strchr(env[i], '=');
 			if (env[i] != NULL && test != NULL)
 			{
-				ft_putstr_fd(env[i], fd);
-				ft_putstr_fd("\n", fd);
+				ft_putstr_fd(env[i], fd, c->i);
+				ft_putstr_fd("\n", fd, c->i);
 			}
 			i++;
 		}

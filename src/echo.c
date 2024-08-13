@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:42 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:41:01 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	close_fd(int fd)
 		close (fd);
 }
 
-void	echo(char **av, int fd)
+void	echo(char **av, int fd, t_cmd *c)
 {
 	int	i;
 	int	j;
@@ -57,13 +57,13 @@ void	echo(char **av, int fd)
 		}
 		while (av[i] != NULL)
 		{
-			ft_putstr_fd(av[i], fd);
+			ft_putstr_fd(av[i], fd, c->i);
 			if (av[i + 1] != NULL)
-				ft_putstr_fd(" ", fd);
+				ft_putstr_fd(" ", fd, c->i);
 			i++;
 		}
 	}
 	if (av[0] == NULL || check_echo_args(av[0], 0) == 0)
-		ft_putstr_fd("\n", fd);
+		ft_putstr_fd("\n", fd, c->i);
 	close_fd(fd);
 }

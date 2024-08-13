@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:12 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 17:05:26 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:48:21 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_minishell
 	char				*s;
 	int					last_pid;
 	int					is_builtin;
+	int					write_error;
 	struct sigaction	sig;
 }				t_minishell;
 
@@ -150,7 +151,7 @@ int			expand_single_quotes(t_iterator *a, char *line);
 int			expand_dols_qmark(char *s, char **line,
 				t_minishell *info, t_iterator *a);
 int			get_dols(char **line, t_iterator *a, t_minishell *info);
-void		ft_putstr_fd(char *s, int fd);
+int			ft_putstr_fd(char *s, int fd, t_minishell *info);
 //----------PARSING----------------------//
 char		**get_env(char **envp, char **argv, int argc);
 t_cmd		*parse(char *line, t_minishell *info);
@@ -187,7 +188,7 @@ void		before_exec(t_cmd *c, t_cmd *c_first, int fd, int pip[2]);
 void		exec(t_minishell *info, t_cmd *c);
 int			is_builtin(t_cmd *c);
 char		*get_first_av(char *av, t_cmd *c);
-char		**ft_print_export(char **env, int fd);
+char		**ft_print_export(char **env, int fd, t_cmd *c);
 int			ft_isalpha(int c);
 int			ft_isalnum(int c);
 void		*wrong_identifier(char *av, t_cmd *c, char *cmd);
@@ -195,7 +196,7 @@ int			arg_ok_for_export(char *av);
 //----------BUILTINS---------------------//
 void		cd(char *path, char **envp, t_minishell *info);
 void		pwd(int fd, t_cmd *c);
-void		echo(char **av, int fd);
+void		echo(char **av, int fd, t_cmd *c);
 void		our_env(char **env, int fd, t_cmd *c);
 void		our_exit(t_cmd *c, t_cmd *c_first, int pip[2], int fd);
 char		**our_export(char **av, char **env, int fd, t_cmd *c);

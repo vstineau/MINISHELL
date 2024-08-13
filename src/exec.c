@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:05 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 13:02:17 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:46:41 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	exit_code_weird(t_cmd *c)
 		c->i->code_error = 0;
 	if (ft_strcmp(c->cmd, ".") == 0)
 	{
-		ft_putstr_fd(".: filename argument required\n", 2);
+		ft_putstr_fd(".: filename argument required\n", 2, c->i);
 		c->i->code_error = 2;
 	}
 }
@@ -55,13 +55,13 @@ void	exec_builtin(t_cmd *c, t_cmd *c_first, int pip[2], int fd)
 		|| (ft_strcmp(c->cmd, "#") == 0) || (ft_strcmp(c->cmd, ".") == 0))
 		exit_code_weird(c);
 	if (ft_strcmp(c->cmd, "echo") == 0)
-		echo(c->arg, c->fd);
+		echo(c->arg, c->fd, c);
 	if (ft_strcmp(c->cmd, "cd") == 0)
 	{
 		if (c->arg[1] != NULL)
 		{
 			c->i->code_error = 1;
-			ft_putstr_fd("cd: too many arguments\n", 2);
+			ft_putstr_fd("cd: too many arguments\n", 2, c->i);
 		}
 		else
 			cd(c->arg[0], c_first->i->env, c->i);
@@ -106,8 +106,9 @@ void	before_exec(t_cmd *c, t_cmd *c_first, int fd, int pip[2])
 	}
 	if (is_builtin(c) == 1)
 	{
+		if (ft_strcmp(c->cmd, "exit") != 0)
+			c->i->code_error = 0;
 		exec_builtin(c, c_first, pip, fd);
-		c->i->code_error = 0;
 	}
 	if (is_builtin(c) == 0)
 		apply_exec_path(c, c_first, fd, pip);

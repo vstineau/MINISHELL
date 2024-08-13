@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:10 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 12:10:05 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:57:02 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	exec_midle(t_minishell *info, int fd, t_cmd *c, t_cmd *c_first)
 	int		id;
 	int		pip[2];
 
+	c->i->write_error = 0;
 	if (c->next == NULL && c->previous_pipe != 1 && (is_builtin(c) == 1))
 		return (exec_first_case(c_first, c, fd, pip));
 	if (is_builtin(c) == 0)
@@ -79,7 +80,8 @@ void	exec(t_minishell *info, t_cmd *c)
 	if (init_sigquit(info) == 0)
 		exit_free_perror(temp, ENV, info, "");
 	if (check_dobble_pipe(temp, pipout) == 1)
-		return (ft_putstr_fd ("syntax error near unexpected token `|'\n", 2));
+		return ((void)
+			ft_putstr_fd ("syntax error near unexpected token `|'\n", 2, c->i));
 	while (temp)
 	{
 		if (temp->outfile != NULL && temp->cmd == NULL)

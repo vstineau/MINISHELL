@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:16 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 13:00:33 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:40:09 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ __int128	ato__i128(const char *str)
 
 void	to_many_arg(t_cmd *c)
 {
-	ft_putstr_fd("exit\n", 2);
-	ft_putstr_fd("exit: too many arguments\n", 2);
+	ft_putstr_fd("exit\n", 2, c->i);
+	ft_putstr_fd("exit: too many arguments\n", 2, c->i);
 	c->i->code_error = 1;
 	return ;
 }

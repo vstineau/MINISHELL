@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:57:29 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:41:47 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ char	*return_find_path(t_minishell *info, char *av, int error)
 	if (error == 127)
 	{
 		info->code_error = 127;
-		ft_putstr_fd(av, 2);
-		ft_putstr_fd(": command not found\n", 2);
+		ft_putstr_fd(av, 2, info);
+		ft_putstr_fd(": command not found\n", 2, info);
 		return (NULL);
 	}
 	if (error == 126)
 	{
 		info->code_error = 126;
-		ft_putstr_fd(av, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
+		ft_putstr_fd(av, 2, info);
+		ft_putstr_fd(": Permission denied\n", 2, info);
 		return (NULL);
 	}
 	return (NULL);
