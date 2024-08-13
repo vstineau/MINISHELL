@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:55:25 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 16:39:26 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:08:58 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*expand_heredoc(char *line, t_minishell *info)
 		exit_free_perror(NULL, ENV, info,
 			BG_RED"memory allocation failed during parsing"RESET);
 	a = (t_iterator){0};
-	while (line[a.i])
+	while (a.i < ft_strlen(line) && line[a.i])
 	{
 		if (line[a.i] == '$' && is_num(line[a.i + 1]))
 			a.j += expand_dols_number(line, &newline, &a);
