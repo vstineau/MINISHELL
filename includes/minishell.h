@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:12 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 17:05:26 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:50:53 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_minishell
 	char				*s;
 	int					last_pid;
 	int					is_builtin;
+	int					temp;
 	struct sigaction	sig;
 }				t_minishell;
 

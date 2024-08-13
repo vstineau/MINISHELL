@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:49 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/11 12:15:59 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:51:51 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	arg_get_quote(char *s, t_cmd *c, int iarg, int j)
 	{
 		set_error_code(c, 2);
 	}
-	return (i);
+	return (i - 1);
 }
 
 static int	if_cmd(char *s, t_cmd *c, int *i_arg, t_minishell *info)
@@ -68,8 +68,9 @@ static int	if_cmd(char *s, t_cmd *c, int *i_arg, t_minishell *info)
 	{
 		if (s[i] == '\'' || s[i] == '"')
 		{
-			i += arg_get_quote(s + i, c, *i_arg, i) + 1;
-			j = i - 2;
+			info->temp = arg_get_quote(s + i, c, *i_arg, i) + 2;
+			j += info->temp - 2;
+			i += info->temp;
 		}
 		else
 			c->arg[*i_arg][j++] = s[i++];
