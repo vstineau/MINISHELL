@@ -6,13 +6,22 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:20 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 12:09:17 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:35:38 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <unistd.h>
 #include <errno.h>
+
+static void	free_fail_exec(char **cmd, int pip[2], t_cmd *c_first, t_cmd *c)
+{
+	errno = EISDIR;
+	perror(c->path);
+	close (pip[0]);
+	free(cmd);
+	free_cmd(c_first, ENV, c->i);
+}
 
 void	apply_exec(t_cmd *c, char **env, int pip[2], t_cmd *c_first)
 {
@@ -21,6 +30,8 @@ void	apply_exec(t_cmd *c, char **env, int pip[2], t_cmd *c_first)
 
 	i = 1;
 	cmd = ft_calloc(sizeof(char **), env_size(c->arg) + 2);
+	if (!cmd)
+		free_and_exit_exec(c_first, c, pip, 0);
 	cmd[0] = c->cmd;
 	while (c->arg[i - 1])
 	{
@@ -32,11 +43,7 @@ void	apply_exec(t_cmd *c, char **env, int pip[2], t_cmd *c_first)
 		close (c->fd);
 	if (execve(c->path, cmd, env) == -1)
 	{
-		errno = EISDIR;
-		perror(c->path);
-		close (pip[0]);
-		free(cmd);
-		free_cmd(c_first, ENV, c->i);
+		free_fail_exec(cmd, pip, c_first, c);
 		exit(126);
 	}
 	free_split(cmd);

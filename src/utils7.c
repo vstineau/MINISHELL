@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:57:29 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/13 14:41:47 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:34:47 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,13 @@ int	check_dobble_pipe(t_cmd *c, int pipout)
 		test = test->next;
 	}
 	return (0);
+}
+
+void	free_and_exit_exec(t_cmd *c_first, t_cmd *c, int pip[2], int value)
+{
+	if (c->outfile != NULL)
+		close (c->fd);
+	close (pip[0]);
+	free_cmd (c_first, ENV, c->i);
+	exit (value);
 }

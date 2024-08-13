@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:49 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/10 12:58:45 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/13 17:40:53 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,30 +67,31 @@ char	*get_first_av2(char *av)
 	return (av1);
 }
 
-char	*get_first_av(char *av, t_cmd *c)
+char	*get_first_av(char *av, t_cmd *c, int len)
 {
 	char	*av1;
 	int		i;
-	int		len;
 	char	*test;
 
 	i = 0;
 	if ((ft_isalpha(av[0]) == 0 && av[0] != '_') || arg_ok_for_export(av) == 0)
 		return (wrong_identifier(av, c, "export"));
-	len = ft_strlen(av);
 	test = ft_strchr(av, '+');
 	if (test != NULL && test[1] == '=')
 		return (av1 = get_first_av2(av));
 	if (ft_strchr(av, '=') == NULL)
 	{
-		av1 = malloc(sizeof(char) * len + 2);
+		av1 = malloc(sizeof(char) * len + 1);
+		if (!av1)
+			return (NULL);
 		ft_strcpy(av1, av);
-		av1 = ft_strjoin (av1, "=");
 		return (av1);
 	}
 	while (av[i] != '=' && i < len)
 		i++;
 	av1 = malloc(sizeof(char) * len + 1);
+	if (!av1)
+		return (NULL);
 	ft_strncpy(av1, av, i);
 	return (av1);
 }
