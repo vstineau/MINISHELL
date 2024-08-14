@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:49 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/13 17:40:53 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/14 09:46:47 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	arg_ok_for_export(char *av)
 
 	len = 0;
 	i = 1;
+	if (av[0] == '_' && av[1] == '=')
+		return (0);
 	if (ft_strchr(av, '=') != NULL)
 	{
 		while (av[len] != '=')
