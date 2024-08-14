@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:05 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/13 14:46:41 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:28:31 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,16 @@ void	before_exec(t_cmd *c, t_cmd *c_first, int fd, int pip[2])
 	c->fd = 1;
 	if (c->outfile != NULL)
 	{
-		if (c->redirect == APPEND)
-			c->fd = open(c->outfile, O_APPEND | O_CREAT | O_WRONLY, 0644);
-		else
-			c->fd = open(c->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		open_outfile(c);
+		if (c->i->code_error == 1)
+			return ;
 	}
 	if (c->previous_pipe == 1)
 		if (dup2(fd, STDIN_FILENO) == -1)
 			free_and_close (fd, pip, c_first, -1);
 	if (c->next && c->next->pipe == PIPE)
-	{
 		if (dup2(pip[1], STDOUT_FILENO) == -1)
 			free_and_close (fd, pip, c_first, -1);
-	}
 	if (is_builtin(c) == 1)
 	{
 		if (ft_strcmp(c->cmd, "exit") != 0)

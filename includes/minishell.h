@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 09:23:22 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/14 09:23:23 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:30:07 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int			check_dobble_pipe(t_cmd *c, int pipout);
 void		apply_wait(t_cmd *c, t_minishell *info);
 void		free_and_exit_exec(t_cmd *c_first, t_cmd *c, int pip[2], int value);
 int			xcd(int c);
+void		open_outfile(t_cmd *c);
 //----------EXPAND----------------------//
 char		*expand(char *s, t_minishell *info);
 int			tilde(char *s, char **line, t_minishell *info, t_iterator *a);
