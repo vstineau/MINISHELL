@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:55:41 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/13 15:10:19 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:13:45 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	main(int argc, char *argv[], char *envp[])
 		signals_stuff(&info);
 		line = readline(get_prompt(prompt, &info, c));
 		if (!line)
-			free_split_exit(info.env);
+			free_split_exit(info.env, &info);
 		add_history(line);
 		line = expand(line, &info);
 		c = parse(line, &info);

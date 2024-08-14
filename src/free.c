@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:55:01 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 10:51:06 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:13:58 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	free_split_exit(char **split)
+void	free_split_exit(char **split, t_minishell *info)
 {
 	int	i;
 
@@ -59,7 +59,8 @@ void	free_split_exit(char **split)
 	while (split[i])
 		free(split[i++]);
 	free(split);
-	exit(1);
+	write(2, "exit\n", 5);
+	exit(info->code_error);
 }
 
 void	exit_free_perror(t_cmd *c, bool env, t_minishell *info, char *error)
