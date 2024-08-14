@@ -6,7 +6,7 @@
 /*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:00:12 by aroualid          #+#    #+#             */
-/*   Updated: 2024/08/13 15:00:14 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/14 09:13:40 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ int			tilde(char *s, char **line, t_minishell *info, t_iterator *a);
 int			expand_env_v(char *s, char **line,
 				t_minishell *info, t_iterator *a);
 void		no_expand_heredoc(char *s, char *line, t_iterator *a);
+void		*pre_expand_heredoc(char *line, char *newline, t_minishell *info);
 char		*expand_heredoc(char *line, t_minishell *info);
 int			expand_doubles_quotes(t_iterator *a, char *line);
 int			expand_single_quotes(t_iterator *a, char *line);

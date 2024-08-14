@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:57:29 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/13 14:41:47 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/14 09:12:15 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,15 @@ int	check_dobble_pipe(t_cmd *c, int pipout)
 		test = test->next;
 	}
 	return (0);
+}
+
+void	*pre_expand_heredoc(char *line, char *newline, t_minishell *info)
+{
+	if (!line)
+		return (NULL);
+	newline = ft_calloc(1, ft_strlen(line) + 1);
+	if (newline == NULL)
+		exit_free_perror(NULL, ENV, info,
+			BG_RED"memory allocation failed during parsing"RESET);
+	return (newline);
 }
