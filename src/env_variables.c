@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:53:59 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/13 16:00:32 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/14 09:42:47 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static int	utils_env2(char *var, int len_var, t_iterator *a, int j)
 
 static void	fill_key(char key[4096], char *s, int *j, t_iterator *a)
 {
-	while (s[*j] && !check_char(s[*j], " $\t/") && ft_isalnum(s[*j]))
+	while (s[*j] && !check_char(s[*j], " $\t/")
+		&& (ft_isalnum(s[*j]) || s[*j] == '_'))
 	{
 		key[*j - a->i - 1] = s[*j];
 		*j += 1;

@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:55:18 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 15:19:15 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/14 09:39:23 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	no_heredoc(char *s, t_cmd *c, t_minishell *info)
 	j = 0;
 	while (s[i] && check_char(s[i], "  \t"))
 		i++;
-	while (s[i] && !check_char(s[i], "  \t|><$"))
+	while (s[i] && !check_char(s[i], "\n  \t|><$"))
 		c->infile[j++] = s[i++];
 	if (s[i] && check_char(s[i], "<>"))
 		set_error_code(c, 2);
