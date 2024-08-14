@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:56:23 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/13 15:46:24 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/14 09:34:12 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	get_outfile(char *s, t_cmd *c, t_minishell *info)
 			c->outfile_quote ^= (1 << 1);
 		i++;
 	}
-	while (s[i] && (!check_char(s[i], "<> |\t") || c->outfile_quote)
+	while (s[i] && (!check_char(s[i], "<> |\t\n") || c->outfile_quote)
 		&& !check_char(s[i], "'\""))
 		c->outfile[j++] = s[i++];
 	if (s[i] && (check_char(s[i], "<|>") && !c->outfile_quote))
