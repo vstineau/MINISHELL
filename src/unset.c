@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:56:41 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/13 16:02:07 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:00:32 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	**unset(char **av, char **env, t_cmd *c)
 		if (av[k] == NULL || arg_ok_for_unset(av[k]) == 0)
 		{
 			if (arg_ok_for_unset(av[k]) == 0)
-				wrong_identifier(av[k], c, "export");
+				c->i->code_error = 0;
 			k++;
 		}
 		else
@@ -113,6 +113,5 @@ char	**unset(char **av, char **env, t_cmd *c)
 			k++;
 		}
 	}
-	free_split(env);
-	return (env2);
+	return (free_split(env), env2);
 }
