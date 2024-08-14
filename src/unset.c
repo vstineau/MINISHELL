@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:56:41 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/12 10:51:46 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:02:07 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,25 @@ char	**apply_unset_each(int j, int i, char **env, char **env2)
 	while (j < i)
 	{
 		env2[j] = ft_strdup(env[j]);
+		if (env2[j] == NULL)
+		{
+			while (j > 0)
+				free(env2[--j]);
+			free(env2);
+			return (free_split(env), NULL);
+		}
 		j++;
 	}
 	while (j < env_size(env) - 1)
 	{
 		env2[j] = ft_strdup(env[j + 1]);
+		if (env2[j] == NULL)
+		{
+			while (j > 0)
+				free(env2[--j]);
+			free(env2);
+			return (free_split(env), NULL);
+		}
 		j++;
 	}
 	return (free_split(env), env2);

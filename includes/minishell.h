@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aroualid <aroualid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/13 15:00:12 by aroualid          #+#    #+#             */
-/*   Updated: 2024/08/14 09:13:40 by vstineau         ###   ########.fr       */
+/*   Created: 2024/08/14 09:23:22 by vstineau          #+#    #+#             */
+/*   Updated: 2024/08/14 09:23:23 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,6 @@
 # define NO_ENV 0
 
 extern int	g_signal_received;
-
-typedef struct s_export
-{
-	char	*av;
-	char	*av1;
-}		t_export;
 
 typedef struct s_iterator
 {
@@ -81,6 +75,8 @@ typedef struct s_minishell
 
 typedef struct s_cmd
 {
+	char				*av;
+	char				*av1;
 	char				*cmd;
 	char				*infile;
 	char				*outfile;
@@ -95,7 +91,6 @@ typedef struct s_cmd
 	int					outfile_quote;
 	t_redirect			redirect;
 	t_minishell			*i;
-	t_export			*xp;
 	struct s_cmd		*next;
 }						t_cmd;
 //----------UTILS----------------------//
@@ -140,6 +135,8 @@ void		wait_status(t_minishell *info, int status);
 char		*return_find_path(t_minishell *info, char *av, int error);
 int			check_dobble_pipe(t_cmd *c, int pipout);
 void		apply_wait(t_cmd *c, t_minishell *info);
+void		free_and_exit_exec(t_cmd *c_first, t_cmd *c, int pip[2], int value);
+int			xcd(int c);
 //----------EXPAND----------------------//
 char		*expand(char *s, t_minishell *info);
 int			tilde(char *s, char **line, t_minishell *info, t_iterator *a);
@@ -189,7 +186,7 @@ void		apply_exec_middle(int fd, int pip[2], t_cmd *c_first, t_cmd *c);
 void		before_exec(t_cmd *c, t_cmd *c_first, int fd, int pip[2]);
 void		exec(t_minishell *info, t_cmd *c);
 int			is_builtin(t_cmd *c);
-char		*get_first_av(char *av, t_cmd *c);
+char		*get_first_av(char *av, t_cmd *c, int len);
 char		**ft_print_export(char **env, int fd, t_cmd *c);
 int			ft_isalpha(int c);
 int			ft_isalnum(int c);

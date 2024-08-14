@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:57:44 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/09 14:57:48 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/13 17:50:00 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,11 @@ void	apply_wait(t_cmd *c, t_minishell *info)
 			i++;
 		}
 	}
+}
+
+int	xcd(int c)
+{
+	if ((c == '=') || (c == '\0'))
+		return (1);
+	return (0);
 }
