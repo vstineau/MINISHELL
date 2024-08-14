@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:54:16 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/13 14:40:09 by aroualid         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:42:09 by aroualid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,21 @@ void	to_many_arg(t_cmd *c)
 	return ;
 }
 
+void	print_exit(t_cmd *c)
+{
+	if ((c->next && c->next->pipe == PIPE) || c->previous_pipe == 1)
+		;
+	else
+		write (2, "exit\n", 5);
+}
+
 void	our_exit(t_cmd *c, t_cmd *c_first, int pip[2], int fd)
 {
 	int				i;
 	__int128		atoi_crack;
 	int				value;
 
-	value = 0;
+	print_exit(c);
 	i = 0;
 	if (c->arg[0] == NULL)
 		free_and_close(fd, pip, c_first, c->i->code_error);
