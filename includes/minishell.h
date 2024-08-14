@@ -6,7 +6,7 @@
 /*   By: vstineau <vstineau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 09:23:22 by vstineau          #+#    #+#             */
-/*   Updated: 2024/08/14 09:23:23 by vstineau         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:13:10 by vstineau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void		exit_free_perror(t_cmd *c, bool env,
 				t_minishell *info, char *error);
 void		free_cmd(t_cmd *cmd, bool env, t_minishell *info);
 void		free_split(char **split);
-void		free_split_exit(char **split);
+void		free_split_exit(char **split, t_minishell *info);
 char		*free_return(char *endfile);
 void		free_alls(char *path, char **cmd);
 //----------EXECUTION--------------------//
